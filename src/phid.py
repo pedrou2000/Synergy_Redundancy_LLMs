@@ -53,13 +53,13 @@ def plot_synergy_redundancy_PhiID(synergy_matrices, redundancy_matrices, plot_ba
         
         cax1 = axs[0].matshow(synergy_matrix, cmap='viridis')
         fig.colorbar(cax1, ax=axs[0])
-        axs[0].set_title('Synergy Matrix - ' + metric)
+        axs[0].set_title('Synergy Matrix')
         axs[0].set_xlabel('Attention Head')
         axs[0].set_ylabel('Attention Head')
 
         cax2 = axs[1].matshow(redundancy_matrix, cmap='viridis')
         fig.colorbar(cax2, ax=axs[1])
-        axs[1].set_title('Redundancy Matrix - ' + metric)
+        axs[1].set_title('Redundancy Matrix')
         axs[1].set_xlabel('Attention Head')
         axs[1].set_ylabel('Attention Head')
 
@@ -81,7 +81,7 @@ def plot_all_PhiID(global_matrices, plot_base_path=None):
         for idx, (key, matrix) in enumerate(matrices.items()):
             cax = axs[idx].matshow(matrix, cmap='viridis')
             fig.colorbar(cax, ax=axs[idx])
-            axs[idx].set_title(f'{metric} - {key}')
+            axs[idx].set_title(f'{key}')
             axs[idx].set_xlabel('Attention Head')
             axs[idx].set_ylabel('Attention Head')
         
