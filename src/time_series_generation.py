@@ -81,7 +81,7 @@ def simulate_resting_state_attention(model, tokenizer, num_tokens_to_generate, d
     generated_text, attention_params = generate_text_with_attention(model, tokenizer, num_tokens_to_generate, device, input_ids=random_input_ids, temperature=temperature)
     return generated_text, attention_params
 
-def compute_attention_metrics_norms(attention_params, selected_metrics, num_tokens_to_generate, len_prompt):
+def compute_attention_metrics_norms(attention_params, selected_metrics, num_tokens_to_generate):
     # Computes the norms of selected attention metrics across all layers and heads for each timestep.
     
     attention_metrics = [attention_params[metric] for metric in selected_metrics]
@@ -96,11 +96,16 @@ def compute_attention_metrics_norms(attention_params, selected_metrics, num_toke
             for layer in range(num_layers):
                 for head in range(num_heads_per_layer):
                     # Compute the norm for the specified token, layer, and head
-                    query_norm = torch.norm(attention_metrics[metric_index][t][layer, head, t+len_prompt-1])
+                    query_norm = torch.norm(attention_metrics[metric_index][t][layer, head, -1])
                     # Store the computed norm
                     time_series[selected_metric][layer][head][t].append(query_norm.item())
 
     return time_series
+
+def save_time_series(time_series, base_plot_path=None):
+    if not base_plot_path:
+        base_plot_path = constants.TIME_SERIES_DIR  + datetime.now().strftime("%Y%m%d_%H%M%S") + '.pt'
+    torch.save(time_series, base_plot_path)
 
 def plot_attention_metrics_norms_over_time(time_series, metrics, num_heads_plot=5, base_plot_path=None):
     if not base_plot_path:
