@@ -180,9 +180,8 @@ def compute_attention_metrics_norms(attention_params, selected_metrics, num_toke
     num_layers, num_heads_per_layer, num_tokens, _ = attention_metrics[0].shape
     num_inputs = num_tokens - num_tokens_to_generate
 
-    # Initialize the time series dictionary for storing the norms
-    time_series = {metric: [[[[] for _ in range(num_tokens_to_generate)] for _ in range(num_heads_per_layer)] for _ in range(num_layers)] for metric in selected_metrics}
-
+    # Initialize the time series dictionary for storing the norms with a tensor of shape (num_layers, num_heads_per_layer, num_tokens_to_generate)
+    time_series = {metric:torch.zeros((num_layers, num_heads_per_layer, num_tokens_to_generate)) for metric in selected_metrics}
     for metric_index, selected_metric in enumerate(selected_metrics):
         for t in range(num_tokens_to_generate):
             for layer in range(num_layers):
@@ -196,7 +195,7 @@ def compute_attention_metrics_norms(attention_params, selected_metrics, num_toke
                     aggregated_vector = calculate_aggregation(vector, aggregation_type)
 
                     # Store the computed norm
-                    time_series[selected_metric][layer][head][t].append(aggregated_vector.item())
+                    time_series[selected_metric][layer][head][t] = aggregated_vector.item()
 
     return time_series
 
