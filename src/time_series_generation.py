@@ -19,7 +19,7 @@ def sample_with_temperature(logits, temperature=1.0):
     sampled_indices = torch.multinomial(probabilities, num_samples=1) # Sample from the probability distribution
     return sampled_indices
 
-def generate_text_with_attention(model, tokenizer, num_tokens_to_generate, device, prompt=None, input_ids=None, temperature=0.1):
+def generate_text_with_attention_inefficient(model, tokenizer, num_tokens_to_generate, device, prompt=None, input_ids=None, temperature=0.1):
     # Autoregressively generates text from a given prompt while capturing all types of attention weights and other related tensors.
 
     # Encode the prompt and move to the specified device
@@ -69,7 +69,7 @@ def generate_text_with_attention(model, tokenizer, num_tokens_to_generate, devic
 
     return generated_text, attention_params
 
-def generate_text_with_attention_efficient(model, tokenizer, num_tokens_to_generate: int, device: str, prompt=None, input_ids=None, temperature=0.1):
+def generate_text_with_attention(model, tokenizer, num_tokens_to_generate: int, device: str, prompt=None, input_ids=None, temperature=0.1):
     # Autoregressively generates text from a given prompt while capturing all types of attention weights and other related tensors.
 
     # Encode the prompt and move to the specified device
@@ -133,7 +133,7 @@ def simulate_resting_state_attention_inefficient(model, tokenizer, num_tokens_to
 def simulate_resting_state_attention(model, tokenizer, num_tokens_to_generate, device, temperature=3, random_input_length=10):
     # Simulate the resting state of the attention weights by generating text from random input tokens
     random_input_ids = generate_random_token_input(random_input_length, tokenizer).to(device)
-    generated_text, attention_params = generate_text_with_attention_efficient(model, tokenizer, num_tokens_to_generate, device, input_ids=random_input_ids, temperature=temperature)
+    generated_text, attention_params = generate_text_with_attention(model, tokenizer, num_tokens_to_generate, device, input_ids=random_input_ids, temperature=temperature)
     return generated_text, attention_params
 
 def compute_attention_metrics_norms_inefficient(attention_params, selected_metrics, num_tokens_to_generate):
@@ -166,6 +166,8 @@ def calculate_aggregation(vector, aggregation_type):
         # Make sure the vector is normalized and positive for entropy calculation
         vector_normalized = F.softmax(vector, dim=0)
         return -(vector_normalized * torch.log(vector_normalized + 1e-5)).sum()  # Adding epsilon to avoid log(0)
+    elif aggregation_type == 'max':
+        return torch.max(vector)
     else:
         raise ValueError("Unsupported aggregation type. Choose from 'norm', 'mean', 'entropy'.")
 
@@ -223,7 +225,7 @@ def smooth_series(series, window_size=3):
     smoothed = np.convolve(series_padded, conv_window, mode='valid')
     return smoothed
 
-def plot_attention_metrics_norms_over_time(time_series, metrics, num_heads_plot=8, base_plot_path=None, smoothing_window=1):
+def plot_attention_metrics_norms_over_time(time_series, metrics, num_heads_plot=8, base_plot_path=None, smoothing_window=1, save=True):
     if not base_plot_path:
         base_plot_path = constants.PLOTS_TIME_SERIES_DIR + datetime.now().strftime("%Y%m%d_%H%M%S") + '/'
     
@@ -265,9 +267,12 @@ def plot_attention_metrics_norms_over_time(time_series, metrics, num_heads_plot=
         plt.tight_layout(rect=[0, 0.03, 1, 0.98])
         plt.subplots_adjust(top=0.965)  # Adjust this to fit both the title and the legend at the top
 
-        plot_path = f"{base_plot_path}{metric}_norms_over_time.png"
-        os.makedirs(os.path.dirname(plot_path), exist_ok=True)
-        plt.savefig(plot_path, bbox_inches='tight')  # Ensure everything is included in the saved file
+        if save:
+            plot_path = f"{base_plot_path}{metric}_norms_over_time.png"
+            os.makedirs(os.path.dirname(plot_path), exist_ok=True)
+            plt.savefig(plot_path, bbox_inches='tight')
+        else:
+            plt.show()
         plt.close()
 
 

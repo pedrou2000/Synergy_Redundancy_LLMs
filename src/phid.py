@@ -42,7 +42,7 @@ def compute_PhiID(time_series, metrics, tau=1, kind="gaussian", redundancy_measu
 
     return results, synergy_matrices, redundancy_matrices
 
-def plot_synergy_redundancy_PhiID(synergy_matrices, redundancy_matrices, plot_base_path=None):
+def plot_synergy_redundancy_PhiID(synergy_matrices, redundancy_matrices, plot_base_path=None, save=True):
     if not plot_base_path:
         plot_base_path = constants.PLOTS_SYNERGY_REDUNDANCY_DIR + datetime.now().strftime("%Y%m%d_%H%M%S") + '/'
     for metric, synergy_matrix in synergy_matrices.items():
@@ -63,12 +63,15 @@ def plot_synergy_redundancy_PhiID(synergy_matrices, redundancy_matrices, plot_ba
         axs[1].set_xlabel('Attention Head')
         axs[1].set_ylabel('Attention Head')
 
-        plt.tight_layout()
-        os.makedirs(os.path.dirname(plot_path), exist_ok=True)
-        plt.savefig(plot_path)
+        if save:
+            plt.tight_layout()
+            os.makedirs(os.path.dirname(plot_path), exist_ok=True)
+            plt.savefig(plot_path)
+        else:
+            plt.show()
         plt.close()
 
-def plot_all_PhiID(global_matrices, plot_base_path=None):
+def plot_all_PhiID(global_matrices, plot_base_path=None, save=True):
     if not plot_base_path:
         plot_base_path = constants.PLOTS_ALL_PHID_DIR + datetime.now().strftime("%Y%m%d_%H%M%S") + '/'
     for metric, matrices in global_matrices.items():
@@ -84,9 +87,12 @@ def plot_all_PhiID(global_matrices, plot_base_path=None):
             axs[idx].set_title(f'{key}')
             axs[idx].set_xlabel('Attention Head')
             axs[idx].set_ylabel('Attention Head')
-        
-        plot_path = os.path.join(plot_base_path, f'{metric}_PhiID_matrices.png')
-        os.makedirs(os.path.dirname(plot_path), exist_ok=True)
         plt.tight_layout()
-        plt.savefig(plot_path)
+        
+        if save:
+            plot_path = os.path.join(plot_base_path, f'{metric}_PhiID_matrices.png')
+            os.makedirs(os.path.dirname(plot_path), exist_ok=True)
+            plt.savefig(plot_path)
+        else:
+            plt.show()
         plt.close()
