@@ -91,7 +91,7 @@ def plot_attention_weights_comparison(all_attention_weights, categories, save=Tr
             positions = np.arange(num_heads) + cat_idx * 0.1 - (num_categories - 1) * 0.05
             plt.errorbar(positions, means, yerr=margins_of_error, fmt=markers[cat_idx % len(markers)], 
                         ecolor=colors[cat_idx % len(colors)], capthick=2, capsize=5, 
-                        label=f'{category} (Mean ± 95% CI)', linestyle='None')
+                        label=f'{category} (95% CI)', linestyle='None')
             
             # # Plot with error bars: adjust positions to not overlap categories
             # positions = np.arange(num_heads) + cat_idx * 0.1 - (num_categories - 1) * 0.05

@@ -12,9 +12,7 @@ TIME_SERIES_DIR = "../time_series/"
 PLOTS_TIME_SERIES_DIR = PLOTS_DIR + "1-Time_Series/"
 PLOTS_SYNERGY_REDUNDANCY_DIR = PLOTS_DIR + "2-Redundancy_Synergy_Matrices/"
 PLOTS_ALL_PHID_DIR = PLOTS_DIR + "3-All_PhiID_Matrices/"
-PLOTS_HEAD_ACTIVATIONS_COMPARISON = PLOTS_DIR + "4-Head_Activations_Comparison/"
 PLOTS_HEAD_ACTIVATIONS_ANALYSIS = PLOTS_DIR + "4-Head_Activations_Analysis/"
-PLOTS_ACTIVATION_HEATMAPS = PLOTS_DIR + "5-Activation_Heatmaps/"
 
 # Prompts
 # Simple Mathematical Operations Prompts
@@ -27,7 +25,7 @@ prompts = {
         "What is the square of 16?",
         "Find the square root of 256.",
         "If a rectangle has a length of 14 and a width of 5, what is its area?",
-        "What is 15% of 200?",
+        "What is 15 per cent of 200?",
         "How many prime numbers are there between 1 and 20?",
         "If I save $50 each month, how much will I have saved after one year?"
     ],
