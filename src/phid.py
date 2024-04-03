@@ -96,3 +96,128 @@ def plot_all_PhiID(global_matrices, plot_base_path=None, save=True):
         else:
             plt.show()
         plt.close()
+
+
+
+####################### Other Visualizations #######################
+def calculate_averages_per_head(synergy_matrices, redundancy_matrices):
+    averages = {}
+    for metric in synergy_matrices.keys():
+        synergy_avg_per_head = np.mean(synergy_matrices[metric], axis=1)
+        redundancy_avg_per_head = np.mean(redundancy_matrices[metric], axis=1)
+        
+        averages[metric] = {'synergy': synergy_avg_per_head, 'redundancy': redundancy_avg_per_head}
+    return averages
+
+def plot_averages_per_head(averages, plot_base_path=None, save=True):
+    if not plot_base_path:
+        plot_base_path = constants.PLOTS_SYNERGY_REDUNDANCY_PER_HEAD + datetime.now().strftime("%Y%m%d_%H%M%S") + '/'
+    
+    for metric, avg_data in averages.items():
+        synergy_avgs = avg_data['synergy']
+        redundancy_avgs = avg_data['redundancy']
+        heads = np.arange(len(synergy_avgs))  # Assuming the number of heads is the same for synergy and redundancy
+        
+        fig, ax = plt.subplots(figsize=(16, 5))
+        ax.plot(heads, synergy_avgs, marker='o', linestyle='-', color='b', label='Synergy')
+        ax.plot(heads, redundancy_avgs, marker='s', linestyle='-', color='r', label='Redundancy')
+        
+        ax.set_xlabel('Attention Head')
+        ax.set_ylabel('Average Value')
+        ax.set_title(f'Average Synergy and Redundancy per Head for {metric}')
+        ax.legend()
+
+        plot_path = f"{plot_base_path}{metric}_averages.png"
+        
+        if save:
+            os.makedirs(os.path.dirname(plot_path), exist_ok=True)
+            plt.tight_layout()
+            plt.savefig(plot_path)
+        else:
+            plt.show()
+        plt.close()
+
+def compute_synergy_redundancy_rank_gradient(averages):
+    rank_gradients = {}
+    for metric, avg_data in averages.items():
+        # Calculate ranks (1 is highest value, hence most redundant/synergistic)
+        synergy_ranks = np.argsort(-avg_data['synergy']) + 1
+        redundancy_ranks = np.argsort(-avg_data['redundancy']) + 1
+        
+        # Compute the gradient: Redundancy rank - Synergy rank
+        rank_gradient = redundancy_ranks - synergy_ranks
+        
+        rank_gradients[metric] = rank_gradient
+    return rank_gradients
+
+def plot_synergy_redundancy_rank_gradient(rank_gradients, plot_base_path=None, save=True):
+    if not plot_base_path:
+        plot_base_path = constants.PLOTS_SYNERGY_REDUNDANCY_RANK_GRADIENT + datetime.now().strftime("%Y%m%d_%H%M%S") + '/'
+    
+    for metric, gradient in rank_gradients.items():
+        heads = np.arange(len(gradient))  # Assuming the number of heads is consistent
+        
+        fig, ax = plt.subplots(figsize=(16, 6))
+        bars = ax.bar(heads, gradient, color=np.where(gradient < 0, 'skyblue', 'salmon'))
+        
+        ax.set_xlabel('Attention Head')
+        ax.set_ylabel('Synergy-Redundancy Rank Gradient')
+        ax.set_title(f'Synergy-Redundancy Rank Gradient for {metric}')
+        ax.axhline(0, color='grey', linewidth=0.8)
+        
+        # Highlighting the zero line for reference
+        for bar in bars:
+            if bar.get_height() < 0:
+                bar.set_edgecolor('blue')
+            else:
+                bar.set_edgecolor('red')
+        
+        plot_path = f"{plot_base_path}{metric}_rank_gradient.png"
+        
+        if save:
+            os.makedirs(os.path.dirname(plot_path), exist_ok=True)
+            plt.tight_layout()
+            plt.savefig(plot_path)
+        else:
+            plt.show()
+        plt.close()
+
+def compute_gradient_percentile(averages):
+    gradient_percentiles = {}
+    for metric, avg_data in averages.items():
+        # Calculate synergy minus redundancy for each head
+        gradient_diff = avg_data['synergy'] - avg_data['redundancy']
+        
+        # Calculate ranks based on the gradient difference
+        ranks = gradient_diff.argsort().argsort() + 1  # +1 to start ranks at 1 instead of 0
+        
+        # Convert ranks to percentiles
+        percentiles = 100.0 * (ranks - 1) / (len(gradient_diff) - 1)
+        
+        gradient_percentiles[metric] = percentiles
+    return gradient_percentiles
+
+def plot_gradient_percentile(gradient_percentiles, plot_base_path=None, save=False):
+    if not plot_base_path:
+        plot_base_path = constants.PLOTS_GRADIENT_PERCENTILE + datetime.now().strftime("%Y%m%d_%H%M%S") + '/'
+    
+    for metric, percentiles in gradient_percentiles.items():
+        heads = np.arange(len(percentiles))  # Assuming the number of heads is consistent
+        
+        fig, ax = plt.subplots(figsize=(16, 6))
+        ax.plot(heads, percentiles, marker='o', linestyle='-', color='darkblue')
+        
+        ax.set_xlabel('Attention Head')
+        ax.set_ylabel('Gradient Percentile')
+        ax.set_title(f'Synergy-Redundancy Gradient Percentile for {metric}')
+        ax.grid(True, which='both', linestyle='--', linewidth=0.5)
+        
+        plot_path = f"{plot_base_path}{metric}_gradient_percentile.png"
+        
+        if save:
+            os.makedirs(os.path.dirname(plot_path), exist_ok=True)
+            plt.tight_layout()
+            plt.savefig(plot_path)
+        else:
+            plt.show()
+        plt.close()
