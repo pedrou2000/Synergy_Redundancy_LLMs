@@ -19,7 +19,6 @@ PLOTS_GRADIENT_PERCENTILE = PLOTS_SYNERGY_REDUNDANCY_GRADIENTS + "3-Gradient_Per
 PLOTS_HEAD_ACTIVATIONS_ANALYSIS = PLOTS_DIR + "5-Head_Activations_Analysis/"
 
 # Prompts
-# Simple Mathematical Operations Prompts
 prompts = {
     "math_operations": [
         "What is the sum of 457 and 674?",
@@ -59,3 +58,77 @@ prompts = {
     ]
 }
 
+prompts_2 = {
+    "syntax_and_grammar_recognition": [
+        "Correct the error: He go to school every day.",
+        "Correct the error: She have two cats and a dogs.",
+        "Correct the error: I eats breakfast at 8:00 in the morning.",
+        "Correct the error: Every students in the classroom has their own laptop.",
+        "Correct the error: She don't like going to the park on weekends.",
+        "Correct the error: We was happy to see the rainbow after the storm.",
+        "Correct the error: There is many reasons to celebrate today.",
+        "Correct the error: Him and I went to the market yesterday.",
+        "Correct the error: The books is on the table.",
+        "Correct the error: They walks to school together every morning."
+    ],
+    "part_of_speech_tagging": [
+        "Identify the parts of speech in the sentence: Quickly, the agile cat climbed the tall tree.",
+        "Identify the parts of speech in the sentence: She whispered a secret to her friend during the boring lecture.",
+        "Identify the parts of speech in the sentence: The sun sets in the west.",
+        "Identify the parts of speech in the sentence: Can you believe this amazing view?",
+        "Identify the parts of speech in the sentence: He quickly finished his homework.",
+        "Identify the parts of speech in the sentence: The beautifully decorated cake was a sight to behold.",
+        "Identify the parts of speech in the sentence: They will travel to Japan next month.",
+        "Identify the parts of speech in the sentence: My favorite book was lost.",
+        "Identify the parts of speech in the sentence: The loud music could be heard from miles away.",
+        "Identify the parts of speech in the sentence: She sold all of her paintings at the art show."
+    ], 
+    "basic_numerical_reasoning": [
+        "If you have 15 apples and you give away 5, how many do you have left?",
+        "A rectangle's length is twice its width. If the rectangle's perimeter is 36 meters, what are its length and width?",
+        "You read 45 pages of a book each day. How many pages will you have read after 7 days?",
+        "If a train travels 60 miles in 1 hour, how far will it travel in 3 hours?",
+        "There are 8 slices in a pizza. If you eat 2 slices, what fraction of the pizza is left?",
+        "If one pencil costs 50 cents, how much do 12 pencils cost?",
+        "You have a 2-liter bottle of soda. If you pour out 500 milliliters, how much soda is left?",
+        "A marathon is 42 kilometers long. If you have run 10 kilometers, how much further do you have to run?",
+        "If you divide 24 by 3, then multiply by 2, what is the result?",
+        "A car travels 150 miles on 10 gallons of gas. How many miles per gallon does the car get?"
+    ],
+    "basic_common_sense_reasoning": [
+        "If it starts raining while the sun is shining, what weather phenomenon might you expect to see?",
+        "Why do people wear sunglasses?",
+        "What might you use to write on a chalkboard?",
+        "Why would you put a letter in an envelope?",
+        "If you're cold, what might you do to get warm?",
+        "What is the purpose of a refrigerator?",
+        "Why might someone plant a tree?",
+        "What happens to ice when it's left out in the sun?",
+        "Why do people shake hands when they meet?",
+        "What can you use to measure the length of a desk?"
+    ],
+    "abstract_reasoning_and_creative_thinking": [
+        "Imagine a future where humans have evolved to live underwater. Describe the adaptations they might develop.",
+        "Invent a sport that could be played on Mars considering its lower gravity compared to Earth. Describe the rules.",
+        "Describe a world where water is scarce, and every drop counts.",
+        "Write a story about a child who discovers they can speak to animals.",
+        "Imagine a city that floats in the sky. What does it look like, and how do people live?",
+        "Create a dialogue between a human and an alien meeting for the first time.",
+        "Design a vehicle that can travel on land, water, and air. Describe its features.",
+        "Imagine a new holiday and explain how people celebrate it.",
+        "Write a poem about a journey through a desert.",
+        "Describe a device that allows you to experience other people's dreams."
+    ],
+    "emotional_intelligence_and_social_cognition": [
+        "Write a dialogue between two characters where one comforts the other after a loss, demonstrating empathy.",
+        "Describe a situation where someone misinterprets a friend's actions as hostile, and how they resolve the misunderstanding.",
+        "Compose a letter from a character apologizing for a mistake they made.",
+        "Describe a scene where a character realizes they are in love.",
+        "Write a conversation between two old friends who haven't seen each other in years.",
+        "Imagine a character facing a moral dilemma. What do they choose and why?",
+        "Describe a character who is trying to make amends for past actions.",
+        "Write about a character who overcomes a fear with the help of a friend.",
+        "Create a story about a misunderstanding between characters from different cultures.",
+        "Imagine a scenario where a character has to forgive someone who wronged them."
+    ]
+}
