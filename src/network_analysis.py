@@ -32,20 +32,20 @@ def compare_synergy_redundancy(synergy_matrices, redundancy_matrices, selected_m
         glob_eff_syn = efficiency_wei(synergy_matrices_norm[metric])
         glob_eff_red = efficiency_wei(redundancy_matrices_norm[metric])
         synergy_bigger_redundancy = glob_eff_syn > glob_eff_red
-        efficiency_results[metric] = {'Synergy': glob_eff_syn, 'Redundancy': glob_eff_red, 'Synergy > Redundancy': synergy_bigger_redundancy}
+        efficiency_results[metric] = {'glob_eff_syn': glob_eff_syn, 'glob_eff_red': glob_eff_red, 'glob_eff_syn > glob_eff_red': synergy_bigger_redundancy}
         
         if verbose:
-            print(f"Synergy bigger than Redundancy for {metric}: {synergy_bigger_redundancy}")
+            print(f"glob_eff_syn bigger than glob_eff_red for {metric}: {synergy_bigger_redundancy}")
             print(f"Global Efficiency for Synergy Matrix ({metric}): {glob_eff_syn}, Global Efficiency for Redundancy Matrix ({metric}): {glob_eff_red}")
 
     for metric in selected_metrics:
-        c, Q_synergy = modularity_louvain_und(synergy_matrices_norm[metric])
-        c, Q_redundancy = modularity_louvain_und(redundancy_matrices_norm[metric])
-        redundancy_bigger_synergy = Q_redundancy > Q_synergy
-        modularity_results[metric] = {'Synergy': Q_synergy, 'Redundancy': Q_redundancy, 'Redundancy > Synergy': redundancy_bigger_synergy}
+        c, modularity_synergy = modularity_louvain_und(synergy_matrices_norm[metric])
+        c, modularity_redundancy = modularity_louvain_und(redundancy_matrices_norm[metric])
+        redundancy_bigger_synergy = modularity_redundancy > modularity_synergy
+        modularity_results[metric] = {'modularity_synergy': modularity_synergy, 'modularity_redundancy': modularity_redundancy, 'modularity_redundancy > modularity_synergy': redundancy_bigger_synergy}
 
         if verbose:
-            print(f"Redundancy bigger than Synergy for {metric}: {redundancy_bigger_synergy}")
-            print(f"Modularity of Synergy Matrix ({metric}): {Q_synergy}, Modularity of Redundancy Matrix ({metric}): {Q_redundancy}")
+            print(f"modularity_redundancy bigger than modularity_synergy for {metric}: {redundancy_bigger_synergy}")
+            print(f"Modularity of Synergy Matrix ({metric}): {modularity_synergy}, Modularity of Redundancy Matrix ({metric}): {modularity_redundancy}")
 
     return efficiency_results, modularity_results

@@ -26,6 +26,41 @@ def generate_and_analyze_prompts(prompts, model, tokenizer, device, num_tokens_t
     final_tensor = category_attention_weights_tensor.transpose(0, 1).transpose(1, 2)
     return final_tensor
 
+def generate_and_analyze_rest(n_prompts, model, tokenizer, device, num_tokens_to_generate=128, aggregation_type='norm', random_input_length=10, temperature=2):
+    # List to hold averaged attention weights for each prompt
+    averaged_attention_weights_per_prompt = []
+
+    for i in range(n_prompts):
+        generated_text, attention_params = simulate_resting_state_attention(model, tokenizer, num_tokens_to_generate, device, temperature=temperature, random_input_length=random_input_length)
+        time_series = compute_attention_metrics_norms(attention_params, constants.METRICS_TRANSFORMER, num_tokens_to_generate, aggregation_type=aggregation_type)
+
+        # Average the attention weights across all timesteps for each prompt
+        avg_attention_weights = torch.mean(time_series["attention_weights"], axis=2)
+        # Collect averaged attention weights
+        averaged_attention_weights_per_prompt.append(avg_attention_weights)
+
+    category_attention_weights_tensor = torch.tensor(np.array(averaged_attention_weights_per_prompt))
+    
+    # Since we want [num_layers, num_heads, num_prompts], we transpose the axes
+    final_tensor = category_attention_weights_tensor.transpose(0, 1).transpose(1, 2)
+    return final_tensor
+
+def average_rest_attention_weights(time_series):
+    # List to hold averaged attention weights for each prompt
+    averaged_attention_weights_per_prompt = []
+
+    for time_serie in time_series:
+        # Average the attention weights across all timesteps for each prompt
+        avg_attention_weights = torch.mean(time_serie["attention_weights"], axis=2)
+        # Collect averaged attention weights
+        averaged_attention_weights_per_prompt.append(avg_attention_weights)
+
+    category_attention_weights_tensor = torch.tensor(np.array(averaged_attention_weights_per_prompt))
+    
+    # Since we want [num_layers, num_heads, num_prompts], we transpose the axes
+    category_attention_weights_tensor = category_attention_weights_tensor.transpose(0, 1).transpose(1, 2)
+    return category_attention_weights_tensor
+
 def compute_and_plot_attention_heatmap(time_series_attention_weights, plot_heatmap=True, save=True, base_plot_path=None):
     # Convert to numpy array for easier manipulation
     time_series_np = np.array(time_series_attention_weights)
@@ -62,10 +97,12 @@ def plot_attention_weights_comparison(all_attention_weights, categories, save=Tr
     num_heads = len(all_attention_weights[categories[0]][0])
     num_categories = len(categories)
     
-    # Create a large figure to accommodate all layer subplots
-    plt.figure(figsize=(15, num_layers * 5))
+    # Initialize the dictionary to store means and stds
+    stats_dict = {category: np.zeros((num_layers, num_heads, 2)) for category in categories}
+    if synergy_redundancy_heads_averages:
+        stats_dict.update({k: np.zeros((num_layers, num_heads, 2)) for k in ['synergy', 'redundancy']})
 
-    # Define colors/markers for different categories for visual distinction
+    plt.figure(figsize=(15, num_layers * 5))
     colors = ['b', 'y', 'g', 'r', 'c', 'm', 'k']
     markers = ['o', '^', 's', 'p', '*', '+', 'x']
     
@@ -75,11 +112,12 @@ def plot_attention_weights_comparison(all_attention_weights, categories, save=Tr
         for cat_idx, category in enumerate(categories + ['synergy', 'redundancy'] if synergy_redundancy_heads_averages else categories):
             if category in ['synergy', 'redundancy']:
                 means = synergy_redundancy_heads_averages["attention_weights"][category][layer_idx*num_heads:(layer_idx+1)*num_heads]
-                # For synergy and redundancy, we plot without error bars
                 plt.plot(np.arange(num_heads), means, marker=markers[cat_idx % len(markers)], 
                          linestyle='-', color=colors[cat_idx % len(colors)], label=f'{category}')
+                # Store means; stds not applicable for synergy/redundancy
+                stats_dict[category][layer_idx, :, 0] = means
+                stats_dict[category][layer_idx, :, 1] = np.nan  # Using NaN for stds as a placeholder
             else:
-                # Original processing for attention weights
                 attention_weights = all_attention_weights[category]
                 layer_attention = np.array(attention_weights[layer_idx])
                 means = np.mean(layer_attention, axis=1).flatten()
@@ -94,6 +132,10 @@ def plot_attention_weights_comparison(all_attention_weights, categories, save=Tr
                 plt.errorbar(positions, means, yerr=margins_of_error, fmt=markers[cat_idx % len(markers)], 
                             ecolor=colors[cat_idx % len(colors)], capthick=2, capsize=5, 
                             label=f'{category} (95% CI)', linestyle='None')
+                
+                # Store means and stds in the dictionary
+                stats_dict[category][layer_idx, :, 0] = means
+                stats_dict[category][layer_idx, :, 1] = stds
         
         plt.title(f'Layer {layer_idx + 1}')
         plt.xlabel('Head Index')
@@ -102,7 +144,7 @@ def plot_attention_weights_comparison(all_attention_weights, categories, save=Tr
         plt.legend()
     
     plt.suptitle("Average Attention Weights Norm Comparison by Prompt Category")
-    plt.tight_layout(rect=[0, 0.03, 1, 0.97])  # Adjust subplot parameters to fit the title
+    plt.tight_layout(rect=[0, 0.03, 1, 0.97])
     if save:
         if not base_plot_path:
             base_plot_path = constants.PLOTS_HEAD_ACTIVATIONS_COMPARISON + datetime.now().strftime("%Y%m%d_%H%M%S") + '/'
@@ -112,6 +154,8 @@ def plot_attention_weights_comparison(all_attention_weights, categories, save=Tr
         plt.savefig(plot_path, bbox_inches='tight')
     else:
         plt.show()
+    
+    return stats_dict
 
 def calculate_weighted_synergy_redundancy(all_attention_weights, synergy_redundancy_heads_averages, categories):
     """
@@ -175,8 +219,9 @@ def plot_weighted_scores_line(weighted_scores, categories, save=True, base_plot_
     else:
         plt.show()
 
-def plot_and_save_attention_analysis(prompts_dict, model, tokenizer, device, num_tokens_to_generate=128, save=True, synergy_redundancy_heads_averages=None):
-    categories = list(prompts_dict.keys())
+def plot_and_save_attention_analysis(prompts_dict, model, tokenizer, device, num_tokens_to_generate=128, save=True, 
+                                     synergy_redundancy_heads_averages=None, rest_time_series=None, generate_rest=False, 
+                                     random_input_length=10, temperature=2):
     all_attention_weights = {}
     
     # Create a base directory path with timestamp
@@ -185,21 +230,29 @@ def plot_and_save_attention_analysis(prompts_dict, model, tokenizer, device, num
         os.makedirs(base_plot_path, exist_ok=True)
 
     # Generate and analyze prompts for each category only once
-    for category in categories:
+    for category in list(prompts_dict.keys()):
         print(f"Analyzing category: {category}")
         attention_weights = generate_and_analyze_prompts(prompts_dict[category], model, tokenizer, device, num_tokens_to_generate)
         all_attention_weights[category] = attention_weights
+        n_prompts = attention_weights.shape[2]
+
+    if rest_time_series is not None and generate_rest is None:
+        print(f"Analyzing category: rest")
+        all_attention_weights['rest'] = average_rest_attention_weights(rest_time_series)
+    elif generate_rest:
+        print("Analyzing and Generating category: rest")
+        all_attention_weights['rest'] = generate_and_analyze_rest(n_prompts, model, tokenizer, device, num_tokens_to_generate, random_input_length=random_input_length, temperature=temperature)    
 
     # Plot category comparison using the collected attention weights
-    plot_attention_weights_comparison(all_attention_weights, categories, save=save, base_plot_path=base_plot_path, synergy_redundancy_heads_averages=synergy_redundancy_heads_averages)
+    stats_dict = plot_attention_weights_comparison(all_attention_weights, list(all_attention_weights.keys()), save=save, base_plot_path=base_plot_path, synergy_redundancy_heads_averages=synergy_redundancy_heads_averages)
     weighted_scores = None
     if synergy_redundancy_heads_averages:
-        weighted_scores = calculate_weighted_synergy_redundancy(all_attention_weights, synergy_redundancy_heads_averages, categories)
-        plot_weighted_scores_line(weighted_scores, categories, save=save, base_plot_path=base_plot_path)
+        weighted_scores = calculate_weighted_synergy_redundancy(all_attention_weights, synergy_redundancy_heads_averages, list(all_attention_weights.keys()))
+        plot_weighted_scores_line(weighted_scores, list(all_attention_weights.keys()), save=save, base_plot_path=base_plot_path)
 
     # Plot individual heatmaps for each category
     for category, attention_weights in all_attention_weights.items():
         print(f"{category.capitalize()} Average Attention Heatmap:")
         compute_and_plot_attention_heatmap(attention_weights, plot_heatmap=True, save=save, base_plot_path=base_plot_path + f"{category}_heatmap")
 
-    return weighted_scores
+    return weighted_scores, stats_dict

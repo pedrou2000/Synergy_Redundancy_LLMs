@@ -19,56 +19,6 @@ def sample_with_temperature(logits, temperature=1.0):
     sampled_indices = torch.multinomial(probabilities, num_samples=1) # Sample from the probability distribution
     return sampled_indices
 
-def generate_text_with_attention_inefficient(model, tokenizer, num_tokens_to_generate, device, prompt=None, input_ids=None, temperature=0.1):
-    # Autoregressively generates text from a given prompt while capturing all types of attention weights and other related tensors.
-
-    # Encode the prompt and move to the specified device
-    if prompt is not None and input_ids is None:
-        input_ids = tokenizer.encode(prompt, return_tensors='pt').to(device)
-    elif input_ids is not None and prompt is None:
-        input_ids = input_ids.to(device)
-    else:
-        raise ValueError("Please provide either a prompt or input_ids")
-    generated_ids = input_ids
-
-    # Initialize container for all tensors of each generation step
-    attention_params = {}
-
-    for t in range(num_tokens_to_generate):
-        if t % 5 == 0:  # Monitor memory usage every 5 tokens
-            # print(f"Generating token {t+1}/{num_tokens_to_generate}...")
-            # print(f"RAM usage after generating {t+1} tokens: {psutil.virtual_memory().percent}%")
-            gc.collect()  # Explicitly invoke garbage collection
-        # Use torch.no_grad() to disable gradient calculations and reduce memory consumption
-        with torch.no_grad():
-            outputs = model(generated_ids, output_attentions=True)
-        next_token_logits = outputs.logits[:, -1, :]  # Logits for the next token predictions
-        next_token_id = sample_with_temperature(next_token_logits, temperature=temperature)
-
-        generated_ids = torch.cat((generated_ids, next_token_id), dim=1)
-
-        # Process and move attention outputs to CPU
-        attentions_on_cpu = [{k: v.detach().to('cpu') for k, v in layer.items()} for layer in outputs.attentions]
-
-        # Dynamically initialize and store all keys from attention outputs
-        for idx, layer in enumerate(attentions_on_cpu):
-            for key, value in layer.items():
-                if key not in attention_params:
-                    attention_params[key] = {}
-                if t not in attention_params[key]:
-                    attention_params[key][t] = []
-                attention_params[key][t].append(value[0]) # Remove the batch dimension
-
-    # Convert time-step dictionaries into tensors where applicable
-    for key in attention_params.keys():
-        for time_step in attention_params[key]:
-            attention_params[key][time_step] = torch.stack(attention_params[key][time_step])
-
-    # Decode the generated ids to text and ensure they are on CPU for decoding
-    generated_text = tokenizer.decode(generated_ids[0].to('cpu'), skip_special_tokens=True)
-
-    return generated_text, attention_params
-
 def generate_text_with_attention(model, tokenizer, num_tokens_to_generate: int, device: str, prompt=None, input_ids=None, temperature=0.1):
     # Autoregressively generates text from a given prompt while capturing all types of attention weights and other related tensors.
 
@@ -123,12 +73,6 @@ def generate_random_token_input(length, tokenizer):
     random_input_ids_np = np.random.randint(0, tokenizer.vocab_size, (1, length))
     random_input_ids = torch.tensor(random_input_ids_np, dtype=torch.long)
     return random_input_ids
-
-def simulate_resting_state_attention_inefficient(model, tokenizer, num_tokens_to_generate, device, temperature=3, random_input_length=10):
-    # Simulate the resting state of the attention weights by generating text from random input tokens
-    random_input_ids = generate_random_token_input(random_input_length, tokenizer).to(device)
-    generated_text, attention_params = generate_text_with_attention(model, tokenizer, num_tokens_to_generate, device, input_ids=random_input_ids, temperature=temperature)
-    return generated_text, attention_params
 
 def simulate_resting_state_attention(model, tokenizer, num_tokens_to_generate, device, temperature=3, random_input_length=10):
     # Simulate the resting state of the attention weights by generating text from random input tokens
