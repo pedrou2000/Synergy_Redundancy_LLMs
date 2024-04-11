@@ -4,6 +4,7 @@ USE_GPU = True
 
 METRICS_TRANSFORMER = ['projected_Q', 'attention_weights', 'attention_outputs']
 AGGREGRATION_METHODS = ['norm', 'mean', 'entropy', 'max']
+ATTENTION_MEASURE = "attention_weights"
 
 # Directories 
 PLOTS_DIR = "../plots/"

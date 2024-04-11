@@ -221,3 +221,60 @@ def plot_gradient_percentile(gradient_percentiles, plot_base_path=None, save=Fal
         else:
             plt.show()
         plt.close()
+    
+def compute_gradient_rank(averages, method='synergy-redundancy'):
+    gradient_ranks = {}
+    for metric, avg_data in averages.items():
+        # Calculate synergy minus redundancy for each head
+        if method == 'synergy-redundancy':
+            gradient_diff = avg_data['synergy'] - avg_data['redundancy']
+        elif method == 'synergy':
+            gradient_diff = avg_data['synergy']
+        elif method == 'redundancy':
+            gradient_diff = avg_data['redundancy']
+        
+        # Sort gradient_diff and get indices of sorted array
+        sorted_indices = np.argsort(gradient_diff)
+        
+        # Create an empty array of the same length as gradient_diff to store ranks
+        ranks = np.empty_like(sorted_indices)
+        
+        # Assign ranks; since sorted_indices are 0-based, we add 1 to make them start from 1
+        ranks[sorted_indices] = np.arange(1, len(gradient_diff) + 1)
+        
+        # Create a dictionary where the key is the head number (1-indexed) and value is the rank
+        head_ranks = {head_number: rank for head_number, rank in enumerate(ranks, start=1)}
+        
+        gradient_ranks[metric] = head_ranks
+    return gradient_ranks
+
+def plot_gradient_rank(gradient_ranks, plot_base_path=None, save=False):
+    if not plot_base_path:
+        # Assuming constants.PLOTS_GRADIENT_RANK exists and has a similar purpose as constants.PLOTS_GRADIENT_PERCENTILE
+        plot_base_path = "path/to/your/gradient/rank/plots/" + datetime.now().strftime("%Y%m%d_%H%M%S") + '/'
+    
+    for metric, head_ranks in gradient_ranks.items():
+        # Convert head_ranks dictionary back to a list of ranks for plotting
+        # Since head numbers are 1-indexed, we adjust accordingly
+        heads = list(head_ranks.keys())
+        ranks = [head_ranks[head] for head in heads]
+
+        fig, ax = plt.subplots(figsize=(16, 6))
+        ax.plot(heads, ranks, marker='o', linestyle='-', color='darkblue')
+        
+        ax.set_xlabel('Attention Head')
+        ax.set_ylabel('Gradient Rank')
+        ax.set_title(f'Synergy-Redundancy Gradient Rank for {metric}')
+        ax.grid(True, which='both', linestyle='--', linewidth=0.5)
+        
+        plot_path = f"{plot_base_path}{metric}_gradient_rank.png"
+        
+        if save:
+            os.makedirs(os.path.dirname(plot_path), exist_ok=True)
+            plt.tight_layout()
+            plt.savefig(plot_path)
+        else:
+            plt.show()
+        plt.close()
+
+
