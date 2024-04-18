@@ -4,11 +4,13 @@ USE_GPU = True
 
 METRICS_TRANSFORMER = ['projected_Q', 'attention_weights', 'attention_outputs']
 AGGREGRATION_METHODS = ['norm', 'mean', 'entropy', 'max']
-ATTENTION_MEASURE = "attention_weights"
+ATTENTION_MEASURE = METRICS_TRANSFORMER[1]
 
 # Directories 
 PLOTS_DIR = "../plots/"
-TIME_SERIES_DIR = "../time_series/"
+SAVED_DATA_DIR = "../data/"
+TIME_SERIES_DIR = SAVED_DATA_DIR + "time_series/"
+MATRICES_DIR = SAVED_DATA_DIR + "syn_red_matrices/"
 
 PLOTS_TIME_SERIES_DIR = PLOTS_DIR + "1-Time_Series/"
 PLOTS_SYNERGY_REDUNDANCY_DIR = PLOTS_DIR + "2-Redundancy_Synergy_Matrices/"
@@ -18,6 +20,8 @@ PLOTS_SYNERGY_REDUNDANCY_PER_HEAD = PLOTS_SYNERGY_REDUNDANCY_GRADIENTS + "1-Syne
 PLOTS_SYNERGY_REDUNDANCY_RANK_GRADIENT = PLOTS_SYNERGY_REDUNDANCY_GRADIENTS + "2-Synergy_Redundancy_Rank_Gradient/"
 PLOTS_GRADIENT_PERCENTILE = PLOTS_SYNERGY_REDUNDANCY_GRADIENTS + "3-Gradient_Percentile/"
 PLOTS_HEAD_ACTIVATIONS_ANALYSIS = PLOTS_DIR + "5-Head_Activations_Analysis/"
+PLOTS_LDA = PLOTS_DIR + "6-LDA_Head_Activations/"
+PLOTS_ACTIVATIONS_SYN_RED_GRAD = PLOTS_DIR + "7-Activations_vs_Synergy-Redundancy_Rank_Gradient/"
 
 # Prompts
 prompts = {

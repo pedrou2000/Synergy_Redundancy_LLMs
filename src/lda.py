@@ -1,0 +1,65 @@
+import numpy as np
+from sklearn.discriminant_analysis import LinearDiscriminantAnalysis as LDA
+import matplotlib.pyplot as plt
+from time_series_generation import *
+
+def reshape_data(all_attention_weights):
+    categories = all_attention_weights.keys()
+    X = []  # This will store the flattened attention weights
+    y = []  # This will store the labels (categories)
+
+    for label, category in enumerate(categories):
+        data = all_attention_weights[category].reshape(-1, 18*8)  # Reshape data
+        X.append(data)
+        y.extend([label] * data.shape[0])
+
+    X = np.vstack(X)
+    y = np.array(y)
+    return X, y
+
+def apply_lda(X, y, n_components=2):
+    lda = LDA(n_components=n_components)
+    X_r = lda.fit_transform(X, y)
+    return X_r, lda
+
+def plot_lda_results(X_r, y, labels, save=False, base_plot_path=None):
+    plt.figure(figsize=(10, 8))
+    for i, label in enumerate(labels):
+        plt.scatter(X_r[y == i, 0], X_r[y == i, 1], alpha=0.8, label=label)
+    plt.title('LDA of Attention Weights')
+    plt.xlabel('LD1')
+    plt.ylabel('LD2')
+    plt.legend(loc='best', shadow=False, scatterpoints=1)
+
+    if save:
+        if not base_plot_path:
+            base_plot_path = constants.PLOTS_LDA + datetime.now().strftime("%Y%m%d_%H%M%S") + '/'
+        
+        plot_path = f"{base_plot_path}lda.png"
+        os.makedirs(os.path.dirname(plot_path), exist_ok=True)
+        plt.savefig(plot_path, bbox_inches='tight')
+
+    plt.show()
+
+def perform_lda_analysis(all_attention_weights, n_components=2, save=False, base_plot_path=None):
+    """
+    Performs LDA analysis on given attention weights and plots the results.
+
+    Args:
+    all_attention_weights (dict): Dictionary of attention weights with categories as keys.
+    n_components (int): Number of components for LDA.
+
+    Returns:
+    None. Displays a plot of the LDA results.
+    """
+    # Reshape the data
+    X, y = reshape_data(all_attention_weights)
+
+    # Apply LDA
+    X_r, lda = apply_lda(X, y, n_components)
+
+    # Get the labels from the keys of the dictionary, which represent categories
+    labels = list(all_attention_weights.keys())
+
+    # Plot the results
+    plot_lda_results(X_r, y, labels, save, base_plot_path)

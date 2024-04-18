@@ -4,9 +4,9 @@ import os
 import matplotlib.pyplot as plt
 import constants
 from datetime import datetime
+import pickle
 
-
-def compute_PhiID(time_series, metrics, tau=1, kind="gaussian", redundancy_measure="MMI"):
+def compute_PhiID(time_series, metrics, tau=1, kind="gaussian", redundancy_measure="MMI", save=False, base_save_path=None):
     results = {metric: {} for metric in metrics}
     
     for metric in metrics:
@@ -14,11 +14,9 @@ def compute_PhiID(time_series, metrics, tau=1, kind="gaussian", redundancy_measu
         num_heads_per_layer = len(time_series[metric][0])
         total_heads = num_layers * num_heads_per_layer
         
-        # Assuming calc_PhiID can work with example inputs to determine keys
         example_res, _ = calc_PhiID(time_series[metric][0][0], time_series[metric][0][1], tau, kind, redundancy_measure)
         keys = list(example_res.keys())
         
-        # Initialize global matrices for each key within this metric
         global_matrices = {key: np.zeros((total_heads, total_heads)) for key in keys}
         
         flat_time_series = [time_series[metric][layer][head] for layer in range(num_layers) for head in range(num_heads_per_layer)]
@@ -36,9 +34,35 @@ def compute_PhiID(time_series, metrics, tau=1, kind="gaussian", redundancy_measu
         
         results[metric] = global_matrices
     
-    # Now, extract synergy and redundancy matrices from results
     synergy_matrices = {metric: results[metric]['sts'] for metric in metrics}
     redundancy_matrices = {metric: results[metric]['rtr'] for metric in metrics}
+
+    if save:
+         save_matrices(results, synergy_matrices, redundancy_matrices, base_save_path=base_save_path)
+    
+    return results, synergy_matrices, redundancy_matrices
+
+def save_matrices(results, synergy_matrices, redundancy_matrices, base_save_path=None):
+    if not base_save_path:
+        # Assuming 'constants.MATRICES_DIR' is defined and is a valid path
+        base_save_path = constants.MATRICES_DIR + datetime.now().strftime("%Y%m%d_%H%M%S") + '.pkl'
+    
+    # Extract directory from base_save_path
+    dir_path = os.path.dirname(base_save_path)
+    
+    # Create the directory if it does not exist
+    os.makedirs(dir_path, exist_ok=True)
+    
+    # Now save the file
+    with open(base_save_path, 'wb') as file:
+        pickle.dump((results, synergy_matrices, redundancy_matrices), file)
+
+def load_matrices(matrices_number, base_plot_path=None):
+    # Sort the time_series files by name and load the time_series_number-th file
+    time_series_files = sorted(os.listdir(constants.MATRICES_DIR))
+    base_plot_path = constants.MATRICES_DIR + time_series_files[matrices_number]
+    with open(base_plot_path, 'rb') as file:
+        results, synergy_matrices, redundancy_matrices = pickle.load(file)
 
     return results, synergy_matrices, redundancy_matrices
 
