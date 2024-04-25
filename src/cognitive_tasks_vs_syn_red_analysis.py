@@ -5,11 +5,15 @@ import matplotlib.pyplot as plt
 from scipy import stats
 from scipy.stats import pearsonr
 
-def plot_all_category_diffs_vs_syn_red_grad_rank(stats_dict, gradient_ranks, rest_category_prefix='rest', save=False, base_plot_path=None, reorder=True, mean_instead_of_rest=False):
+def plot_all_category_diffs_vs_syn_red_grad_rank(stats_dict, gradient_ranks, rest_category_prefix='rest', save=False, base_plot_path=None, 
+                            reorder=True, mean_instead_of_rest=False, per_layer=False, num_heads_per_layer=8):
     categories = [cat for cat in stats_dict.keys() if not cat.startswith('rest')]
     slopes = []
     correlations = []
     regression_params = []  # To store slope and intercept for each category
+
+    if not base_plot_path:
+        base_plot_path = constants.PLOTS_ACTIVATIONS_SYN_RED_GRAD + datetime.now().strftime("%Y%m%d_%H%M%S") + '/'
 
     # Set up the subplot dimensions
     n = len(categories)
@@ -18,45 +22,56 @@ def plot_all_category_diffs_vs_syn_red_grad_rank(stats_dict, gradient_ranks, res
     fig, axs = plt.subplots(rows, cols, figsize=(cols*6, rows*4), squeeze=False)
 
     # Compute the global mean across all categories
-    all_means = np.vstack([stats_dict[cat][:, :, 0].flatten() for cat in categories])
-    global_mean = np.mean(all_means, axis=0)  # This is the mean of all categories' means
-
+    if per_layer:
+        all_means = np.vstack([np.mean(stats_dict[cat][:, :, 0].reshape(-1, num_heads_per_layer), axis=1) for cat in categories])
+    else:
+        all_means = np.vstack([stats_dict[cat][:, :, 0].flatten() for cat in categories])
+    global_mean = np.mean(all_means, axis=0)
 
     for i, category in enumerate(categories):
-        # Perform the existing process for each category
         stats_category = stats_dict[category]
-        stats_rest = stats_dict[rest_category_prefix]
-        
-        stats_category_means = stats_category[:, :, 0].flatten()
-        stats_rest_means = stats_rest[:, :, 0].flatten()
-        diff_means = stats_category_means - stats_rest_means
-        if mean_instead_of_rest:
+
+        if not mean_instead_of_rest:
+            stats_rest = stats_dict[rest_category_prefix]
+
+            if per_layer:
+                stats_category_means = np.mean(stats_category[:, :, 0].reshape(-1, num_heads_per_layer), axis=1)
+                stats_rest_means = np.mean(stats_rest[:, :, 0].reshape(-1, num_heads_per_layer), axis=1)
+            else:
+                stats_category_means = stats_category[:, :, 0].flatten()
+                stats_rest_means = stats_rest[:, :, 0].flatten()
+
+            diff_means = stats_category_means - stats_rest_means
+        else:
+            if per_layer:
+                stats_category_means = np.mean(stats_category[:, :, 0].reshape(-1, num_heads_per_layer), axis=1)
+            else:
+                stats_category_means = stats_category[:, :, 0].flatten()
+
             diff_means = stats_category_means - global_mean
 
         gradient_ranks_ordered = np.array([gradient_ranks[i] for i in range(1, len(diff_means) + 1)])
         reorder_indices = np.argsort(gradient_ranks_ordered)
 
-        diff_means_reordered = diff_means
-        if reorder:
-            diff_means_reordered = diff_means[reorder_indices]
+        diff_means_reordered = diff_means[reorder_indices] if reorder else diff_means
 
         x = np.arange(len(diff_means_reordered))
         slope, intercept = np.polyfit(x, diff_means_reordered, 1)
-        regression_params.append((slope, intercept))  # Store slope and intercept
-        
-        # Calculate Pearson correlation coefficient
-        correlation_coefficient, _ = pearsonr(x, diff_means_reordered)
+        regression_params.append((slope, intercept))
 
-        # Plotting in subplots
+        correlation_coefficient, _ = pearsonr(x, diff_means_reordered)
         ax = axs[i % rows, i // rows]
+        if per_layer:
+            num_layers = all_means.shape[1]
+            # Set x-axis to label each layer explicitly
+            ax.set_xticks(range(num_layers))  # Set tick positions starting from 0
+            ax.set_xticklabels([str(i+1) for i in range(num_layers)])  # Label from 1 to num_layers
+
+
         ax.plot(diff_means_reordered, marker='o', linestyle='-', color='darkblue', label='Original Data')
         ax.plot(x, slope * x + intercept, color='red', label=f'Slope = {slope:.5f}')
-        
         ax.set_title(f'{category}')
-        if reorder:
-            ax.set_xlabel('Synergy - Redundancy Gradient Rank')
-        else:
-            ax.set_xlabel('Head Index')
+        ax.set_xlabel('Synergy - Redundancy Gradient Rank' if reorder else 'Layer Index' if per_layer else 'Head Index')
         ax.set_ylabel('Diff in Avg Activation')
         ax.legend()
 
@@ -84,7 +99,7 @@ def plot_all_category_diffs_vs_syn_red_grad_rank(stats_dict, gradient_ranks, res
     ax1.tick_params(axis='y', labelcolor='tab:blue')
     ax1.set_title('Slope and Pearson Correlation for Each Category')
     ax1.set_xticks(np.arange(len(categories)))
-    ax1.set_xticklabels(categories, rotation=45, ha="right")
+    ax1.set_xticklabels(categories, rotation=10)
 
     # Create another y-axis for the Pearson correlation coefficients
     ax2 = ax1.twinx()
@@ -108,10 +123,16 @@ def plot_all_category_diffs_vs_syn_red_grad_rank(stats_dict, gradient_ranks, res
         x = np.linspace(0, len(diff_means_reordered) - 1, num=len(diff_means_reordered))
         plt.plot(x, slope * x + intercept, label=f'{categories[i]} (Slope: {slope:.4f})')
 
-    plt.title('Overlay of Regression Lines for All Categories')
-    plt.xlabel('Synergy - Redundancy Gradient Rank')
+    plt.title('Overlay of Regression Lines for Cognitive Task Categories')
+    plt.xlabel('Synergy - Redundancy Gradient Rank' if reorder else 'Layer Index' if per_layer else 'Head Index')
     plt.ylabel('Diff in Avg Activation')
     plt.legend()
+
+    # Set the x-axis to label each layer explicitly
+    if per_layer:
+        num_layers = all_means.shape[1]
+        plt.xticks(range(num_layers), [str(i+1) for i in range(num_layers)])
+
 
     if save:
         if not base_plot_path:

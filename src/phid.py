@@ -5,6 +5,7 @@ import matplotlib.pyplot as plt
 import constants
 from datetime import datetime
 import pickle
+import seaborn as sns
 
 def compute_PhiID(time_series, metrics, tau=1, kind="gaussian", redundancy_measure="MMI", save=False, base_save_path=None):
     results = {metric: {} for metric in metrics}
@@ -124,42 +125,94 @@ def plot_all_PhiID(global_matrices, plot_base_path=None, save=True):
 
 
 ####################### Other Visualizations #######################
-def calculate_averages_per_head(synergy_matrices, redundancy_matrices):
+def calculate_average_synergy_redundancies_per_head(synergy_matrices, redundancy_matrices, within_layer=False, num_heads_per_layer=8):
     averages = {}
     for metric in synergy_matrices.keys():
-        synergy_avg_per_head = np.mean(synergy_matrices[metric], axis=1)
-        redundancy_avg_per_head = np.mean(redundancy_matrices[metric], axis=1)
-        
+        num_heads = synergy_matrices[metric].shape[0]  # total number of heads
+        synergy_avg_per_head = np.zeros(num_heads)
+        redundancy_avg_per_head = np.zeros(num_heads)
+
+        if within_layer:
+            # Calculate averages per head only within the same layer
+            for head_index in range(num_heads):
+                layer_start = (head_index // num_heads_per_layer) * num_heads_per_layer
+                layer_end = layer_start + num_heads_per_layer
+
+                # Calculate average for the current head across its layer
+                synergy_avg_per_head[head_index] = np.mean(synergy_matrices[metric][head_index, layer_start:layer_end])
+                redundancy_avg_per_head[head_index] = np.mean(redundancy_matrices[metric][head_index, layer_start:layer_end])
+        else:
+            # Calculate averages globally across all heads
+            synergy_avg_per_head = np.mean(synergy_matrices[metric], axis=1)
+            redundancy_avg_per_head = np.mean(redundancy_matrices[metric], axis=1)
+
         averages[metric] = {'synergy': synergy_avg_per_head, 'redundancy': redundancy_avg_per_head}
     return averages
 
-def plot_averages_per_head(averages, plot_base_path=None, save=True):
+def plot_averages_per_head(averages, plot_base_path=None, save=False, use_heatmap=False, num_heads_per_layer=8):
     if not plot_base_path:
         plot_base_path = constants.PLOTS_SYNERGY_REDUNDANCY_PER_HEAD + datetime.now().strftime("%Y%m%d_%H%M%S") + '/'
-    
+
     for metric, avg_data in averages.items():
         synergy_avgs = avg_data['synergy']
         redundancy_avgs = avg_data['redundancy']
-        heads = np.arange(len(synergy_avgs))  # Assuming the number of heads is the same for synergy and redundancy
-        
-        fig, ax = plt.subplots(figsize=(16, 5))
-        ax.plot(heads, synergy_avgs, marker='o', linestyle='-', color='b', label='Synergy')
-        ax.plot(heads, redundancy_avgs, marker='s', linestyle='-', color='r', label='Redundancy')
-        
-        ax.set_xlabel('Attention Head')
-        ax.set_ylabel('Average Value')
-        ax.set_title(f'Average Synergy and Redundancy per Head for {metric}')
-        ax.legend()
 
-        plot_path = f"{plot_base_path}{metric}_averages.png"
-        
-        if save:
-            os.makedirs(os.path.dirname(plot_path), exist_ok=True)
+        if use_heatmap:
+            num_layers = len(synergy_avgs) // num_heads_per_layer
+            synergy_matrix = synergy_avgs.reshape((num_layers, num_heads_per_layer))
+            redundancy_matrix = redundancy_avgs.reshape((num_layers, num_heads_per_layer))
+
+            # Plot and save synergy heatmap
+            fig, ax = plt.subplots(figsize=(12, 5))
+            sns.heatmap(synergy_matrix.T, annot=True, fmt=".2f", cmap="coolwarm", cbar=True, linewidths=0.5,
+                        linecolor='gray', cbar_kws={"shrink": 0.8, "label": 'Synergy'})
+            ax.set_title(f'Average Synergy per Head')
+            ax.set_xlabel("Layer")
+            ax.set_ylabel("Head")
+            ax.set_xticklabels([f"{i+1}" for i in range(num_layers)], rotation=45, ha="right")
+            ax.set_yticklabels([f"{i+1}" for i in range(num_heads_per_layer)], rotation=0)
             plt.tight_layout()
-            plt.savefig(plot_path)
+
+            synergy_plot_path = f"{plot_base_path}{metric}_synergy_heatmap.png"
+            if save:
+                os.makedirs(os.path.dirname(synergy_plot_path), exist_ok=True)
+                plt.savefig(synergy_plot_path, bbox_inches='tight')
+            plt.close()
+
+            # Plot and save redundancy heatmap
+            fig, ax = plt.subplots(figsize=(12, 5))
+            sns.heatmap(redundancy_matrix.T, annot=True, fmt=".2f", cmap="coolwarm", cbar=True, linewidths=0.5,
+                        linecolor='gray', cbar_kws={"shrink": 0.8, "label": 'Redundancy'})
+            ax.set_title(f'Average Redundancy per Head')
+            ax.set_xlabel("Layer")
+            ax.set_ylabel("Head")
+            ax.set_xticklabels([f"{i+1}" for i in range(num_layers)], rotation=45, ha="right")
+            ax.set_yticklabels([f"{i+1}" for i in range(num_heads_per_layer)], rotation=0)
+            plt.tight_layout()
+
+            redundancy_plot_path = f"{plot_base_path}{metric}_redundancy_heatmap.png"
+            if save:
+                os.makedirs(os.path.dirname(redundancy_plot_path), exist_ok=True)
+                plt.savefig(redundancy_plot_path, bbox_inches='tight')
+            plt.close()
+
         else:
-            plt.show()
-        plt.close()
+            # Continue using the existing line plot code if heatmap is not selected
+            fig, ax = plt.subplots(figsize=(16, 5))
+            heads = np.arange(len(synergy_avgs))  # Assuming the number of heads is the same for synergy and redundancy
+            ax.plot(heads, synergy_avgs, marker='o', linestyle='-', color='b', label='Synergy')
+            ax.plot(heads, redundancy_avgs, marker='s', linestyle='-', color='r', label='Redundancy')
+            
+            ax.set_xlabel('Attention Head')
+            ax.set_ylabel('Average Value')
+            ax.set_title(f'Average Synergy and Redundancy per Head for {metric}')
+            ax.legend()
+
+            line_plot_path = f"{plot_base_path}{metric}_averages_line.png"
+            if save:
+                os.makedirs(os.path.dirname(line_plot_path), exist_ok=True)
+                plt.savefig(line_plot_path, bbox_inches='tight')
+            plt.close()
 
 def compute_synergy_redundancy_rank_gradient(averages):
     rank_gradients = {}
@@ -272,33 +325,118 @@ def compute_gradient_rank(averages, method='synergy-redundancy'):
         gradient_ranks[metric] = head_ranks
     return gradient_ranks
 
-def plot_gradient_rank(gradient_ranks, plot_base_path=None, save=False):
+def plot_gradient_rank(gradient_ranks, plot_base_path=None, save=False, use_heatmap=False, num_heads_per_layer=8):
     if not plot_base_path:
-        # Assuming constants.PLOTS_GRADIENT_RANK exists and has a similar purpose as constants.PLOTS_GRADIENT_PERCENTILE
-        plot_base_path = "path/to/your/gradient/rank/plots/" + datetime.now().strftime("%Y%m%d_%H%M%S") + '/'
-    
+        # Set a default path if not provided
+        plot_base_path = constants.PLOTS_SYNERGY_REDUNDANCY_PER_HEAD + datetime.now().strftime("%Y%m%d_%H%M%S") + '/'
+
     for metric, head_ranks in gradient_ranks.items():
         # Convert head_ranks dictionary back to a list of ranks for plotting
         # Since head numbers are 1-indexed, we adjust accordingly
         heads = list(head_ranks.keys())
         ranks = [head_ranks[head] for head in heads]
 
-        fig, ax = plt.subplots(figsize=(16, 6))
-        ax.plot(heads, ranks, marker='o', linestyle='-', color='darkblue')
-        
-        ax.set_xlabel('Attention Head')
-        ax.set_ylabel('Gradient Rank')
-        ax.set_title(f'Synergy-Redundancy Gradient Rank for {metric}')
-        ax.grid(True, which='both', linestyle='--', linewidth=0.5)
-        
+        if use_heatmap:
+            # Assume ranks can be reshaped into a num_layers x num_heads_per_layer matrix
+            num_layers = len(ranks) // num_heads_per_layer
+            ranks_matrix = np.array(ranks).reshape((num_layers, num_heads_per_layer))
+
+            fig, ax = plt.subplots(figsize=(12, 5))
+            sns.heatmap(ranks_matrix.T, annot=True, fmt="d", cmap="viridis", cbar=True, linewidths=0.5,
+                        linecolor='gray', cbar_kws={"shrink": 0.8, "label": 'Gradient Rank'})
+            ax.set_xticklabels([f"{i+1}" for i in range(num_layers)], rotation=45, ha="right")
+            ax.set_yticklabels([f"{i+1}" for i in range(num_heads_per_layer)], rotation=0)
+            ax.set_title(f'Gradient Rank Heatmap for {metric}')
+            ax.set_xlabel("Layer")
+            ax.set_ylabel("Head")
+            plt.tight_layout()
+        else:
+            fig, ax = plt.subplots(figsize=(16, 6))
+            ax.plot(heads, ranks, marker='o', linestyle='-', color='darkblue')
+
+            ax.set_xlabel('Attention Head')
+            ax.set_ylabel('Gradient Rank')
+            ax.set_title(f'Synergy-Redundancy Gradient Rank for {metric}')
+            ax.grid(True, which='both', linestyle='--', linewidth=0.5)
+
         plot_path = f"{plot_base_path}{metric}_gradient_rank.png"
-        
+
         if save:
             os.makedirs(os.path.dirname(plot_path), exist_ok=True)
-            plt.tight_layout()
             plt.savefig(plot_path)
         else:
             plt.show()
         plt.close()
+
+def plot_averages_per_layer(averages, plot_base_path=None, save=False, num_heads_per_layer=8):
+    if not plot_base_path:
+        plot_base_path = constants.PLOTS_SYNERGY_REDUNDANCY_PER_HEAD + datetime.now().strftime("%Y%m%d_%H%M%S") + '/'
+
+    for metric, avg_data in averages.items():
+        synergy_avgs = avg_data['synergy']
+        redundancy_avgs = avg_data['redundancy']
+
+        # Compute the average across all heads per layer
+        num_layers = len(synergy_avgs) // num_heads_per_layer
+        synergy_per_layer = np.mean(synergy_avgs.reshape(num_layers, num_heads_per_layer), axis=1)
+        redundancy_per_layer = np.mean(redundancy_avgs.reshape(num_layers, num_heads_per_layer), axis=1)
+
+        fig, ax = plt.subplots(figsize=(16, 6))
+        ax.plot(range(1, num_layers+1), synergy_per_layer, marker='o', linestyle='-', color='b', label='Synergy')
+        ax.plot(range(1, num_layers+1), redundancy_per_layer, marker='s', linestyle='-', color='r', label='Redundancy')
+
+        ax.set_xlabel('Layer')
+        ax.set_ylabel('Average Value')
+        ax.set_title(f'Average Synergy and Redundancy per Layer for {metric}')
+        ax.legend()
+        ax.grid(True, which='both', linestyle='--', linewidth=0.5)
+
+        # Set x-axis to label each layer explicitly
+        ax.set_xticks(range(1, num_layers + 1))  # Set tick positions
+        ax.set_xticklabels([str(i) for i in range(1, num_layers + 1)])  # Label each tick with the layer number
+
+        plot_path = f"{plot_base_path}{metric}_averages_per_layer.png"
+
+        if save:
+            os.makedirs(os.path.dirname(plot_path), exist_ok=True)
+            plt.savefig(plot_path)
+        else:
+            plt.show()
+        plt.close()
+
+def plot_average_ranks_per_layer(gradient_ranks, plot_base_path=None, save=False, num_heads_per_layer=8):
+    if not plot_base_path:
+        plot_base_path = constants.PLOTS_SYNERGY_REDUNDANCY_PER_HEAD + datetime.now().strftime("%Y%m%d_%H%M%S") + '/'
+
+    for metric, head_ranks in gradient_ranks.items():
+        # Convert head_ranks dictionary back to a list of ranks for plotting
+        heads = list(head_ranks.keys())
+        ranks = [head_ranks[head] for head in heads]
+
+        # Compute the average across all heads per layer
+        num_layers = len(ranks) // num_heads_per_layer
+        ranks_per_layer = np.mean(np.array(ranks).reshape(num_layers, num_heads_per_layer), axis=1)
+
+        fig, ax = plt.subplots(figsize=(16, 6))
+        ax.plot(range(1, num_layers+1), ranks_per_layer, marker='o', linestyle='-', color='darkblue')
+
+        ax.set_xlabel('Layer')
+        ax.set_ylabel('Average Rank')
+        ax.set_title(f'Average Synergy Minus Redundancy Rank per Layer')
+        ax.grid(True, which='both', linestyle='--', linewidth=0.5)
+
+        # Set x-axis to label each layer explicitly
+        ax.set_xticks(range(1, num_layers + 1))  # Set tick positions
+        ax.set_xticklabels([str(i) for i in range(1, num_layers + 1)])  # Label each tick with the layer number
+
+        plot_path = f"{plot_base_path}{metric}_average_ranks_per_layer.png"
+
+        if save:
+            os.makedirs(os.path.dirname(plot_path), exist_ok=True)
+            plt.savefig(plot_path)
+        else:
+            plt.show()
+        plt.close()
+
 
 

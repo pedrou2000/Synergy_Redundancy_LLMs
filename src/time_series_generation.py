@@ -168,58 +168,71 @@ def smooth_series(series, window_size=3):
     smoothed = np.convolve(series_padded, conv_window, mode='valid')
     return smoothed
 
-def plot_attention_metrics_norms_over_time(time_series, metrics, num_heads_plot=8, base_plot_path=None, smoothing_window=1, save=True):
+def plot_attention_metrics_norms_over_time(time_series, metrics, num_heads_plot=8, base_plot_path=None, smoothing_window=1, save=False, layer_range=None):
     if not base_plot_path:
         base_plot_path = constants.PLOTS_TIME_SERIES_DIR + datetime.now().strftime("%Y%m%d_%H%M%S") + '/'
-    
+
+    if layer_range is None:
+        layer_start = 0
+        layer_end = len(time_series[next(iter(metrics))])  # Use the total number of layers if range is not provided
+    else:
+        layer_start, layer_end = layer_range
+        layer_start = max(layer_start - 1, 0)  # Convert to zero-indexed
+        layer_end = min(layer_end, len(time_series[next(iter(metrics))]))  # Ensure layer_end does not exceed number of layers
+
     for metric in metrics:
-        num_layers = len(time_series[metric])  # Number of layers
+        num_layers = layer_end - layer_start
         num_tokens_to_generate = len(time_series[metric][0][0])  # Assuming uniform length across heads
 
         fig, axs = plt.subplots(nrows=num_layers, ncols=1, figsize=(11, 2 * num_layers), sharex=True)
         title = f'Norm of {metric} Over Time'
+        if layer_range:
+            title += f', Layers {layer_start+1} to {layer_end}'
         if smoothing_window > 1:
             title += f' (Smoothed with Window Size {smoothing_window})'
-        fig.suptitle(title, y=0.99, fontsize='x-large')#, fontweight='bold')
+        fig.suptitle(title, y=0.99, fontsize='x-large')
 
         if num_layers == 1:
-            axs = [axs]
+            axs = [axs]  # Ensure axs is iterable when only one plot
 
         tick_positions = np.arange(0, num_tokens_to_generate + 1, num_tokens_to_generate // 10)
 
         # Collect labels and handles for legend from the first subplot
         handles, labels = [], []
-        for layer_idx, ax in enumerate(np.atleast_1d(axs)):
+        for layer_idx in range(layer_start, layer_end):
+            ax = axs[layer_idx - layer_start]
             for head_idx in range(min(num_heads_plot, len(time_series[metric][layer_idx]))):
                 norms = [norm for norm in time_series[metric][layer_idx][head_idx]]
                 if smoothing_window > 1:
                     norms = smooth_series(np.array(norms), window_size=smoothing_window)
-                line, = ax.plot(norms, label=f'Head {head_idx}')
-                if layer_idx == 0:  # Collect legend info only from the first layer
+                line, = ax.plot(norms, label=f'Head {head_idx+1}')
+                if layer_idx == layer_start:  # Collect legend info only from the first layer
                     handles.append(line)
-                    labels.append(f'Head {head_idx}')
+                    labels.append(f'Head {head_idx + 1}')
 
-            ax.set_title(f'Layer {layer_idx}', pad=10)  # Adjust the pad parameter to control spacing
+            ax.set_title(f'Layer {layer_idx+1}', pad=10)
             ax.set_xlabel('Timestep')
             ax.set_ylabel('Norm')
             ax.set_xticks(tick_positions)
 
         # Place the legend at the top
-        fig.legend(handles, labels, loc='upper center', ncol=min(num_heads_plot, len(time_series[metric][0])), bbox_to_anchor=(0.5, 0.982), frameon=False)
+        fig.legend(handles, labels, loc='upper center', ncol=min(num_heads_plot, len(time_series[metric][layer_start])), bbox_to_anchor=(0.5, 0.982), frameon=False)
 
-        plt.tight_layout(rect=[0, 0.03, 1, 0.98])
-        plt.subplots_adjust(top=0.965)  # Adjust this to fit both the title and the legend at the top
+        if layer_range is None:
+            plt.tight_layout(rect=[0, 0.03, 1, 0.98])
+            plt.subplots_adjust(top=0.965)  # Adjust this to fit both the title and the legend at the top
+        else:
+            plt.tight_layout(rect=[0, 0.03, 1, 0.98])
+            plt.subplots_adjust(top=0.945)
 
         if save:
-            plot_path = f"{base_plot_path}{metric}_norms_over_time.png"
+            layer_suffix = f'_layers_{layer_start+1}_to_{layer_end}' if layer_range else ''
+            plot_path = f"{base_plot_path}{metric}{layer_suffix}_norms_over_time.png"
             os.makedirs(os.path.dirname(plot_path), exist_ok=True)
             plt.savefig(plot_path, bbox_inches='tight')
         else:
             plt.show()
         plt.close()
-
-
-
 
 
 
