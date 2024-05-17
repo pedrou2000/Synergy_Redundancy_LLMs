@@ -23,12 +23,13 @@ def apply_lda(X, y, n_components=2):
     return X_r, lda
 
 def plot_lda_results(X_r, y, labels, save=False, base_plot_path=None):
+    plt.rcParams.update({'font.size': 15}) 
     plt.figure(figsize=(10, 8))
     for i, label in enumerate(labels):
         plt.scatter(X_r[y == i, 0], X_r[y == i, 1], alpha=0.8, label=label)
-    plt.title('LDA of Attention Weights')
-    plt.xlabel('LD1')
-    plt.ylabel('LD2')
+    plt.title('Discriminant Analysis of Attention Head Activations Across Cognitive Task Categories')
+    plt.xlabel('Linear Combination of Head Activations Differentiating Cognitive Task - Axis 1')
+    plt.ylabel('Linear Combination of Head Activations Differentiating Cognitive Task - Axis 2')
     plt.legend(loc='best', shadow=False, scatterpoints=1)
 
     if save:

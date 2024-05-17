@@ -5,9 +5,20 @@ import matplotlib.pyplot as plt
 from scipy import stats
 from scipy.stats import pearsonr
 
+def sort_categories(categories):
+    # swaps_subplots = [(0,2), (2,3), (4,3), (2,3), (3,4)]
+    swaps_overlay = [(1,2), (0,1)]
+    for i, j in swaps_overlay:
+        categories[i], categories[j] = categories[j], categories[i]
+    print(categories)
+    return categories
+
+
 def plot_all_category_diffs_vs_syn_red_grad_rank(stats_dict, gradient_ranks, rest_category_prefix='rest', save=False, base_plot_path=None, 
                             reorder=True, mean_instead_of_rest=False, per_layer=False, num_heads_per_layer=8):
+    plt.rcParams.update({'font.size': 12})  # Adjust the 14 to larger sizes as needed
     categories = [cat for cat in stats_dict.keys() if not cat.startswith('rest')]
+    categories = sort_categories(categories)
     slopes = []
     correlations = []
     regression_params = []  # To store slope and intercept for each category
@@ -17,7 +28,7 @@ def plot_all_category_diffs_vs_syn_red_grad_rank(stats_dict, gradient_ranks, res
 
     # Set up the subplot dimensions
     n = len(categories)
-    cols = 3  # Define how many columns you want in your subplot grid
+    cols = 2  # Define how many columns you want in your subplot grid
     rows = n // cols + (n % cols > 0)  # Calculate required number of rows
     fig, axs = plt.subplots(rows, cols, figsize=(cols*6, rows*4), squeeze=False)
 
@@ -69,10 +80,10 @@ def plot_all_category_diffs_vs_syn_red_grad_rank(stats_dict, gradient_ranks, res
 
 
         ax.plot(diff_means_reordered, marker='o', linestyle='-', color='darkblue', label='Original Data')
-        ax.plot(x, slope * x + intercept, color='red', label=f'Slope = {slope:.5f}')
-        ax.set_title(f'{category}')
-        ax.set_xlabel('Synergy - Redundancy Gradient Rank' if reorder else 'Layer Index' if per_layer else 'Head Index')
-        ax.set_ylabel('Diff in Avg Activation')
+        ax.plot(x, slope * x + intercept, color='red', label=f'Linear Regression (Pearson Corr {correlation_coefficient:.2f})')
+        ax.set_title(f'{category}', fontsize=16)
+        ax.set_xlabel('Synergy - Redundancy Gradient Rank' if reorder else 'Layer Index' if per_layer else 'Head Index', fontsize=16)
+        ax.set_ylabel('Diff in Avg Activation', fontsize=16)
         ax.legend()
 
         slopes.append(slope)
@@ -97,14 +108,14 @@ def plot_all_category_diffs_vs_syn_red_grad_rank(stats_dict, gradient_ranks, res
     ax1.set_xlabel('Category')
     ax1.set_ylabel('Slope of Fitted Line', color='tab:blue')
     ax1.tick_params(axis='y', labelcolor='tab:blue')
-    ax1.set_title('Slope and Pearson Correlation for Each Category')
+    ax1.set_title('Slope and Pearson Correlation for Each Category', fontsize=15)
     ax1.set_xticks(np.arange(len(categories)))
     ax1.set_xticklabels(categories, rotation=10)
 
     # Create another y-axis for the Pearson correlation coefficients
     ax2 = ax1.twinx()
     ax2.bar(np.arange(len(categories)) + 0.2, correlations, 0.4, label='Pearson Correlation', color='tab:orange')
-    ax2.set_ylabel('Pearson Correlation Coefficient', color='tab:orange')
+    ax2.set_ylabel('Pearson Correlation Coefficient', color='tab:orange', fontsize=15)
     ax2.tick_params(axis='y', labelcolor='tab:orange')
 
     fig.tight_layout()
@@ -121,11 +132,11 @@ def plot_all_category_diffs_vs_syn_red_grad_rank(stats_dict, gradient_ranks, res
     plt.figure(figsize=(10, 6))
     for i, (slope, intercept) in enumerate(regression_params):
         x = np.linspace(0, len(diff_means_reordered) - 1, num=len(diff_means_reordered))
-        plt.plot(x, slope * x + intercept, label=f'{categories[i]} (Slope: {slope:.4f})')
+        plt.plot(x, slope * x + intercept, label=f'{categories[i]}')
 
-    plt.title('Overlay of Regression Lines for Cognitive Task Categories')
-    plt.xlabel('Synergy - Redundancy Gradient Rank' if reorder else 'Layer Index' if per_layer else 'Head Index')
-    plt.ylabel('Diff in Avg Activation')
+    plt.title('Overlay of Regression Lines for Cognitive Task Categories', fontsize=15)
+    plt.xlabel('Synergy - Redundancy Gradient Rank' if reorder else 'Layer Index' if per_layer else 'Head Index', fontsize=15)
+    plt.ylabel('Difference in Average Head Activation', fontsize=15)
     plt.legend()
 
     # Set the x-axis to label each layer explicitly

@@ -190,7 +190,7 @@ def plot_attention_metrics_norms_over_time(time_series, metrics, num_heads_plot=
             title += f', Layers {layer_start+1} to {layer_end}'
         if smoothing_window > 1:
             title += f' (Smoothed with Window Size {smoothing_window})'
-        fig.suptitle(title, y=0.99, fontsize='x-large')
+        fig.suptitle(title, y=0.99, fontsize='xx-large')
 
         if num_layers == 1:
             axs = [axs]  # Ensure axs is iterable when only one plot
@@ -210,13 +210,14 @@ def plot_attention_metrics_norms_over_time(time_series, metrics, num_heads_plot=
                     handles.append(line)
                     labels.append(f'Head {head_idx + 1}')
 
-            ax.set_title(f'Layer {layer_idx+1}', pad=10)
-            ax.set_xlabel('Timestep')
-            ax.set_ylabel('Norm')
+            ax.set_title(f'Layer {layer_idx+1}', pad=10, fontsize=15)
+            ax.set_xlabel('Timestep', fontsize=15)
+            ax.set_ylabel('L2 Norm', fontsize=15)
             ax.set_xticks(tick_positions)
 
         # Place the legend at the top
-        fig.legend(handles, labels, loc='upper center', ncol=min(num_heads_plot, len(time_series[metric][layer_start])), bbox_to_anchor=(0.5, 0.982), frameon=False)
+        #fig.legend(handles, labels, loc='upper center', ncol=min(num_heads_plot, len(time_series[metric][layer_start])), 
+        #          bbox_to_anchor=(0.5, 0.982), frameon=False, fontsize='medium')
 
         if layer_range is None:
             plt.tight_layout(rect=[0, 0.03, 1, 0.98])

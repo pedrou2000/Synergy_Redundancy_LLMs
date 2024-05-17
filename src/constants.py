@@ -1,10 +1,11 @@
-CACHE_DIR = "/vol/bitbucket/pu22/Transformers/"
+CACHE_DIR_BITBUCKET = "/vol/bitbucket/pu22/Transformers/" # Bitbucket cache directory
+CACHE_DIR_LOCAL = "/homes/pu22/.cache/huggingface/hub" # Local cache directory
 MODEL_NAME = "google/gemma-2b-it"
 USE_GPU = True
 
 METRICS_TRANSFORMER = ['projected_Q', 'attention_weights', 'attention_outputs']
 AGGREGRATION_METHODS = ['norm', 'mean', 'entropy', 'max']
-ATTENTION_MEASURE = METRICS_TRANSFORMER[1]
+ATTENTION_MEASURE = METRICS_TRANSFORMER[0]
 
 # Directories 
 PLOTS_DIR = "../plots/"

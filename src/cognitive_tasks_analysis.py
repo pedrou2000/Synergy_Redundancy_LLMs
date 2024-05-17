@@ -99,6 +99,7 @@ def compute_and_plot_attention_heatmap(time_series_attention_weights, plot_heatm
 def plot_attention_weights_comparison(all_attention_weights, categories, save=True, base_plot_path=None, 
                                       synergy_redundancy_heads_averages=None, attention_measure="attention_weights", 
                                       layer_indices=None, filename='head_activations_comparison'):
+    plt.rcParams.update({'font.size': 12})  # Adjust the 14 to larger sizes as needed
     num_layers = len(all_attention_weights[categories[0]])
     num_heads = len(all_attention_weights[categories[0]][0])
     num_categories = len(categories)
@@ -163,20 +164,20 @@ def plot_attention_weights_comparison(all_attention_weights, categories, save=Tr
 
         plt.title(f'Layer {layer_idx + 1}')
         if layer_idx == layer_end - 1:
-            plt.xlabel('Head Index')
-        plt.ylabel('Attention Weights', fontsize=14)
+            plt.xlabel('Head Index', fontsize=18)
+        plt.ylabel('Attention Weights', fontsize=18)
         plt.xticks(np.arange(num_heads))
 
 
     # Place the super title above everything, adjusting spacing as needed
-    plt.suptitle("Average Attention Weights Norm Comparison by Prompt Category", fontsize=16, y=0.98)  # Increased font size here
+    plt.suptitle("Average Attention Weights Norm Comparison by Prompt Category", fontsize=20, y=0.98)  # Increased font size here
 
     # Add the figure-wide legend at the top, but below the super title
     plt.figlegend(handles, labels, loc='upper center', ncol=3, frameon=True, bbox_to_anchor=(0.5, 0.97), fontsize='x-large')
 
 
     # Adjust layout to prevent overlap and make sure everything fits
-    plt.subplots_adjust(top=0.925)  # You might need to adjust this value based on your specific plot configuration
+    plt.subplots_adjust(top=0.915)  # You might need to adjust this value based on your specific plot configuration
     # plt.tight_layout(rect=[0, 0.03, 1, 0.98])
 
 
@@ -260,6 +261,7 @@ def plot_and_save_attention_analysis(prompts_dict, model, tokenizer, device, num
                                      random_input_length=10, temperature=2, attention_measure="attention_weights", split_half=False, split_third=False,
                                      all_attention_weights=None):
     
+    # plt.rcParams.update({'font.size': 15})  # Adjust the 14 to larger sizes as needed
         
     # Create a base directory path with timestamp
     base_plot_path = constants.PLOTS_HEAD_ACTIVATIONS_ANALYSIS + datetime.now().strftime("%Y%m%d_%H%M%S") + '/'
