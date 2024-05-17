@@ -8,7 +8,7 @@ from transformers import AutoConfig, AutoModelForCausalLM, AutoTokenizer
 from safetensors import safe_open
 
 
-class ModelLoader:
+class ShardedModelLoader:
     def __init__(self, model_name, model_id, cache_dir):
         self.model_name = model_name
         self.model_id = model_id
