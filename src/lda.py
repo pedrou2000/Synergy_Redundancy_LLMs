@@ -9,7 +9,8 @@ def reshape_data(all_attention_weights):
     y = []  # This will store the labels (categories)
 
     for label, category in enumerate(categories):
-        data = all_attention_weights[category].reshape(-1, 18*8)  # Reshape data
+        num_layers, num_heads_per_layer = all_attention_weights[category].shape[:2]
+        data = all_attention_weights[category].reshape(-1, num_heads_per_layer*num_layers)  # Reshape data
         X.append(data)
         y.extend([label] * data.shape[0])
 

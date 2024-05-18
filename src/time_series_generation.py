@@ -19,7 +19,8 @@ def sample_with_temperature(logits, temperature=1.0):
     sampled_indices = torch.multinomial(probabilities, num_samples=1) # Sample from the probability distribution
     return sampled_indices
 
-def generate_text_with_attention(model, tokenizer, num_tokens_to_generate: int, device: str, prompt=None, input_ids=None, temperature=0.1):
+def generate_text_with_attention(model, tokenizer, num_tokens_to_generate: int, device: str, prompt=None, input_ids=None, 
+                                 temperature=0.1, modified_output_attentions=True):
     # Autoregressively generates text from a given prompt while capturing all types of attention weights and other related tensors.
 
     # Encode the prompt and move to the specified device
@@ -50,7 +51,10 @@ def generate_text_with_attention(model, tokenizer, num_tokens_to_generate: int, 
         # Only save the last timestep for memory efficiency
         if t == num_tokens_to_generate - 1:
             # Process and move attention outputs to CPU
-            attentions_on_cpu = [{k: v.detach().to('cpu') for k, v in layer.items()} for layer in outputs.attentions]
+            if modified_output_attentions:
+                attentions_on_cpu = [{k: v.detach().to('cpu') for k, v in layer.items()} for layer in outputs.attentions]
+            else:
+                attentions_on_cpu = [{"attention_weights": layer.detach().to('cpu')} for layer in outputs.attentions]
 
             # Dynamically initialize and store all keys from attention outputs
             for idx, layer in enumerate(attentions_on_cpu):
@@ -77,7 +81,8 @@ def generate_random_token_input(length, tokenizer):
 def simulate_resting_state_attention(model, tokenizer, num_tokens_to_generate, device, temperature=3, random_input_length=10):
     # Simulate the resting state of the attention weights by generating text from random input tokens
     random_input_ids = generate_random_token_input(random_input_length, tokenizer).to(device)
-    generated_text, attention_params = generate_text_with_attention(model, tokenizer, num_tokens_to_generate, device, input_ids=random_input_ids, temperature=temperature)
+    generated_text, attention_params = generate_text_with_attention(model, tokenizer, num_tokens_to_generate, device, 
+                            input_ids=random_input_ids, temperature=temperature, modified_output_attentions=constants.MODIFIED_OUTPUT_ATTENTIONS)
     return generated_text, attention_params
 
 def compute_attention_metrics_norms_inefficient(attention_params, selected_metrics, num_tokens_to_generate):

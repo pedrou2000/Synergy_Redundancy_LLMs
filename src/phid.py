@@ -180,7 +180,10 @@ def plot_averages_per_head(averages, plot_base_path=None, save=False, use_heatma
             ax.set_title(f'Average Synergy per Head', fontsize=16)
             ax.set_xlabel("Layer", fontsize=16)
             ax.set_ylabel("Head", fontsize=16)
+
+            ax.set_xticks(np.arange(num_layers) + 0.5)  # Change: Added set_xticks
             ax.set_xticklabels([f"{i+1}" for i in range(num_layers)], fontsize=16)
+            ax.set_yticks(np.arange(num_heads_per_layer) + 0.5)  # Change: Added set_yticks
             ax.set_yticklabels([f"{i+1}" for i in range(num_heads_per_layer)], rotation=0, fontsize=16)
             plt.tight_layout()
 
@@ -202,7 +205,9 @@ def plot_averages_per_head(averages, plot_base_path=None, save=False, use_heatma
             ax.set_title(f'Average Redundancy per Head', fontsize=16)
             ax.set_xlabel("Layer", fontsize=16)
             ax.set_ylabel("Head", fontsize=16)
+            ax.set_xticks(np.arange(num_layers) + 0.5)  # Change: Added set_xticks
             ax.set_xticklabels([f"{i+1}" for i in range(num_layers)], rotation=0, fontsize=16)
+            ax.set_yticks(np.arange(num_heads_per_layer) + 0.5)  # Change: Added set_yticks
             ax.set_yticklabels([f"{i+1}" for i in range(num_heads_per_layer)], rotation=0, fontsize=16)
             plt.tight_layout()
 
@@ -362,7 +367,9 @@ def plot_gradient_rank(gradient_ranks, plot_base_path=None, save=False, use_heat
             fig, ax = plt.subplots(figsize=(12, 5))
             sns.heatmap(ranks_matrix.T, annot=True, fmt="d", cmap="viridis", cbar=True, linewidths=0.5,
                         linecolor='gray', cbar_kws={"shrink": 0.8, "label": 'Gradient Rank'})
+            ax.set_xticks(np.arange(num_layers) + 0.5)  # Change: Added set_yticks
             ax.set_xticklabels([f"{i+1}" for i in range(num_layers)], rotation=45, ha="right")
+            ax.set_yticks(np.arange(num_heads_per_layer) + 0.5)  # Change: Added set_yticks
             ax.set_yticklabels([f"{i+1}" for i in range(num_heads_per_layer)], rotation=0)
             ax.set_title(f'Gradient Rank Heatmap for {metric}')
             ax.set_xlabel("Layer")

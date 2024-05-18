@@ -11,7 +11,8 @@ def generate_and_analyze_prompts(prompts, model, tokenizer, device, num_tokens_t
 
     for prompt in prompts:
         # Generate text and attention parameters for each prompt
-        generated_text, attention_params = generate_text_with_attention(model, tokenizer, num_tokens_to_generate, device, prompt, temperature=1)
+        generated_text, attention_params = generate_text_with_attention(model, tokenizer, num_tokens_to_generate, 
+                    device, prompt, temperature=1, modified_output_attentions=constants.MODIFIED_OUTPUT_ATTENTIONS)
         
         # Compute attention metrics norms for each generated text
         time_series = compute_attention_metrics_norms(attention_params, constants.METRICS_TRANSFORMER, num_tokens_to_generate, aggregation_type=aggregation_type)
@@ -78,8 +79,11 @@ def compute_and_plot_attention_heatmap(time_series_attention_weights, plot_heatm
         average_attention_transposed = average_attention.T
         ax = sns.heatmap(average_attention_transposed, annot=True, fmt=".2f", cmap="coolwarm", cbar=True,
                          linewidths=0.5, linecolor='gray', cbar_kws={"shrink": 0.8, "label": 'Average Attention Weight Norm'})
+        ax.set_xticks(np.arange(average_attention.shape[0]) + 0.5)
         ax.set_xticklabels([f"{i+1}" for i in range(average_attention.shape[0])], rotation=45, ha="right")  # Layers
+        ax.set_yticks(np.arange(average_attention.shape[1]) + 0.5)
         ax.set_yticklabels([f"{i+1}" for i in range(average_attention.shape[1])], rotation=0)  # Heads
+
         plt.title("Average Attention Weights Norm Across Time", pad=20)
         plt.xlabel("Layer", labelpad=10)
         plt.ylabel("Head", labelpad=10)

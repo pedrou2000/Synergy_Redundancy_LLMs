@@ -1,6 +1,7 @@
 # model_loader.py
 
 import os
+import gc
 import shutil
 import torch
 import requests
@@ -15,8 +16,8 @@ class ShardedModelLoader:
         self.cache_dir = cache_dir
         self.config = AutoConfig.from_pretrained(model_id, cache_dir=cache_dir)
         self.tokenizer = AutoTokenizer.from_pretrained(model_id, cache_dir=cache_dir)
-        self.model = AutoModelForCausalLM.from_config(self.config)
         self.device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
+        self.model = AutoModelForCausalLM.from_config(self.config).to(self.device)
 
     def load_shard_to_gpu(self, shard_file):
         with safe_open(shard_file, framework="pt") as f:
@@ -26,6 +27,7 @@ class ShardedModelLoader:
                     self.model.state_dict()[name].copy_(tensor)
                 else:
                     print(f"Warning: Tensor {name} not found in model state_dict")
+                del tensor  # Ensure tensor is deleted to free memory
 
     def load_local_shards(self, shard_local_files):
         for shard_file in shard_local_files:
@@ -47,4 +49,6 @@ class ShardedModelLoader:
             self.download_shard(url, local_file, token)
             self.load_shard_to_gpu(local_file)
             os.remove(local_file)
+            gc.collect()  # Force garbage collection
+
         return self.model, self.tokenizer
