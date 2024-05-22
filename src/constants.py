@@ -1,9 +1,10 @@
 CACHE_DIR_BITBUCKET = "/vol/bitbucket/pu22/Transformers/" # Bitbucket cache directory
 CACHE_DIR_LOCAL = "/homes/pu22/.cache/huggingface/hub" # Local cache directory
-MODEL_NAME = "meta-llama/Meta-Llama-3-8B-Instruct"
+# MODEL_NAME = "meta-llama/Meta-Llama-3-8B-Instruct"
 # MODEL_NAME = "google/gemma-1.1-7b-it"
+MODEL_NAME = "google/gemma-1.1-2b-it"
 USE_GPU = True
-NUM_HEADS_PER_LAYER = 32
+NUM_HEADS_PER_LAYER = 8 if "2b" in MODEL_NAME else 16 if MODEL_NAME == "google/gemma-1.1-7b-it" else 32 
 
 MODIFIED_OUTPUT_ATTENTIONS=False
 METRICS_TRANSFORMER = ['attention_weights'] if not MODIFIED_OUTPUT_ATTENTIONS else ['projected_Q', 'attention_weights', 'attention_outputs']
@@ -20,9 +21,6 @@ PLOTS_TIME_SERIES_DIR = PLOTS_DIR + "1-Time_Series/" + MODEL_NAME + "/"
 PLOTS_SYNERGY_REDUNDANCY_DIR = PLOTS_DIR + "2-Redundancy_Synergy_Matrices/" + MODEL_NAME + "/"
 PLOTS_ALL_PHID_DIR = PLOTS_DIR + "3-All_PhiID_Matrices/" + MODEL_NAME + "/"
 PLOTS_SYNERGY_REDUNDANCY_GRADIENTS = PLOTS_DIR + "4-Redundancy_Synergy_Gradients/" + MODEL_NAME + "/"
-PLOTS_SYNERGY_REDUNDANCY_PER_HEAD = PLOTS_SYNERGY_REDUNDANCY_GRADIENTS + "1-Synergy_Redundancy_per_Head/"
-PLOTS_SYNERGY_REDUNDANCY_RANK_GRADIENT = PLOTS_SYNERGY_REDUNDANCY_GRADIENTS + "2-Synergy_Redundancy_Rank_Gradient/"
-PLOTS_GRADIENT_PERCENTILE = PLOTS_SYNERGY_REDUNDANCY_GRADIENTS + "3-Gradient_Percentile/"
 PLOTS_HEAD_ACTIVATIONS_ANALYSIS = PLOTS_DIR + "5-Head_Activations_Analysis/" + MODEL_NAME + "/"
 PLOTS_LDA = PLOTS_DIR + "6-LDA_Head_Activations/" + MODEL_NAME + "/"
 PLOTS_ACTIVATIONS_SYN_RED_GRAD = PLOTS_DIR + "7-Activations_vs_Synergy-Redundancy_Rank_Gradient/" + MODEL_NAME + "/"

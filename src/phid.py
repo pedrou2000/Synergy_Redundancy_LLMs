@@ -159,7 +159,7 @@ def plot_averages_per_head(averages, plot_base_path=None, save=False, use_heatma
     plt.rcParams.update({'font.size': 12})  # Adjust the 14 to larger sizes as needed
 
     if not plot_base_path:
-        plot_base_path = constants.PLOTS_SYNERGY_REDUNDANCY_PER_HEAD + datetime.now().strftime("%Y%m%d_%H%M%S") + '/'
+        plot_base_path = constants.PLOTS_SYNERGY_REDUNDANCY_GRADIENTS + datetime.now().strftime("%Y%m%d_%H%M%S") + '/'
 
     for metric, avg_data in averages.items():
         synergy_avgs = avg_data['synergy']
@@ -351,7 +351,7 @@ def compute_gradient_rank(averages, method='synergy-redundancy'):
 def plot_gradient_rank(gradient_ranks, plot_base_path=None, save=False, use_heatmap=False, num_heads_per_layer=8):
     if not plot_base_path:
         # Set a default path if not provided
-        plot_base_path = constants.PLOTS_SYNERGY_REDUNDANCY_PER_HEAD + datetime.now().strftime("%Y%m%d_%H%M%S") + '/'
+        plot_base_path = constants.PLOTS_SYNERGY_REDUNDANCY_GRADIENTS + datetime.now().strftime("%Y%m%d_%H%M%S") + '/'
 
     for metric, head_ranks in gradient_ranks.items():
         # Convert head_ranks dictionary back to a list of ranks for plotting
@@ -395,7 +395,7 @@ def plot_gradient_rank(gradient_ranks, plot_base_path=None, save=False, use_heat
 
 def plot_averages_per_layer(averages, plot_base_path=None, save=False, num_heads_per_layer=8):
     if not plot_base_path:
-        plot_base_path = constants.PLOTS_SYNERGY_REDUNDANCY_PER_HEAD + datetime.now().strftime("%Y%m%d_%H%M%S") + '/'
+        plot_base_path = constants.PLOTS_SYNERGY_REDUNDANCY_GRADIENTS + datetime.now().strftime("%Y%m%d_%H%M%S") + '/'
 
     for metric, avg_data in averages.items():
         synergy_avgs = avg_data['synergy']
@@ -432,7 +432,7 @@ def plot_averages_per_layer(averages, plot_base_path=None, save=False, num_heads
 def plot_average_ranks_per_layer(gradient_ranks, plot_base_path=None, save=False, num_heads_per_layer=8):
     plt.rcParams.update({'font.size': 15})  # Adjust the font size as needed
     if not plot_base_path:
-        plot_base_path = constants.PLOTS_SYNERGY_REDUNDANCY_PER_HEAD + datetime.now().strftime("%Y%m%d_%H%M%S") + '/'
+        plot_base_path = constants.PLOTS_SYNERGY_REDUNDANCY_GRADIENTS + datetime.now().strftime("%Y%m%d_%H%M%S") + '/'
 
     for metric, head_ranks in gradient_ranks.items():
         # Convert head_ranks dictionary back to a list of ranks for plotting
