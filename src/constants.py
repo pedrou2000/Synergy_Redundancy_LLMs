@@ -2,7 +2,8 @@ CACHE_DIR_BITBUCKET = "/vol/bitbucket/pu22/Transformers/" # Bitbucket cache dire
 CACHE_DIR_LOCAL = "/homes/pu22/.cache/huggingface/hub" # Local cache directory
 # MODEL_NAME = "meta-llama/Meta-Llama-3-8B-Instruct"
 # MODEL_NAME = "google/gemma-1.1-7b-it"
-MODEL_NAME = "google/gemma-1.1-2b-it"
+# MODEL_NAME = "google/gemma-1.1-2b-it"
+MODEL_NAME = "google/gemma-2b-it"
 USE_GPU = True
 NUM_HEADS_PER_LAYER = 8 if "2b" in MODEL_NAME else 16 if MODEL_NAME == "google/gemma-1.1-7b-it" else 32 
 
