@@ -85,6 +85,13 @@ def simulate_resting_state_attention(model, tokenizer, num_tokens_to_generate, d
                             input_ids=random_input_ids, temperature=temperature, modified_output_attentions=constants.MODIFIED_OUTPUT_ATTENTIONS)
     return generated_text, attention_params
 
+def solve_prompt(model, tokenizer, num_tokens_to_generate, device, temperature=3, prompt=None):
+    # Simulate the resting state of the attention weights by generating text from random input tokens
+    random_input_ids = generate_random_token_input(random_input_length, tokenizer).to(device)
+    generated_text, attention_params = generate_text_with_attention(model, tokenizer, num_tokens_to_generate, device, 
+                            input_ids=random_input_ids, temperature=temperature, modified_output_attentions=constants.MODIFIED_OUTPUT_ATTENTIONS)
+    return generated_text, attention_params
+
 def compute_attention_metrics_norms_inefficient(attention_params, selected_metrics, num_tokens_to_generate):
     # Computes the norms of selected attention metrics across all layers and heads for each timestep.
     
@@ -239,6 +246,4 @@ def plot_attention_metrics_norms_over_time(time_series, metrics, num_heads_plot=
         else:
             plt.show()
         plt.close()
-
-
 

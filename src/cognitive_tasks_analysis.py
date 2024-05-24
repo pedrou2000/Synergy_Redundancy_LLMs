@@ -5,14 +5,15 @@ import matplotlib.pyplot as plt
 from scipy import stats
 from scipy.stats import pearsonr
 
-def generate_and_analyze_prompts(prompts, model, tokenizer, device, num_tokens_to_generate=128, aggregation_type='norm', attention_measure="attention_weights"  ):
+def generate_and_analyze_prompts(prompts, model, tokenizer, device, num_tokens_to_generate=128, aggregation_type='norm', 
+                                 attention_measure="attention_weights", temperature=0.7):
     # List to hold averaged attention weights for each prompt
     averaged_attention_weights_per_prompt = []
 
     for prompt in prompts:
         # Generate text and attention parameters for each prompt
         generated_text, attention_params = generate_text_with_attention(model, tokenizer, num_tokens_to_generate, 
-                    device, prompt, temperature=1, modified_output_attentions=constants.MODIFIED_OUTPUT_ATTENTIONS)
+                    device, prompt, temperature=temperature, modified_output_attentions=constants.MODIFIED_OUTPUT_ATTENTIONS)
         
         # Compute attention metrics norms for each generated text
         time_series = compute_attention_metrics_norms(attention_params, constants.METRICS_TRANSFORMER, num_tokens_to_generate, aggregation_type=aggregation_type)
@@ -262,7 +263,7 @@ def plot_weighted_scores_line(weighted_scores, categories, save=True, base_plot_
 
 def plot_and_save_attention_analysis(prompts_dict, model, tokenizer, device, num_tokens_to_generate=128, save=True, 
                                      synergy_redundancy_heads_averages=None, rest_time_series=None, generate_rest=False, 
-                                     random_input_length=10, temperature=2, attention_measure="attention_weights", split_half=False, split_third=False,
+                                     random_input_length=10, temperature_prompts=0.7, temperature_rest=2, attention_measure="attention_weights", split_half=False, split_third=False,
                                      all_attention_weights=None):
     
     # plt.rcParams.update({'font.size': 15})  # Adjust the 14 to larger sizes as needed
@@ -279,7 +280,8 @@ def plot_and_save_attention_analysis(prompts_dict, model, tokenizer, device, num
         # Generate and analyze prompts for each category only once
         for category in list(prompts_dict.keys()):
             print(f"Analyzing category: {category}")
-            attention_weights = generate_and_analyze_prompts(prompts_dict[category], model, tokenizer, device, num_tokens_to_generate, attention_measure=attention_measure)
+            attention_weights = generate_and_analyze_prompts(prompts_dict[category], model, tokenizer, device, num_tokens_to_generate, 
+                                                             attention_measure=attention_measure, temperature=temperature_prompts)
             all_attention_weights[category] = attention_weights
             n_prompts = attention_weights.shape[2]
 
@@ -289,12 +291,14 @@ def plot_and_save_attention_analysis(prompts_dict, model, tokenizer, device, num
         if generate_rest:
             print("Analyzing and Generating category: rest")
 
-            if isinstance(temperature, list) and len(temperature) > 1:
-                for temp in temperature:
+            if isinstance(temperature_rest, list) and len(temperature_rest) > 1:
+                for temp in temperature_rest:
                     key = f'rest_temp_{temp}'
-                    all_attention_weights[key], time_series = generate_and_analyze_rest(n_prompts, model, tokenizer, device, num_tokens_to_generate, random_input_length=random_input_length, temperature=temp, attention_measure=attention_measure)   
+                    all_attention_weights[key], time_series = generate_and_analyze_rest(n_prompts, model, tokenizer, device, num_tokens_to_generate, 
+                                    random_input_length=random_input_length, temperature=temp, attention_measure=attention_measure)   
             else:
-                all_attention_weights['rest'], time_series = generate_and_analyze_rest(n_prompts, model, tokenizer, device, num_tokens_to_generate, random_input_length=random_input_length, temperature=temperature, attention_measure=attention_measure)
+                all_attention_weights['rest'], time_series = generate_and_analyze_rest(n_prompts, model, tokenizer, device, num_tokens_to_generate, 
+                                random_input_length=random_input_length, temperature=temperature_rest, attention_measure=attention_measure)
 
 
     # Plot category comparison using the collected attention weights

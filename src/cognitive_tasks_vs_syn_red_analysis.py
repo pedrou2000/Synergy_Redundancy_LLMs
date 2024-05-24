@@ -227,7 +227,7 @@ def plot_most_syn_red_tasks(stats_dict, gradient_ranks, top_n=10):
     plt.tight_layout()
     plt.show()
 
-def plot_rank_most_activated_heads_per_task(stats_dict, gradient_ranks, top_n=10):
+def plot_rank_most_activated_heads_per_task(stats_dict, gradient_ranks, top_n=10, save=False, base_plot_path=None):
     categories = [cat for cat in stats_dict.keys() if not cat.startswith('rest')]
     
     # Initialize a dictionary to store the average ranks for each task
@@ -274,7 +274,15 @@ def plot_rank_most_activated_heads_per_task(stats_dict, gradient_ranks, top_n=10
     ax.tick_params(axis='x', rotation=5)
 
     plt.tight_layout()
-    plt.show()
+    if save:
+        if not base_plot_path:
+            base_plot_path = constants.PLOTS_ACTIVATIONS_TASKS + datetime.now().strftime("%Y%m%d_%H%M%S") + '/'
+        
+        plot_path = f"{base_plot_path}{top_n}_most_activated_heads_per_task.png"
+        os.makedirs(os.path.dirname(plot_path), exist_ok=True)
+        plt.savefig(plot_path, bbox_inches='tight')
+    else:
+        plt.show()
 
 def plot_average_head_activation_per_task(stats_dict):
     categories = [cat for cat in stats_dict.keys() if not cat.startswith('rest')]

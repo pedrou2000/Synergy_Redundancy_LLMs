@@ -10,7 +10,7 @@ NUM_HEADS_PER_LAYER = 8 if "2b" in MODEL_NAME else 16 if MODEL_NAME == "google/g
 MODIFIED_OUTPUT_ATTENTIONS=True
 METRICS_TRANSFORMER = ['attention_weights'] if not MODIFIED_OUTPUT_ATTENTIONS else ['projected_Q', 'attention_weights', 'attention_outputs']
 AGGREGRATION_METHODS = ['norm', 'mean', 'entropy', 'max']
-ATTENTION_MEASURE = METRICS_TRANSFORMER[0]
+ATTENTION_MEASURE = METRICS_TRANSFORMER[1 if MODIFIED_OUTPUT_ATTENTIONS else 0]
 
 # Directories 
 PLOTS_DIR = "../plots/"
@@ -25,6 +25,7 @@ PLOTS_SYNERGY_REDUNDANCY_GRADIENTS = PLOTS_DIR + "4-Redundancy_Synergy_Gradients
 PLOTS_HEAD_ACTIVATIONS_ANALYSIS = PLOTS_DIR + "5-Head_Activations_Analysis/" + MODEL_NAME + "/"
 PLOTS_LDA = PLOTS_DIR + "6-LDA_Head_Activations/" + MODEL_NAME + "/"
 PLOTS_ACTIVATIONS_SYN_RED_GRAD = PLOTS_DIR + "7-Activations_vs_Synergy-Redundancy_Rank_Gradient/" + MODEL_NAME + "/"
+PLOTS_ACTIVATIONS_TASKS = PLOTS_DIR + "8-Most_Activated_Heads_per_Cognitive_Task/" + MODEL_NAME + "/"
 
 # Prompts
 prompts = {

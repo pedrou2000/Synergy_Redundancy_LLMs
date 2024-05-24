@@ -8,7 +8,7 @@ import pickle
 import seaborn as sns
 
 def compute_PhiID(time_series, metrics, tau=1, kind="gaussian", redundancy_measure="MMI", save=False, base_save_path=None):
-    results = {metric: {} for metric in metrics}
+    all_matrices = {metric: {} for metric in metrics}
     
     for metric in metrics:
         num_layers = len(time_series[metric])
@@ -33,17 +33,17 @@ def compute_PhiID(time_series, metrics, tau=1, kind="gaussian", redundancy_measu
                     for key in keys:
                         global_matrices[key][src_idx, trg_idx] = np.mean(atoms_res[key])
         
-        results[metric] = global_matrices
+        all_matrices[metric] = global_matrices
     
-    synergy_matrices = {metric: results[metric]['sts'] for metric in metrics}
-    redundancy_matrices = {metric: results[metric]['rtr'] for metric in metrics}
+    synergy_matrices = {metric: all_matrices[metric]['sts'] for metric in metrics}
+    redundancy_matrices = {metric: all_matrices[metric]['rtr'] for metric in metrics}
 
     if save:
-         save_matrices(results, synergy_matrices, redundancy_matrices, base_save_path=base_save_path)
+         save_matrices(synergy_matrices, redundancy_matrices, all_matrices, base_save_path=base_save_path)
     
-    return results, synergy_matrices, redundancy_matrices
+    return all_matrices, synergy_matrices, redundancy_matrices
 
-def save_matrices(results, synergy_matrices, redundancy_matrices, base_save_path=None):
+def save_matrices(all_matrices, synergy_matrices, redundancy_matrices, base_save_path=None):
     if not base_save_path:
         # Assuming 'constants.MATRICES_DIR' is defined and is a valid path
         base_save_path = constants.MATRICES_DIR + datetime.now().strftime("%Y%m%d_%H%M%S") + '.pkl'
@@ -56,43 +56,109 @@ def save_matrices(results, synergy_matrices, redundancy_matrices, base_save_path
     
     # Now save the file
     with open(base_save_path, 'wb') as file:
-        pickle.dump((results, synergy_matrices, redundancy_matrices), file)
+        pickle.dump((all_matrices, synergy_matrices, redundancy_matrices), file)
 
-def load_matrices(matrices_number, base_plot_path=None):
+def load_matrices(matrices_number=0, base_save_path=None):
     # Sort the time_series files by name and load the time_series_number-th file
     time_series_files = sorted(os.listdir(constants.MATRICES_DIR))
-    base_plot_path = constants.MATRICES_DIR + time_series_files[matrices_number]
-    with open(base_plot_path, 'rb') as file:
-        results, synergy_matrices, redundancy_matrices = pickle.load(file)
+    if not base_save_path:
+        base_save_path = constants.MATRICES_DIR + time_series_files[matrices_number]
+    with open(base_save_path, 'rb') as file:
+        all_matrices, synergy_matrices, redundancy_matrices = pickle.load(file)
 
-    return results, synergy_matrices, redundancy_matrices
+    return all_matrices, synergy_matrices, redundancy_matrices
 
-def plot_synergy_redundancy_PhiID(synergy_matrices, redundancy_matrices, plot_base_path=None, save=True):
-    plt.rcParams.update({'font.size': 15})  # Adjust the 14 to larger sizes as needed
+def average_synergy_redundancies_matrices_cognitive_tasks(all_matrices, synergy_matrices, redundancy_matrices):
+    # Initialize the result dictionary dynamically
+    average_matrices = {}
+    num_matrices = len(all_matrices.keys())
 
-    if not plot_base_path:
-        plot_base_path = constants.PLOTS_SYNERGY_REDUNDANCY_DIR + datetime.now().strftime("%Y%m%d_%H%M%S") + '/'
+    # Extract the structure dynamically
+    for key1 in all_matrices.keys():
+        for key2 in all_matrices[key1].keys():
+            if key2 not in average_matrices:
+                average_matrices[key2] = {}
+            for key3 in all_matrices[key1][key2].keys():
+                if key3 not in average_matrices[key2]:
+                    average_matrices[key2][key3] = np.zeros(all_matrices[key1][key2][key3].shape)
+
+    # Iterate over each key in the first dimension of all_matrices
+    for key1 in all_matrices.keys():
+        for key2 in all_matrices[key1].keys():
+            for key3 in all_matrices[key1][key2].keys():
+                # Sum the matrices
+                average_matrices[key2][key3] += all_matrices[key1][key2][key3]
+    
+    # Compute the average by dividing by the number of matrices
+    for key2 in average_matrices.keys():
+        for key3 in average_matrices[key2].keys():
+            average_matrices[key2][key3] /= num_matrices
+
+    average_synergy_matrices = {metric: average_matrices[metric]['sts'] for metric in average_matrices.keys()}
+    average_redundancy_matrices = {metric: average_matrices[metric]['rtr'] for metric in average_matrices.keys()}
+
+    return average_matrices, average_synergy_matrices, average_redundancy_matrices
+
+
+def layer_wise_matrix(matrix, block_size=constants.NUM_HEADS_PER_LAYER):
+    """
+    Averages each block_size x block_size square in the matrix.
+    """
+    new_size = matrix.shape[0] // block_size
+    layer_wise_matrix = np.zeros((new_size, new_size))
+    
+    for i in range(new_size):
+        for j in range(new_size):
+            block = matrix[i*block_size:(i+1)*block_size, j*block_size:(j+1)*block_size]
+            layer_wise_matrix[i, j] = np.mean(block)
+    
+    return layer_wise_matrix
+
+def plot_synergy_redundancy_PhiID(synergy_matrices, redundancy_matrices, base_plot_path=None, save=True):
+    plt.rcParams.update({'font.size': 15})
+
+    if not base_plot_path:
+        base_plot_path = constants.PLOTS_SYNERGY_REDUNDANCY_DIR + datetime.now().strftime("%Y%m%d_%H%M%S") + '/'
+    
     for metric, synergy_matrix in synergy_matrices.items():
         redundancy_matrix = redundancy_matrices[metric]
-        plot_path = f"{plot_base_path}{metric}.png"
-
-        fig, axs = plt.subplots(1, 2, figsize=(12, 5))
+        plot_path = f"{base_plot_path}{metric}.png"
+        layer_wise_synergy = layer_wise_matrix(synergy_matrix)
+        layer_wise_redundancy = layer_wise_matrix(redundancy_matrix)
         
-        cax1 = axs[0].matshow(synergy_matrix, cmap='viridis')
-        fig.colorbar(cax1, ax=axs[0])
-        axs[0].set_title('Synergy Matrix')
-        axs[0].set_xlabel('Attention Head')
-        axs[0].set_ylabel('Attention Head')
-        axs[0].xaxis.set_ticks_position('bottom')
-        axs[0].xaxis.set_label_position('bottom')
+        fig, axs = plt.subplots(2, 2, figsize=(12, 10))
 
-        cax2 = axs[1].matshow(redundancy_matrix, cmap='viridis')
-        fig.colorbar(cax2, ax=axs[1])
-        axs[1].set_title('Redundancy Matrix')
-        axs[1].set_xlabel('Attention Head')
-        axs[1].set_ylabel('Attention Head')
-        axs[1].xaxis.set_ticks_position('bottom')
-        axs[1].xaxis.set_label_position('bottom')
+        cax1 = axs[0, 0].matshow(synergy_matrix, cmap='viridis')
+        fig.colorbar(cax1, ax=axs[0, 0])
+        axs[0, 0].set_title('Synergy Matrix')
+        axs[0, 0].set_xlabel('Attention Head')
+        axs[0, 0].set_ylabel('Attention Head')
+        axs[0, 0].xaxis.set_ticks_position('bottom')
+        axs[0, 0].xaxis.set_label_position('bottom')
+
+        cax2 = axs[0, 1].matshow(redundancy_matrix, cmap='viridis')
+        fig.colorbar(cax2, ax=axs[0, 1])
+        axs[0, 1].set_title('Redundancy Matrix')
+        axs[0, 1].set_xlabel('Attention Head')
+        axs[0, 1].set_ylabel('Attention Head')
+        axs[0, 1].xaxis.set_ticks_position('bottom')
+        axs[0, 1].xaxis.set_label_position('bottom')
+        
+        cax3 = axs[1, 0].matshow(layer_wise_synergy, cmap='viridis')
+        fig.colorbar(cax3, ax=axs[1, 0])
+        axs[1, 0].set_title('Layer-wise Synergy Matrix')
+        axs[1, 0].set_xlabel('Layer')
+        axs[1, 0].set_ylabel('Layer')
+        axs[1, 0].xaxis.set_ticks_position('bottom')
+        axs[1, 0].xaxis.set_label_position('bottom')
+
+        cax4 = axs[1, 1].matshow(layer_wise_redundancy, cmap='viridis')
+        fig.colorbar(cax4, ax=axs[1, 1])
+        axs[1, 1].set_title('Layer-wise Redundancy Matrix')
+        axs[1, 1].set_xlabel('Layer')
+        axs[1, 1].set_ylabel('Layer')
+        axs[1, 1].xaxis.set_ticks_position('bottom')
+        axs[1, 1].xaxis.set_label_position('bottom')
 
         if save:
             plt.tight_layout()
@@ -102,9 +168,10 @@ def plot_synergy_redundancy_PhiID(synergy_matrices, redundancy_matrices, plot_ba
             plt.show()
         plt.close()
 
-def plot_all_PhiID(global_matrices, plot_base_path=None, save=True):
-    if not plot_base_path:
-        plot_base_path = constants.PLOTS_ALL_PHID_DIR + datetime.now().strftime("%Y%m%d_%H%M%S") + '/'
+
+def plot_all_PhiID(global_matrices, base_plot_path=None, save=True):
+    if not base_plot_path:
+        base_plot_path = constants.PLOTS_ALL_PHID_DIR + datetime.now().strftime("%Y%m%d_%H%M%S") + '/'
     for metric, matrices in global_matrices.items():
         num_plots = len(matrices)
         fig, axs = plt.subplots(4, 4, figsize=(20, 20))  # Adjust the figsize as needed
@@ -121,7 +188,7 @@ def plot_all_PhiID(global_matrices, plot_base_path=None, save=True):
         plt.tight_layout()
         
         if save:
-            plot_path = os.path.join(plot_base_path, f'{metric}_PhiID_matrices.png')
+            plot_path = os.path.join(base_plot_path, f'{metric}_PhiID_matrices.png')
             os.makedirs(os.path.dirname(plot_path), exist_ok=True)
             plt.savefig(plot_path)
         else:
@@ -155,11 +222,11 @@ def calculate_average_synergy_redundancies_per_head(synergy_matrices, redundancy
         averages[metric] = {'synergy': synergy_avg_per_head, 'redundancy': redundancy_avg_per_head}
     return averages
 
-def plot_averages_per_head(averages, plot_base_path=None, save=False, use_heatmap=False, num_heads_per_layer=8):
+def plot_averages_per_head(averages, base_plot_path=None, save=False, use_heatmap=False, num_heads_per_layer=8):
     plt.rcParams.update({'font.size': 12})  # Adjust the 14 to larger sizes as needed
 
-    if not plot_base_path:
-        plot_base_path = constants.PLOTS_SYNERGY_REDUNDANCY_GRADIENTS + datetime.now().strftime("%Y%m%d_%H%M%S") + '/'
+    if not base_plot_path:
+        base_plot_path = constants.PLOTS_SYNERGY_REDUNDANCY_GRADIENTS + datetime.now().strftime("%Y%m%d_%H%M%S") + '/'
 
     for metric, avg_data in averages.items():
         synergy_avgs = avg_data['synergy']
@@ -187,7 +254,7 @@ def plot_averages_per_head(averages, plot_base_path=None, save=False, use_heatma
             ax.set_yticklabels([f"{i+1}" for i in range(num_heads_per_layer)], rotation=0, fontsize=16)
             plt.tight_layout()
 
-            synergy_plot_path = f"{plot_base_path}{metric}_synergy_heatmap.png"
+            synergy_plot_path = f"{base_plot_path}{metric}_synergy_heatmap.png"
             if save:
                 os.makedirs(os.path.dirname(synergy_plot_path), exist_ok=True)
                 plt.savefig(synergy_plot_path, bbox_inches='tight')
@@ -211,7 +278,7 @@ def plot_averages_per_head(averages, plot_base_path=None, save=False, use_heatma
             ax.set_yticklabels([f"{i+1}" for i in range(num_heads_per_layer)], rotation=0, fontsize=16)
             plt.tight_layout()
 
-            redundancy_plot_path = f"{plot_base_path}{metric}_redundancy_heatmap.png"
+            redundancy_plot_path = f"{base_plot_path}{metric}_redundancy_heatmap.png"
             if save:
                 os.makedirs(os.path.dirname(redundancy_plot_path), exist_ok=True)
                 plt.savefig(redundancy_plot_path, bbox_inches='tight')
@@ -231,10 +298,12 @@ def plot_averages_per_head(averages, plot_base_path=None, save=False, use_heatma
             ax.set_title(f'Average Synergy and Redundancy per Head for {metric}')
             ax.legend()
 
-            line_plot_path = f"{plot_base_path}{metric}_averages_line.png"
+            line_plot_path = f"{base_plot_path}{metric}_averages_line.png"
             if save:
                 os.makedirs(os.path.dirname(line_plot_path), exist_ok=True)
                 plt.savefig(line_plot_path, bbox_inches='tight')
+            else :
+                plt.show()
             plt.close()
 
 def compute_synergy_redundancy_rank_gradient(averages):
@@ -250,9 +319,9 @@ def compute_synergy_redundancy_rank_gradient(averages):
         rank_gradients[metric] = rank_gradient
     return rank_gradients
 
-def plot_synergy_redundancy_rank_gradient(rank_gradients, plot_base_path=None, save=True):
-    if not plot_base_path:
-        plot_base_path = constants.PLOTS_SYNERGY_REDUNDANCY_RANK_GRADIENT + datetime.now().strftime("%Y%m%d_%H%M%S") + '/'
+def plot_synergy_redundancy_rank_gradient(rank_gradients, base_plot_path=None, save=True):
+    if not base_plot_path:
+        base_plot_path = constants.PLOTS_SYNERGY_REDUNDANCY_RANK_GRADIENT + datetime.now().strftime("%Y%m%d_%H%M%S") + '/'
     
     for metric, gradient in rank_gradients.items():
         heads = np.arange(len(gradient))  # Assuming the number of heads is consistent
@@ -272,7 +341,7 @@ def plot_synergy_redundancy_rank_gradient(rank_gradients, plot_base_path=None, s
             else:
                 bar.set_edgecolor('red')
         
-        plot_path = f"{plot_base_path}{metric}_rank_gradient.png"
+        plot_path = f"{base_plot_path}{metric}_rank_gradient.png"
         
         if save:
             os.makedirs(os.path.dirname(plot_path), exist_ok=True)
@@ -297,9 +366,9 @@ def compute_gradient_percentile(averages):
         gradient_percentiles[metric] = percentiles
     return gradient_percentiles
 
-def plot_gradient_percentile(gradient_percentiles, plot_base_path=None, save=False):
-    if not plot_base_path:
-        plot_base_path = constants.PLOTS_GRADIENT_PERCENTILE + datetime.now().strftime("%Y%m%d_%H%M%S") + '/'
+def plot_gradient_percentile(gradient_percentiles, base_plot_path=None, save=False):
+    if not base_plot_path:
+        base_plot_path = constants.PLOTS_GRADIENT_PERCENTILE + datetime.now().strftime("%Y%m%d_%H%M%S") + '/'
     
     for metric, percentiles in gradient_percentiles.items():
         heads = np.arange(len(percentiles))  # Assuming the number of heads is consistent
@@ -312,7 +381,7 @@ def plot_gradient_percentile(gradient_percentiles, plot_base_path=None, save=Fal
         ax.set_title(f'Synergy-Redundancy Gradient Percentile for {metric}')
         ax.grid(True, which='both', linestyle='--', linewidth=0.5)
         
-        plot_path = f"{plot_base_path}{metric}_gradient_percentile.png"
+        plot_path = f"{base_plot_path}{metric}_gradient_percentile.png"
         
         if save:
             os.makedirs(os.path.dirname(plot_path), exist_ok=True)
@@ -348,10 +417,10 @@ def compute_gradient_rank(averages, method='synergy-redundancy'):
         gradient_ranks[metric] = head_ranks
     return gradient_ranks
 
-def plot_gradient_rank(gradient_ranks, plot_base_path=None, save=False, use_heatmap=False, num_heads_per_layer=8):
-    if not plot_base_path:
+def plot_gradient_rank(gradient_ranks, base_plot_path=None, save=False, use_heatmap=False, num_heads_per_layer=8):
+    if not base_plot_path:
         # Set a default path if not provided
-        plot_base_path = constants.PLOTS_SYNERGY_REDUNDANCY_GRADIENTS + datetime.now().strftime("%Y%m%d_%H%M%S") + '/'
+        base_plot_path = constants.PLOTS_SYNERGY_REDUNDANCY_GRADIENTS + datetime.now().strftime("%Y%m%d_%H%M%S") + '/'
 
     for metric, head_ranks in gradient_ranks.items():
         # Convert head_ranks dictionary back to a list of ranks for plotting
@@ -384,7 +453,7 @@ def plot_gradient_rank(gradient_ranks, plot_base_path=None, save=False, use_heat
             ax.set_title(f'Synergy-Redundancy Gradient Rank for {metric}')
             ax.grid(True, which='both', linestyle='--', linewidth=0.5)
 
-        plot_path = f"{plot_base_path}{metric}_gradient_rank.png"
+        plot_path = f"{base_plot_path}{metric}_gradient_rank.png"
 
         if save:
             os.makedirs(os.path.dirname(plot_path), exist_ok=True)
@@ -393,9 +462,9 @@ def plot_gradient_rank(gradient_ranks, plot_base_path=None, save=False, use_heat
             plt.show()
         plt.close()
 
-def plot_averages_per_layer(averages, plot_base_path=None, save=False, num_heads_per_layer=8):
-    if not plot_base_path:
-        plot_base_path = constants.PLOTS_SYNERGY_REDUNDANCY_GRADIENTS + datetime.now().strftime("%Y%m%d_%H%M%S") + '/'
+def plot_averages_per_layer(averages, base_plot_path=None, save=False, num_heads_per_layer=8):
+    if not base_plot_path:
+        base_plot_path = constants.PLOTS_SYNERGY_REDUNDANCY_GRADIENTS + datetime.now().strftime("%Y%m%d_%H%M%S") + '/'
 
     for metric, avg_data in averages.items():
         synergy_avgs = avg_data['synergy']
@@ -420,7 +489,7 @@ def plot_averages_per_layer(averages, plot_base_path=None, save=False, num_heads
         ax.set_xticks(range(1, num_layers + 1))  # Set tick positions
         ax.set_xticklabels([str(i) for i in range(1, num_layers + 1)])  # Label each tick with the layer number
 
-        plot_path = f"{plot_base_path}{metric}_averages_per_layer.png"
+        plot_path = f"{base_plot_path}{metric}_averages_per_layer.png"
 
         if save:
             os.makedirs(os.path.dirname(plot_path), exist_ok=True)
@@ -429,10 +498,10 @@ def plot_averages_per_layer(averages, plot_base_path=None, save=False, num_heads
             plt.show()
         plt.close()
 
-def plot_average_ranks_per_layer(gradient_ranks, plot_base_path=None, save=False, num_heads_per_layer=8):
+def plot_average_ranks_per_layer(gradient_ranks, base_plot_path=None, save=False, num_heads_per_layer=8):
     plt.rcParams.update({'font.size': 15})  # Adjust the font size as needed
-    if not plot_base_path:
-        plot_base_path = constants.PLOTS_SYNERGY_REDUNDANCY_GRADIENTS + datetime.now().strftime("%Y%m%d_%H%M%S") + '/'
+    if not base_plot_path:
+        base_plot_path = constants.PLOTS_SYNERGY_REDUNDANCY_GRADIENTS + datetime.now().strftime("%Y%m%d_%H%M%S") + '/'
 
     for metric, head_ranks in gradient_ranks.items():
         # Convert head_ranks dictionary back to a list of ranks for plotting
@@ -458,7 +527,7 @@ def plot_average_ranks_per_layer(gradient_ranks, plot_base_path=None, save=False
         ax.set_xticks(range(1, num_layers + 1))  # Set tick positions
         ax.set_xticklabels([str(i) for i in range(1, num_layers + 1)])  # Label each tick with the layer number
 
-        plot_path = f"{plot_base_path}{metric}_average_ranks_per_layer.png"
+        plot_path = f"{base_plot_path}{metric}_average_ranks_per_layer.png"
 
         if save:
             os.makedirs(os.path.dirname(plot_path), exist_ok=True)
