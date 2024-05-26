@@ -161,8 +161,6 @@ def save_time_series(time_series, base_plot_path=None):
     torch.save(time_series, base_plot_path)
 
 def load_time_series(time_series_number, base_plot_path=None):
-    if not base_plot_path:
-        base_plot_path = constants.TIME_SERIES_DIR  + datetime.now().strftime("%Y%m%d_%H%M%S") + '.pt'
     # Sort the time_series files by name and load the time_series_number-th file
     time_series_files = sorted(os.listdir(constants.TIME_SERIES_DIR))
     base_plot_path = constants.TIME_SERIES_DIR + time_series_files[time_series_number]

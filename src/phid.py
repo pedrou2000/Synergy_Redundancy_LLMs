@@ -6,11 +6,23 @@ import constants
 from datetime import datetime
 import pickle
 import seaborn as sns
+import torch
 
-def compute_PhiID(time_series, metrics, tau=1, kind="gaussian", redundancy_measure="MMI", save=False, base_save_path=None):
+# Function to check and modify the vector if variance is zero
+def check_and_modify_variance(vector, index, epsilon=1e-2):
+    variance = torch.var(vector)
+    if variance == 0:
+        random_idx = np.random.randint(len(vector))
+        vector[random_idx] -= epsilon
+        print(f"Variance for head {index} was zero. Modified element at index {random_idx}.")
+    return vector
+
+def compute_PhiID(time_series, tau=1, kind="gaussian", redundancy_measure="MMI", save=False, base_save_path=None):
+    metrics = list(time_series.keys())
     all_matrices = {metric: {} for metric in metrics}
     
     for metric in metrics:
+        print(f"Calculating PhiID for metric: {metric}")
         num_layers = len(time_series[metric])
         num_heads_per_layer = len(time_series[metric][0])
         total_heads = num_layers * num_heads_per_layer
@@ -20,14 +32,18 @@ def compute_PhiID(time_series, metrics, tau=1, kind="gaussian", redundancy_measu
         
         global_matrices = {key: np.zeros((total_heads, total_heads)) for key in keys}
         
-        flat_time_series = [time_series[metric][layer][head] for layer in range(num_layers) for head in range(num_heads_per_layer)]
+        flat_time_series = [time_series[metric][layer][head] for layer in range(num_layers) for head in range(num_heads_per_layer)] # Flatten the time series
         
         for src_idx in range(total_heads):
+            if src_idx % 50 == 0:
+                print(f"Calculating PhiID for head {src_idx}...")
             for trg_idx in range(total_heads):
                 if src_idx != trg_idx:
-                    src = flat_time_series[src_idx]
+                    src = flat_time_series[src_idx] # Extract the source and target time series
                     trg = flat_time_series[trg_idx]
-                    
+                    check_and_modify_variance(src, src_idx)
+                    check_and_modify_variance(trg, trg_idx)
+
                     atoms_res, calc_res = calc_PhiID(src, trg, tau, kind, redundancy_measure)
                     
                     for key in keys:
@@ -39,7 +55,7 @@ def compute_PhiID(time_series, metrics, tau=1, kind="gaussian", redundancy_measu
     redundancy_matrices = {metric: all_matrices[metric]['rtr'] for metric in metrics}
 
     if save:
-         save_matrices(synergy_matrices, redundancy_matrices, all_matrices, base_save_path=base_save_path)
+         save_matrices(all_matrices, synergy_matrices, redundancy_matrices, base_save_path=base_save_path)
     
     return all_matrices, synergy_matrices, redundancy_matrices
 
