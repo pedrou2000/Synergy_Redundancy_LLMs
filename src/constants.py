@@ -7,12 +7,13 @@ MODEL_NAME = "meta-llama/Meta-Llama-3-8B-Instruct"
 USE_GPU = True
 NUM_HEADS_PER_LAYER = 8 if "2b" in MODEL_NAME else 16 if MODEL_NAME == "google/gemma-1.1-7b-it" else 32 
 
-MODIFIED_OUTPUT_ATTENTIONS=True
+MODIFIED_OUTPUT_ATTENTIONS=False
+LOAD_ATTENTION_WEIGHTS = True
+
 METRICS_TRANSFORMER = ['attention_weights'] if not MODIFIED_OUTPUT_ATTENTIONS else ['projected_Q', 'attention_weights', 'attention_outputs']
 AGGREGRATION_METHODS = ['norm', 'mean', 'entropy', 'max']
 ATTENTION_MEASURE = METRICS_TRANSFORMER[1 if MODIFIED_OUTPUT_ATTENTIONS else 0]
 
-LOAD_ATTENTION_WEIGHTS = False
 
 # Directories 
 PLOTS_DIR = "../plots/"

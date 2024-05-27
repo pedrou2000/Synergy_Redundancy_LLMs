@@ -155,10 +155,15 @@ def compute_attention_metrics_norms(attention_params, selected_metrics, num_toke
 
     return time_series
 
-def save_time_series(time_series, base_plot_path=None):
-    if not base_plot_path:
-        base_plot_path = constants.TIME_SERIES_DIR  + datetime.now().strftime("%Y%m%d_%H%M%S") + '.pt'
-    torch.save(time_series, base_plot_path)
+def save_time_series(time_series, base_save_path=None):
+    if not base_save_path:
+        base_save_path = constants.TIME_SERIES_DIR  + datetime.now().strftime("%Y%m%d_%H%M%S") + '.pt'
+    # Extract directory from base_save_path
+    dir_path = os.path.dirname(base_save_path)
+    
+    # Create the directory if it does not exist
+    os.makedirs(dir_path, exist_ok=True)
+    torch.save(time_series, base_save_path)
 
 def load_time_series(time_series_number, base_plot_path=None):
     # Sort the time_series files by name and load the time_series_number-th file
