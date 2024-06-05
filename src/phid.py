@@ -551,6 +551,7 @@ def plot_average_ranks_per_layer(gradient_ranks, base_plot_path=None, save=False
         else:
             plt.show()
         plt.close()
+        return ranks_per_layer_mean, ranks_per_layer_std
 
 
 

@@ -39,6 +39,7 @@ def plot_all_category_diffs_vs_syn_red_grad_rank(stats_dict, gradient_ranks, res
         all_means = np.vstack([stats_dict[cat][:, :, 0].flatten() for cat in categories])
     global_mean = np.mean(all_means, axis=0)
 
+    results = {}
     for i, category in enumerate(categories):
         stats_category = stats_dict[category]
 
@@ -88,6 +89,8 @@ def plot_all_category_diffs_vs_syn_red_grad_rank(stats_dict, gradient_ranks, res
 
         slopes.append(slope)
         correlations.append(correlation_coefficient)
+
+        results[category] = diff_means_reordered
 
     # Adjust layout and hide empty subplots
     plt.tight_layout()
@@ -152,8 +155,10 @@ def plot_all_category_diffs_vs_syn_red_grad_rank(stats_dict, gradient_ranks, res
         plot_path = f"{base_plot_path}3-overlay_regression_slopes.png"
         os.makedirs(os.path.dirname(plot_path), exist_ok=True)
         plt.savefig(plot_path, bbox_inches='tight')
+    else:
+        plt.show()
 
-    plt.show()
+    return results
 
 def get_head_number(layer, head_index):
     """

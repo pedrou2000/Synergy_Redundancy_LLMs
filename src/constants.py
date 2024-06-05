@@ -1,6 +1,9 @@
 CACHE_DIR_BITBUCKET = "/vol/bitbucket/pu22/Transformers/" # Bitbucket cache directory
 CACHE_DIR_LOCAL = "/homes/pu22/.cache/huggingface/hub" # Local cache directory
+# MODEL_NAME = 'meta-llama/Llama-2-13b-chat-hf'
+# MODEL_NAME = 'meta-llama/Llama-2-7b-chat-hf'
 MODEL_NAME = "meta-llama/Meta-Llama-3-8B-Instruct"
+# MODEL_NAME = "meta-llama/Meta-Llama-3-70B-Instruct"
 # MODEL_NAME = "google/gemma-1.1-7b-it" # 28 Layers; 16 Heads/Layer => 448 Heads
 # MODEL_NAME = "google/gemma-1.1-2b-it"
 # MODEL_NAME = "google/gemma-2b-it"
@@ -8,7 +11,7 @@ USE_GPU = True
 NUM_HEADS_PER_LAYER = 8 if "2b" in MODEL_NAME else 16 if MODEL_NAME == "google/gemma-1.1-7b-it" else 32 
 
 MODIFIED_OUTPUT_ATTENTIONS=False
-LOAD_ATTENTION_WEIGHTS = True
+LOAD_ATTENTION_WEIGHTS = False
 
 METRICS_TRANSFORMER = ['attention_weights'] if not MODIFIED_OUTPUT_ATTENTIONS else ['projected_Q', 'attention_weights', 'attention_outputs']
 AGGREGRATION_METHODS = ['norm', 'mean', 'entropy', 'max']
