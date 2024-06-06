@@ -9,7 +9,7 @@ import constants
 import gc  
 import psutil  
 from datetime import datetime
-
+import pickle
 
 
 def sample_with_temperature(logits, temperature=1.0):
@@ -69,6 +69,38 @@ def generate_text_with_attention(model, tokenizer, num_tokens_to_generate: int, 
 
     # Decode the generated ids to text and ensure they are on CPU for decoding
     generated_text = tokenizer.decode(generated_ids[0].to('cpu'), skip_special_tokens=True)
+
+    return generated_text, attention_params
+
+def save_raw_attention(generated_text, attention_params, base_save_path=None):
+    if not base_save_path:
+        # Assuming 'constants.MATRICES_DIR' is defined and is a valid path
+        base_save_path = constants.RAW_ATTENTION_DIR + datetime.now().strftime("%Y%m%d_%H%M%S") + '/'
+    
+    # Extract directory from base_save_path
+    dir_path = os.path.dirname(base_save_path)
+    
+    # Create the directory if it does not exist
+    os.makedirs(dir_path, exist_ok=True)
+    
+    # Now save the file
+    with open(base_save_path + 'attention_params.pkl', 'wb') as file:
+        pickle.dump(attention_params, file)
+    # Save generated text as a txt file in the same directory
+    with open(base_save_path + 'generated_text.txt', 'w') as file:
+        file.write(generated_text)
+
+def load_raw_attention(raw_attention_number=0, base_save_path=None):
+    # Sort the raw_attention files by name and load the raw_attention_number-th file
+    if base_save_path is None:
+        raw_attention_files = sorted(os.listdir(constants.RAW_ATTENTION_DIR))
+        base_save_path = constants.RAW_ATTENTION_DIR + raw_attention_files[raw_attention_number]
+
+    with open(base_save_path + 'attention_params.pkl', 'rb') as file:
+        attention_params = pickle.load(file)
+    # Load generated text from the txt file
+    with open(base_save_path + 'generated_text.txt', 'r') as file:
+        generated_text = file.read()
 
     return generated_text, attention_params
 
@@ -165,12 +197,13 @@ def save_time_series(time_series, base_save_path=None):
     os.makedirs(dir_path, exist_ok=True)
     torch.save(time_series, base_save_path)
 
-def load_time_series(time_series_number, base_plot_path=None):
+def load_time_series(time_series_number=0, base_load_path=None):
     # Sort the time_series files by name and load the time_series_number-th file
-    time_series_files = sorted(os.listdir(constants.TIME_SERIES_DIR))
-    base_plot_path = constants.TIME_SERIES_DIR + time_series_files[time_series_number]
+    if base_load_path is None:
+        time_series_files = sorted(os.listdir(constants.TIME_SERIES_DIR))
+        base_load_path = constants.TIME_SERIES_DIR + time_series_files[time_series_number]
 
-    return torch.load(base_plot_path)
+    return torch.load(base_load_path)
 
 def smooth_series(series, window_size=3):
     """Smooth the series with a simple moving average. window_size must be odd."""
@@ -225,9 +258,9 @@ def plot_attention_metrics_norms_over_time(time_series, metrics, num_heads_plot=
                     handles.append(line)
                     labels.append(f'Head {head_idx + 1}')
 
-            ax.set_title(f'Layer {layer_idx+1}', pad=10, fontsize=15)
-            ax.set_xlabel('Timestep', fontsize=15)
-            ax.set_ylabel('L2 Norm', fontsize=15)
+            ax.set_title(f'Layer {layer_idx+1}', pad=10)
+            ax.set_xlabel('Timestep')
+            ax.set_ylabel('L2 Norm')
             ax.set_xticks(tick_positions)
 
         # Place the legend at the top

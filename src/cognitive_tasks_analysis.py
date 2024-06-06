@@ -66,7 +66,7 @@ def compute_and_plot_attention_heatmap(time_series_attention_weights, plot_heatm
 def plot_attention_weights_comparison(all_attention_weights, save=True, base_plot_path=None, layer_indices=None, 
                                       filename='head_activations_comparison'):
     categories = list(all_attention_weights.keys())
-    plt.rcParams.update({'font.size': 12})  # Adjust the 14 to larger sizes as needed
+    # plt.rcParams.update({'font.size': 12})  # Adjust the 14 to larger sizes as needed
     num_layers = len(all_attention_weights[categories[0]])
     num_heads = len(all_attention_weights[categories[0]][0])
     num_categories = len(categories)
@@ -124,13 +124,13 @@ def plot_attention_weights_comparison(all_attention_weights, save=True, base_plo
 
         plt.title(f'Layer {layer_idx + 1}')
         if layer_idx == layer_end - 1:
-            plt.xlabel('Head Index', fontsize=18)
-        plt.ylabel('Attention Weights', fontsize=18)
+            plt.xlabel('Head Index')
+        plt.ylabel('Attention Weights')
         plt.xticks(np.arange(num_heads))
 
 
     # Place the super title above everything, adjusting spacing as needed
-    plt.suptitle("Average Attention Weights Norm Comparison by Prompt Category", fontsize=20, y=0.98)  # Increased font size here
+    plt.suptitle("Average Attention Weights Norm Comparison by Prompt Category", y=0.98)  # Increased font size here
 
     # Add the figure-wide legend at the top, but below the super title
     plt.figlegend(handles, labels, loc='upper center', ncol=3, frameon=True, bbox_to_anchor=(0.5, 0.97), fontsize='x-large')

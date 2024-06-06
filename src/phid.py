@@ -131,7 +131,7 @@ def layer_wise_matrix(matrix, block_size=constants.NUM_HEADS_PER_LAYER):
     return layer_wise_matrix
 
 def plot_synergy_redundancy_PhiID(synergy_matrices, redundancy_matrices, base_plot_path=None, save=True):
-    plt.rcParams.update({'font.size': 15})
+    # plt.rcParams.update({'font.size': 15})
 
     if not base_plot_path:
         base_plot_path = constants.PLOTS_SYNERGY_REDUNDANCY_DIR + datetime.now().strftime("%Y%m%d_%H%M%S") + '/'
@@ -214,7 +214,7 @@ def plot_all_PhiID(global_matrices, base_plot_path=None, save=True):
 
 
 ####################### Other Visualizations #######################
-def calculate_average_synergy_redundancies_per_head(synergy_matrices, redundancy_matrices, within_layer=False, num_heads_per_layer=8):
+def calculate_average_synergy_redundancies_per_head(synergy_matrices, redundancy_matrices, within_layer=False, num_heads_per_layer=constants.NUM_HEADS_PER_LAYER):
     averages = {}
     for metric in synergy_matrices.keys():
         num_heads = synergy_matrices[metric].shape[0]  # total number of heads
@@ -238,8 +238,8 @@ def calculate_average_synergy_redundancies_per_head(synergy_matrices, redundancy
         averages[metric] = {'synergy': synergy_avg_per_head, 'redundancy': redundancy_avg_per_head}
     return averages
 
-def plot_averages_per_head(averages, base_plot_path=None, save=False, use_heatmap=False, num_heads_per_layer=8):
-    plt.rcParams.update({'font.size': 12})  # Adjust the 14 to larger sizes as needed
+def plot_averages_per_head(averages, base_plot_path=None, save=False, use_heatmap=False, num_heads_per_layer=constants.NUM_HEADS_PER_LAYER):
+    # plt.rcParams.update({'font.size': 12})  # Adjust the 14 to larger sizes as needed
 
     if not base_plot_path:
         base_plot_path = constants.PLOTS_SYNERGY_REDUNDANCY_GRADIENTS + datetime.now().strftime("%Y%m%d_%H%M%S") + '/'
@@ -260,14 +260,14 @@ def plot_averages_per_head(averages, base_plot_path=None, save=False, use_heatma
             cbar = heatmap.collections[0].colorbar
             cbar.set_label('Synergy', size=16)  # Adjust the size as needed
 
-            ax.set_title(f'Average Synergy per Head', fontsize=16)
-            ax.set_xlabel("Layer", fontsize=16)
-            ax.set_ylabel("Head", fontsize=16)
+            ax.set_title(f'Average Synergy per Head')
+            ax.set_xlabel("Layer")
+            ax.set_ylabel("Head")
 
             ax.set_xticks(np.arange(num_layers) + 0.5)  # Change: Added set_xticks
-            ax.set_xticklabels([f"{i+1}" for i in range(num_layers)], fontsize=16)
+            ax.set_xticklabels([f"{i+1}" for i in range(num_layers)])
             ax.set_yticks(np.arange(num_heads_per_layer) + 0.5)  # Change: Added set_yticks
-            ax.set_yticklabels([f"{i+1}" for i in range(num_heads_per_layer)], rotation=0, fontsize=16)
+            ax.set_yticklabels([f"{i+1}" for i in range(num_heads_per_layer)], rotation=0)
             plt.tight_layout()
 
             synergy_plot_path = f"{base_plot_path}{metric}_synergy_heatmap.png"
@@ -285,13 +285,13 @@ def plot_averages_per_head(averages, base_plot_path=None, save=False, use_heatma
             cbar = heatmap.collections[0].colorbar
             cbar.set_label('Redundancy', size=16)  # Adjust the size as needed
 
-            ax.set_title(f'Average Redundancy per Head', fontsize=16)
-            ax.set_xlabel("Layer", fontsize=16)
-            ax.set_ylabel("Head", fontsize=16)
+            ax.set_title(f'Average Redundancy per Head')
+            ax.set_xlabel("Layer")
+            ax.set_ylabel("Head")
             ax.set_xticks(np.arange(num_layers) + 0.5)  # Change: Added set_xticks
-            ax.set_xticklabels([f"{i+1}" for i in range(num_layers)], rotation=0, fontsize=16)
+            ax.set_xticklabels([f"{i+1}" for i in range(num_layers)], rotation=0)
             ax.set_yticks(np.arange(num_heads_per_layer) + 0.5)  # Change: Added set_yticks
-            ax.set_yticklabels([f"{i+1}" for i in range(num_heads_per_layer)], rotation=0, fontsize=16)
+            ax.set_yticklabels([f"{i+1}" for i in range(num_heads_per_layer)], rotation=0)
             plt.tight_layout()
 
             redundancy_plot_path = f"{base_plot_path}{metric}_redundancy_heatmap.png"
@@ -433,7 +433,7 @@ def compute_gradient_rank(averages, method='synergy-redundancy'):
         gradient_ranks[metric] = head_ranks
     return gradient_ranks
 
-def plot_gradient_rank(gradient_ranks, base_plot_path=None, save=False, use_heatmap=False, num_heads_per_layer=8):
+def plot_gradient_rank(gradient_ranks, base_plot_path=None, save=False, use_heatmap=False, num_heads_per_layer=constants.NUM_HEADS_PER_LAYER):
     if not base_plot_path:
         # Set a default path if not provided
         base_plot_path = constants.PLOTS_SYNERGY_REDUNDANCY_GRADIENTS + datetime.now().strftime("%Y%m%d_%H%M%S") + '/'
@@ -478,7 +478,7 @@ def plot_gradient_rank(gradient_ranks, base_plot_path=None, save=False, use_heat
             plt.show()
         plt.close()
 
-def plot_averages_per_layer(averages, base_plot_path=None, save=False, num_heads_per_layer=8):
+def plot_averages_per_layer(averages, base_plot_path=None, save=False, num_heads_per_layer=constants.NUM_HEADS_PER_LAYER):
     if not base_plot_path:
         base_plot_path = constants.PLOTS_SYNERGY_REDUNDANCY_GRADIENTS + datetime.now().strftime("%Y%m%d_%H%M%S") + '/'
 
@@ -514,10 +514,12 @@ def plot_averages_per_layer(averages, base_plot_path=None, save=False, num_heads
             plt.show()
         plt.close()
 
-def plot_average_ranks_per_layer(gradient_ranks, base_plot_path=None, save=False, num_heads_per_layer=8):
-    plt.rcParams.update({'font.size': 15})  # Adjust the font size as needed
+def plot_average_ranks_per_layer(gradient_ranks, base_plot_path=None, save=False, num_heads_per_layer=constants.NUM_HEADS_PER_LAYER):
+    # plt.rcParams.update({'font.size': 15})  # Adjust the font size as needed
     if not base_plot_path:
         base_plot_path = constants.PLOTS_SYNERGY_REDUNDANCY_GRADIENTS + datetime.now().strftime("%Y%m%d_%H%M%S") + '/'
+    
+    ranks_per_layer_mean, ranks_per_layer_std = {}, {}
 
     for metric, head_ranks in gradient_ranks.items():
         # Convert head_ranks dictionary back to a list of ranks for plotting
@@ -527,12 +529,12 @@ def plot_average_ranks_per_layer(gradient_ranks, base_plot_path=None, save=False
         # Compute the average and standard deviation across all heads per layer
         num_layers = len(ranks) // num_heads_per_layer
         ranks_array = np.array(ranks).reshape(num_layers, num_heads_per_layer)
-        ranks_per_layer_mean = np.mean(ranks_array, axis=1)
-        ranks_per_layer_std = np.std(ranks_array, axis=1)
+        ranks_per_layer_mean[metric] = np.mean(ranks_array, axis=1)
+        ranks_per_layer_std[metric] = np.std(ranks_array, axis=1)
 
         fig, ax = plt.subplots(figsize=(16, 6))
         # Include error bars
-        ax.errorbar(range(1, num_layers + 1), ranks_per_layer_mean, yerr=ranks_per_layer_std, marker='o', linestyle='-', color='darkblue', ecolor='gray', capsize=5)
+        ax.errorbar(range(1, num_layers + 1), ranks_per_layer_mean[metric], yerr=ranks_per_layer_std[metric], marker='o', linestyle='-', color='darkblue', ecolor='gray', capsize=5)
 
         ax.set_xlabel('Layer')
         ax.set_ylabel('Average Rank')
@@ -551,7 +553,7 @@ def plot_average_ranks_per_layer(gradient_ranks, base_plot_path=None, save=False
         else:
             plt.show()
         plt.close()
-        return ranks_per_layer_mean, ranks_per_layer_std
+    return ranks_per_layer_mean, ranks_per_layer_std
 
 
 

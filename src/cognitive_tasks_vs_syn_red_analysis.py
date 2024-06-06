@@ -14,9 +14,9 @@ def sort_categories(categories):
     return categories
 
 
-def plot_all_category_diffs_vs_syn_red_grad_rank(stats_dict, gradient_ranks, rest_category_prefix='rest', save=False, base_plot_path=None, 
-                            reorder=True, mean_instead_of_rest=False, per_layer=False, num_heads_per_layer=8):
-    plt.rcParams.update({'font.size': 12})  # Adjust the 14 to larger sizes as needed
+def plot_all_category_diffs_vs_syn_red_grad_rank(stats_dict, gradient_ranks, save=False, base_plot_path=None, 
+                            reorder=True, per_layer=False, num_heads_per_layer=constants.NUM_HEADS_PER_LAYER):
+    # plt.rcParams.update({'font.size': 12})  # Adjust the 14 to larger sizes as needed
     categories = [cat for cat in stats_dict.keys() if not cat.startswith('rest')]
     categories = sort_categories(categories)
     slopes = []
@@ -43,24 +43,12 @@ def plot_all_category_diffs_vs_syn_red_grad_rank(stats_dict, gradient_ranks, res
     for i, category in enumerate(categories):
         stats_category = stats_dict[category]
 
-        if not mean_instead_of_rest:
-            stats_rest = stats_dict[rest_category_prefix]
-
-            if per_layer:
-                stats_category_means = np.mean(stats_category[:, :, 0].reshape(-1, num_heads_per_layer), axis=1)
-                stats_rest_means = np.mean(stats_rest[:, :, 0].reshape(-1, num_heads_per_layer), axis=1)
-            else:
-                stats_category_means = stats_category[:, :, 0].flatten()
-                stats_rest_means = stats_rest[:, :, 0].flatten()
-
-            diff_means = stats_category_means - stats_rest_means
+        if per_layer:
+            stats_category_means = np.mean(stats_category[:, :, 0].reshape(-1, num_heads_per_layer), axis=1)
         else:
-            if per_layer:
-                stats_category_means = np.mean(stats_category[:, :, 0].reshape(-1, num_heads_per_layer), axis=1)
-            else:
-                stats_category_means = stats_category[:, :, 0].flatten()
+            stats_category_means = stats_category[:, :, 0].flatten()
 
-            diff_means = stats_category_means - global_mean
+        diff_means = stats_category_means - global_mean
 
         gradient_ranks_ordered = np.array([gradient_ranks[i] for i in range(1, len(diff_means) + 1)])
         reorder_indices = np.argsort(gradient_ranks_ordered)
@@ -82,9 +70,9 @@ def plot_all_category_diffs_vs_syn_red_grad_rank(stats_dict, gradient_ranks, res
 
         ax.plot(diff_means_reordered, marker='o', linestyle='-', color='darkblue', label='Original Data')
         ax.plot(x, slope * x + intercept, color='red', label=f'Linear Regression (Pearson Corr {correlation_coefficient:.2f})')
-        ax.set_title(f'{category}', fontsize=16)
-        ax.set_xlabel('Synergy - Redundancy Gradient Rank' if reorder else 'Layer Index' if per_layer else 'Head Index', fontsize=16)
-        ax.set_ylabel('Diff in Avg Activation', fontsize=16)
+        ax.set_title(f'{category}')
+        ax.set_xlabel('Synergy - Redundancy Gradient Rank' if reorder else 'Layer Index' if per_layer else 'Head Index')
+        ax.set_ylabel('Diff in Avg Activation')
         ax.legend()
 
         slopes.append(slope)
@@ -111,14 +99,14 @@ def plot_all_category_diffs_vs_syn_red_grad_rank(stats_dict, gradient_ranks, res
     ax1.set_xlabel('Category')
     ax1.set_ylabel('Slope of Fitted Line', color='tab:blue')
     ax1.tick_params(axis='y', labelcolor='tab:blue')
-    ax1.set_title('Slope and Pearson Correlation for Each Category', fontsize=15)
+    ax1.set_title('Slope and Pearson Correlation for Each Category')
     ax1.set_xticks(np.arange(len(categories)))
     ax1.set_xticklabels(categories, rotation=10)
 
     # Create another y-axis for the Pearson correlation coefficients
     ax2 = ax1.twinx()
     ax2.bar(np.arange(len(categories)) + 0.2, correlations, 0.4, label='Pearson Correlation', color='tab:orange')
-    ax2.set_ylabel('Pearson Correlation Coefficient', color='tab:orange', fontsize=15)
+    ax2.set_ylabel('Pearson Correlation Coefficient', color='tab:orange')
     ax2.tick_params(axis='y', labelcolor='tab:orange')
 
     fig.tight_layout()
@@ -137,9 +125,9 @@ def plot_all_category_diffs_vs_syn_red_grad_rank(stats_dict, gradient_ranks, res
         x = np.linspace(0, len(diff_means_reordered) - 1, num=len(diff_means_reordered))
         plt.plot(x, slope * x + intercept, label=f'{categories[i]}')
 
-    plt.title('Overlay of Regression Lines for Cognitive Task Categories', fontsize=15)
-    plt.xlabel('Synergy - Redundancy Gradient Rank' if reorder else 'Layer Index' if per_layer else 'Head Index', fontsize=15)
-    plt.ylabel('Difference in Average Head Activation', fontsize=15)
+    plt.title('Overlay of Regression Lines for Cognitive Task Categories')
+    plt.xlabel('Synergy - Redundancy Gradient Rank' if reorder else 'Layer Index' if per_layer else 'Head Index')
+    plt.ylabel('Difference in Average Head Activation')
     plt.legend()
 
     # Set the x-axis to label each layer explicitly
@@ -171,7 +159,7 @@ def get_head_number(layer, head_index):
     Returns:
     int: One-indexed global head number.
     """
-    return layer * 8 + head_index + 1
+    return layer * constants.NUM_HEADS_PER_LAYER + head_index + 1
 
 def get_layer_and_head(head_number):
     """
@@ -184,7 +172,7 @@ def get_layer_and_head(head_number):
     tuple: (layer, head_index), where both are zero-indexed.
     """
     head_number -= 1  # Adjust for zero-indexing
-    return head_number // 8, head_number % 8
+    return head_number // constants.NUM_HEADS_PER_LAYER, head_number % constants.NUM_HEADS_PER_LAYER
 
 def plot_most_syn_red_tasks(stats_dict, gradient_ranks, top_n=10):
     # Filter out categories starting with 'rest'
@@ -238,13 +226,10 @@ def plot_rank_most_activated_heads_per_task(stats_dict, gradient_ranks, top_n=10
     # Initialize a dictionary to store the average ranks for each task
     avg_rank_per_task = {task: [] for task in categories}
 
-    n_layers = stats_dict[categories[0]].shape[0]
-    n_heads = stats_dict[categories[0]].shape[1]
-    
     # Calculate the average activation for each head across all tasks
     head_avg_activations = {}
-    for layer in range(n_layers):  # Assuming there are 18 layers
-        for head_idx in range(n_heads):  # Assuming 8 heads per layer
+    for layer in range(constants.NUM_LAYERS):  
+        for head_idx in range(constants.NUM_HEADS_PER_LAYER): 
             activations = [stats_dict[task][layer][head_idx][0] for task in categories]
             head_number = get_head_number(layer, head_idx)
             head_avg_activations[head_number] = np.mean(activations)
@@ -252,8 +237,8 @@ def plot_rank_most_activated_heads_per_task(stats_dict, gradient_ranks, top_n=10
     # For each task, find the top 10 heads based on their activation compared to their average
     for task in categories:
         head_activations = []
-        for layer in range(n_layers):
-            for head_idx in range(n_heads):
+        for layer in range(constants.NUM_LAYERS):
+            for head_idx in range(constants.NUM_HEADS_PER_LAYER):
                 head_number = get_head_number(layer, head_idx)
                 activation = stats_dict[task][layer][head_idx][0]
                 if activation > head_avg_activations[head_number]:
@@ -297,14 +282,14 @@ def plot_average_head_activation_per_task(stats_dict):
     
     # Iterate through each task and calculate the average activation and gather the precomputed standard deviations
     for task in categories:
-        n_layers = stats_dict[task].shape[0]
-        n_heads = stats_dict[task].shape[1]
+        constants.NUM_LAYERS = stats_dict[task].shape[0]
+        constants.NUM_HEADS_PER_LAYER = stats_dict[task].shape[1]
         total_activation = 0
         sd_values = []
         count = 0
         
-        for layer in range(n_layers):
-            for head_idx in range(n_heads):
+        for layer in range(constants.NUM_LAYERS):
+            for head_idx in range(constants.NUM_HEADS_PER_LAYER):
                 activation = stats_dict[task][layer][head_idx][0]
                 sd = stats_dict[task][layer][head_idx][1]  # Directly use the precomputed SD
                 total_activation += activation

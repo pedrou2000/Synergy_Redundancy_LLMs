@@ -1,29 +1,37 @@
+from transformers import AutoConfig 
+
 CACHE_DIR_BITBUCKET = "/vol/bitbucket/pu22/Transformers/" # Bitbucket cache directory
 CACHE_DIR_LOCAL = "/homes/pu22/.cache/huggingface/hub" # Local cache directory
+
+
 # MODEL_NAME = 'meta-llama/Llama-2-13b-chat-hf'
 # MODEL_NAME = 'meta-llama/Llama-2-7b-chat-hf'
-MODEL_NAME = "meta-llama/Meta-Llama-3-8B-Instruct"
+# MODEL_NAME = "meta-llama/Meta-Llama-3-8B-Instruct"
 # MODEL_NAME = "meta-llama/Meta-Llama-3-70B-Instruct"
-# MODEL_NAME = "google/gemma-1.1-7b-it" # 28 Layers; 16 Heads/Layer => 448 Heads
+MODEL_NAME = "google/gemma-1.1-7b-it" # 28 Layers; 16 Heads/Layer => 448 Heads
 # MODEL_NAME = "google/gemma-1.1-2b-it"
 # MODEL_NAME = "google/gemma-2b-it"
-USE_GPU = True
-NUM_HEADS_PER_LAYER = 8 if "2b" in MODEL_NAME else 16 if MODEL_NAME == "google/gemma-1.1-7b-it" else 32 
 
-MODIFIED_OUTPUT_ATTENTIONS=False
+config = AutoConfig.from_pretrained(MODEL_NAME)
+NUM_LAYERS = config.num_hidden_layers if hasattr(config, 'num_hidden_layers') else config.n_layer
+NUM_HEADS_PER_LAYER = config.num_attention_heads if hasattr(config, 'num_attention_heads') else config.n_head
+NUM_TOTAL_HEADS = NUM_LAYERS * NUM_HEADS_PER_LAYER
+
+MODIFIED_OUTPUT_ATTENTIONS = True
 LOAD_ATTENTION_WEIGHTS = False
 
 METRICS_TRANSFORMER = ['attention_weights'] if not MODIFIED_OUTPUT_ATTENTIONS else ['projected_Q', 'attention_weights', 'attention_outputs']
 AGGREGRATION_METHODS = ['norm', 'mean', 'entropy', 'max']
-ATTENTION_MEASURE = METRICS_TRANSFORMER[1 if MODIFIED_OUTPUT_ATTENTIONS else 0]
+ATTENTION_MEASURE = METRICS_TRANSFORMER[0 if MODIFIED_OUTPUT_ATTENTIONS else 0]
 
 
 # Directories 
 PLOTS_DIR = "../plots/"
 SAVED_DATA_DIR = "../data/"
-TIME_SERIES_DIR = SAVED_DATA_DIR + "1-Time_Series/" + MODEL_NAME + "/"
-MATRICES_DIR = SAVED_DATA_DIR + "2-Synergy_Redundancy_Matrices/" + MODEL_NAME + "/"
-ATTENTION_WEIGHTS_DIR = SAVED_DATA_DIR + "3-Attention_Weights_Prompts/" + MODEL_NAME + "/"
+RAW_ATTENTION_DIR = SAVED_DATA_DIR + "1-Raw_Attention/" + MODEL_NAME + "/"
+TIME_SERIES_DIR = SAVED_DATA_DIR + "2-Time_Series/" + MODEL_NAME + "/"
+MATRICES_DIR = SAVED_DATA_DIR + "3-Synergy_Redundancy_Matrices/" + MODEL_NAME + "/"
+ATTENTION_WEIGHTS_DIR = SAVED_DATA_DIR + "4-Attention_Weights_Prompts/" + MODEL_NAME + "/"
 
 PLOTS_TIME_SERIES_DIR = PLOTS_DIR + "1-Time_Series/" + MODEL_NAME + "/"
 PLOTS_SYNERGY_REDUNDANCY_DIR = PLOTS_DIR + "2-Redundancy_Synergy_Matrices/" + MODEL_NAME + "/"
