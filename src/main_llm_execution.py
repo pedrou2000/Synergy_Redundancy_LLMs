@@ -11,8 +11,8 @@ from transformers import AutoTokenizer, BitsAndBytesConfig, GemmaForCausalLM
 import seaborn as sns
 import matplotlib.pyplot as plt
 
-
 # Load the Model
+print("--- Loading Model: ", constants.MODEL_NAME, " ---\n\n")
 device = torch.device("cuda")
 login(token = TOKEN)
 attn_implementation="eager" # GEMMA_ATTENTION_CLASSES = {"eager": GemmaAttention, "flash_attention_2": GemmaFlashAttention2, "sdpa": GemmaSdpaAttention,}
@@ -26,7 +26,7 @@ model = AutoModelForCausalLM.from_pretrained(
     attn_implementation=attn_implementation, # Make sure to use the adequate attention layer in order to 
 )
 model.eval()
-print("Loaded Model Name: ", model.config.name_or_path)
+print("Loaded Model Name: ", model.config.name_or_path, '\n\n')
 print("Model: ", model)
 print("Attention Layers Implementation: ", model.config._attn_implementation)
 print(f"Number of layers: {constants.NUM_LAYERS}")
@@ -34,6 +34,7 @@ print(f"Number of attention heads per layer: {constants.NUM_HEADS_PER_LAYER}")
 
 
 # Generate Time Series
+print("\n\n--- Generating Time Series ---\n\n")
 random_input_length, num_tokens_to_generate, temperature = 24, 100, 0.3
 generated_text, attention_params, time_series = {}, {}, {}
 
@@ -53,6 +54,7 @@ for cognitive_task in constants.PROMPT_CATEGORIES:
 
 
 # Attention Weights Average Activation per Task Category and Attention Head
+print("\n\n--- Generating Attention Weights ---\n\n")
 base_plot_path = constants.PLOTS_HEAD_ACTIVATIONS_ANALYSIS + datetime.now().strftime("%Y%m%d_%H%M%S") + '/'
 attention_weights_prompts, generated_text = solve_prompts(constants.PROMPTS, model, tokenizer, device, num_tokens_to_generate=64,temperature=0.7, attention_measure=constants.ATTENTION_MEASURE)
 save_attention_weights(attention_weights_prompts, generated_text)

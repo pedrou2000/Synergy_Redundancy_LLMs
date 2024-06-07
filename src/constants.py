@@ -12,7 +12,7 @@ MODEL_NAMES = {
     "6": "meta-llama/Llama-2-7b-chat-hf",
     "7": "meta-llama/Llama-2-13b-chat-hf"
 }
-MODEL_NAME = MODEL_NAMES["4"]
+MODEL_NAME = MODEL_NAMES["2"]
 
 config = AutoConfig.from_pretrained(MODEL_NAME)
 NUM_LAYERS = config.num_hidden_layers if hasattr(config, 'num_hidden_layers') else config.n_layer
