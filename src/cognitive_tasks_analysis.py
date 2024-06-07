@@ -218,17 +218,27 @@ def plot_all_heatmaps(all_attention_weights, save=False, base_plot_path=None):
         for category, attention_weights in all_attention_weights[metric].items():
             compute_and_plot_attention_heatmap(attention_weights, plot_heatmap=True, save=save, base_plot_path=base_plot_path + f"{metric}/{category}_heatmap")
 
-def save_attention_weights(attention_weights_prompts, base_plot_path=None):
-    if not base_plot_path:
-        base_plot_path = constants.ATTENTION_WEIGHTS_DIR
+def save_attention_weights(attention_weights_prompts, generated_text, base_save_path=None):
+    if not base_save_path:
+        # Assuming 'constants.MATRICES_DIR' is defined and is a valid path
+        base_save_path = constants.ATTENTION_WEIGHTS_DIR + datetime.now().strftime("%Y%m%d_%H%M%S") + '/'
+    
+    # Extract directory from base_save_path
+    dir_path = os.path.dirname(base_save_path)
     
     # Create the directory if it does not exist
-    os.makedirs(base_plot_path, exist_ok=True)
-
-    file_attention_weights = base_plot_path + datetime.now().strftime("%Y%m%d_%H%M%S") + '.pkl'
-
-    with open(file_attention_weights, 'wb') as file:
+    os.makedirs(dir_path, exist_ok=True)
+    
+    # Now save the file
+    with open(base_save_path + 'attention_params.pkl', 'wb') as file:
         pickle.dump(attention_weights_prompts, file)
+    # Save generated text as a txt file in the same directory
+    with open(base_save_path + 'generated_text.txt', 'w') as file:
+        for category, answers in generated_text.items():
+            file.write(f"{category}:\n")
+            for answer in answers:
+                file.write(f"- {answer}\n")
+            file.write("\n")  # Add an extra newline for better readability
 
 def load_attention_weights(n=0, base_plot_path=None):
     attention_weights_dirs = sorted(os.listdir(constants.ATTENTION_WEIGHTS_DIR))

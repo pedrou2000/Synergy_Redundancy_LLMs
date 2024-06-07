@@ -10,7 +10,7 @@ def sort_categories(categories):
     swaps_overlay = [(1,2), (0,1)]
     for i, j in swaps_overlay:
         categories[i], categories[j] = categories[j], categories[i]
-    print(categories)
+    # print(categories)
     return categories
 
 
