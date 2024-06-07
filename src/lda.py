@@ -40,8 +40,9 @@ def plot_lda_results(X_r, y, labels, save=False, base_plot_path=None):
         plot_path = f"{base_plot_path}lda.png"
         os.makedirs(os.path.dirname(plot_path), exist_ok=True)
         plt.savefig(plot_path, bbox_inches='tight')
-
-    plt.show()
+        plt.close()
+    else:
+        plt.show()
 
 def perform_lda_analysis(all_attention_weights, n_components=2, save=False, base_plot_path=None):
     """
@@ -54,14 +55,17 @@ def perform_lda_analysis(all_attention_weights, n_components=2, save=False, base
     Returns:
     None. Displays a plot of the LDA results.
     """
-    # Reshape the data
-    X, y = reshape_data(all_attention_weights)
+    if base_plot_path is None:
+        base_plot_path = constants.PLOTS_LDA + datetime.now().strftime("%Y%m%d_%H%M%S") + '/'
+    for metric, attention_weights in all_attention_weights.items():
+        # Reshape the data
+        X, y = reshape_data(attention_weights)
 
-    # Apply LDA
-    X_r, lda = apply_lda(X, y, n_components)
+        # Apply LDA
+        X_r, lda = apply_lda(X, y, n_components)
 
-    # Get the labels from the keys of the dictionary, which represent categories
-    labels = list(all_attention_weights.keys())
+        # Get the labels from the keys of the dictionary, which represent categories
+        labels = list(attention_weights.keys())
 
-    # Plot the results
-    plot_lda_results(X_r, y, labels, save, base_plot_path)
+        # Plot the results
+        plot_lda_results(X_r, y, labels, save, base_plot_path+ metric + '-')

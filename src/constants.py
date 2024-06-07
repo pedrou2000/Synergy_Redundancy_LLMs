@@ -3,14 +3,16 @@ from transformers import AutoConfig
 CACHE_DIR_BITBUCKET = "/vol/bitbucket/pu22/Transformers/" # Bitbucket cache directory
 CACHE_DIR_LOCAL = "/homes/pu22/.cache/huggingface/hub" # Local cache directory
 
-
-# MODEL_NAME = 'meta-llama/Llama-2-13b-chat-hf'
-# MODEL_NAME = 'meta-llama/Llama-2-7b-chat-hf'
-# MODEL_NAME = "meta-llama/Meta-Llama-3-8B-Instruct"
-# MODEL_NAME = "meta-llama/Meta-Llama-3-70B-Instruct"
-MODEL_NAME = "google/gemma-1.1-7b-it" # 28 Layers; 16 Heads/Layer => 448 Heads
-# MODEL_NAME = "google/gemma-1.1-2b-it"
-# MODEL_NAME = "google/gemma-2b-it"
+MODEL_NAMES = {
+    "1": "google/gemma-2b-it",
+    "2": "google/gemma-1.1-2b-it",
+    "3": "google/gemma-1.1-7b-it",
+    "4": "meta-llama/Meta-Llama-3-8B-Instruct",
+    "5": "meta-llama/Meta-Llama-3-70B-Instruct",
+    "6": "meta-llama/Llama-2-7b-chat-hf",
+    "7": "meta-llama/Llama-2-13b-chat-hf"
+}
+MODEL_NAME = MODEL_NAMES["4"]
 
 config = AutoConfig.from_pretrained(MODEL_NAME)
 NUM_LAYERS = config.num_hidden_layers if hasattr(config, 'num_hidden_layers') else config.n_layer
@@ -22,7 +24,7 @@ LOAD_ATTENTION_WEIGHTS = False
 
 METRICS_TRANSFORMER = ['attention_weights'] if not MODIFIED_OUTPUT_ATTENTIONS else ['projected_Q', 'attention_weights', 'attention_outputs']
 AGGREGRATION_METHODS = ['norm', 'mean', 'entropy', 'max']
-ATTENTION_MEASURE = METRICS_TRANSFORMER[0 if MODIFIED_OUTPUT_ATTENTIONS else 0]
+ATTENTION_MEASURE = METRICS_TRANSFORMER[1 if MODIFIED_OUTPUT_ATTENTIONS else 0]
 
 
 # Directories 
@@ -43,46 +45,7 @@ PLOTS_ACTIVATIONS_SYN_RED_GRAD = PLOTS_DIR + "7-Activations_vs_Synergy-Redundanc
 PLOTS_ACTIVATIONS_TASKS = PLOTS_DIR + "8-Most_Activated_Heads_per_Cognitive_Task/" + MODEL_NAME + "/"
 
 # Prompts
-prompts = {
-    "math_operations": [
-        "What is the sum of 457 and 674?",
-        "Calculate the product of 23 and 89.",
-        "If you divide 144 by 12, what do you get?",
-        "Subtract 321 from 789 and provide the result.",
-        "What is the square of 16?",
-        "Find the square root of 256.",
-        "If a rectangle has a length of 14 and a width of 5, what is its area?",
-        "What is 15 per cent of 200?",
-        "How many prime numbers are there between 1 and 20?",
-        "If I save $50 each month, how much will I have saved after one year?"
-    ],
-    "creative_writing": [
-        "Describe a world where water is scarce, and every drop counts.",
-        "Write a story about a child who discovers they can speak to animals.",
-        "Imagine a city that floats in the sky. What does it look like, and how do people live?",
-        "Create a tale of a lost civilization hidden beneath the ocean.",
-        "Envision a future where humans have merged with technology.",
-        "Tell the story of a mystical forest protected by ancient spirits.",
-        "Describe a journey to a planet with two suns and three moons.",
-        "Write about a character who can manipulate time, but with consequences.",
-        "Imagine a world where dreams are currency. How does society function?",
-        "Craft a story around a magical artifact that can change the seasons at will."
-    ],
-    "grammatical_errors": [
-        "Correct the error: He go to school every day.",
-        "Correct the error: She have two cats and a dogs.",
-        "Correct the error: I eats breakfast at 8:00 in the morning.",
-        "Correct the error: They is planning a trip to Paris next month.",
-        "Correct the error: He don't like going to the gym.",
-        "Correct the error: It's raining, but he forget his umbrella at home.",
-        "Correct the error: Me and my friend are going to the beach tomorrow.",
-        "Correct the error: She's happy because she passed she's exams.",
-        "Correct the error: There's many reasons why I didn't attend the meeting.",
-        "Correct the error: I can't find my keys. Have you saw them?"
-    ]
-}
-
-prompts_2 = {
+PROMPTS = {
     "syntax_and_grammar_recognition": [
         "Correct the error: He go to school every day.",
         "Correct the error: She have two cats and a dogs.",
@@ -156,3 +119,5 @@ prompts_2 = {
         "Imagine a scenario where a character has to forgive someone who wronged them."
     ]
 }
+
+PROMPT_CATEGORIES = list(PROMPTS.keys())

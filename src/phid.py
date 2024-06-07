@@ -204,7 +204,7 @@ def plot_all_PhiID(global_matrices, base_plot_path=None, save=True):
         plt.tight_layout()
         
         if save:
-            plot_path = os.path.join(base_plot_path, f'{metric}_PhiID_matrices.png')
+            plot_path = os.path.join(base_plot_path, f'{metric}/PhiID_matrices.png')
             os.makedirs(os.path.dirname(plot_path), exist_ok=True)
             plt.savefig(plot_path)
         else:
@@ -270,7 +270,7 @@ def plot_averages_per_head(averages, base_plot_path=None, save=False, use_heatma
             ax.set_yticklabels([f"{i+1}" for i in range(num_heads_per_layer)], rotation=0)
             plt.tight_layout()
 
-            synergy_plot_path = f"{base_plot_path}{metric}_synergy_heatmap.png"
+            synergy_plot_path = f"{base_plot_path}{metric}/synergy_heatmap.png"
             if save:
                 os.makedirs(os.path.dirname(synergy_plot_path), exist_ok=True)
                 plt.savefig(synergy_plot_path, bbox_inches='tight')
@@ -294,7 +294,7 @@ def plot_averages_per_head(averages, base_plot_path=None, save=False, use_heatma
             ax.set_yticklabels([f"{i+1}" for i in range(num_heads_per_layer)], rotation=0)
             plt.tight_layout()
 
-            redundancy_plot_path = f"{base_plot_path}{metric}_redundancy_heatmap.png"
+            redundancy_plot_path = f"{base_plot_path}{metric}/redundancy_heatmap.png"
             if save:
                 os.makedirs(os.path.dirname(redundancy_plot_path), exist_ok=True)
                 plt.savefig(redundancy_plot_path, bbox_inches='tight')
@@ -314,7 +314,7 @@ def plot_averages_per_head(averages, base_plot_path=None, save=False, use_heatma
             ax.set_title(f'Average Synergy and Redundancy per Head for {metric}')
             ax.legend()
 
-            line_plot_path = f"{base_plot_path}{metric}_averages_line.png"
+            line_plot_path = f"{base_plot_path}{metric}/averages_line.png"
             if save:
                 os.makedirs(os.path.dirname(line_plot_path), exist_ok=True)
                 plt.savefig(line_plot_path, bbox_inches='tight')
@@ -357,7 +357,7 @@ def plot_synergy_redundancy_rank_gradient(rank_gradients, base_plot_path=None, s
             else:
                 bar.set_edgecolor('red')
         
-        plot_path = f"{base_plot_path}{metric}_rank_gradient.png"
+        plot_path = f"{base_plot_path}{metric}/rank_gradient.png"
         
         if save:
             os.makedirs(os.path.dirname(plot_path), exist_ok=True)
@@ -397,7 +397,7 @@ def plot_gradient_percentile(gradient_percentiles, base_plot_path=None, save=Fal
         ax.set_title(f'Synergy-Redundancy Gradient Percentile for {metric}')
         ax.grid(True, which='both', linestyle='--', linewidth=0.5)
         
-        plot_path = f"{base_plot_path}{metric}_gradient_percentile.png"
+        plot_path = f"{base_plot_path}{metric}/gradient_percentile.png"
         
         if save:
             os.makedirs(os.path.dirname(plot_path), exist_ok=True)
@@ -469,7 +469,7 @@ def plot_gradient_rank(gradient_ranks, base_plot_path=None, save=False, use_heat
             ax.set_title(f'Synergy-Redundancy Gradient Rank for {metric}')
             ax.grid(True, which='both', linestyle='--', linewidth=0.5)
 
-        plot_path = f"{base_plot_path}{metric}_gradient_rank.png"
+        plot_path = f"{base_plot_path}{metric}/gradient_rank.png"
 
         if save:
             os.makedirs(os.path.dirname(plot_path), exist_ok=True)
@@ -505,7 +505,7 @@ def plot_averages_per_layer(averages, base_plot_path=None, save=False, num_heads
         ax.set_xticks(range(1, num_layers + 1))  # Set tick positions
         ax.set_xticklabels([str(i) for i in range(1, num_layers + 1)])  # Label each tick with the layer number
 
-        plot_path = f"{base_plot_path}{metric}_averages_per_layer.png"
+        plot_path = f"{base_plot_path}{metric}/averages_per_layer.png"
 
         if save:
             os.makedirs(os.path.dirname(plot_path), exist_ok=True)
@@ -545,7 +545,7 @@ def plot_average_ranks_per_layer(gradient_ranks, base_plot_path=None, save=False
         ax.set_xticks(range(1, num_layers + 1))  # Set tick positions
         ax.set_xticklabels([str(i) for i in range(1, num_layers + 1)])  # Label each tick with the layer number
 
-        plot_path = f"{base_plot_path}{metric}_average_ranks_per_layer.png"
+        plot_path = f"{base_plot_path}{metric}/average_ranks_per_layer.png"
 
         if save:
             os.makedirs(os.path.dirname(plot_path), exist_ok=True)
