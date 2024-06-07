@@ -4,23 +4,28 @@ CACHE_DIR_BITBUCKET = "/vol/bitbucket/pu22/Transformers/" # Bitbucket cache dire
 CACHE_DIR_LOCAL = "/homes/pu22/.cache/huggingface/hub" # Local cache directory
 
 MODEL_NAMES = {
-    "1": "google/gemma-2b-it",
-    "2": "google/gemma-1.1-2b-it",
-    "3": "google/gemma-1.1-7b-it",
-    "4": "meta-llama/Meta-Llama-3-8B-Instruct",
-    "5": "meta-llama/Meta-Llama-3-70B-Instruct",
-    "6": "meta-llama/Llama-2-7b-chat-hf",
-    "7": "meta-llama/Llama-2-13b-chat-hf"
+    1: {"HF_NAME": "google/gemma-2b-it", "FOLDER_NAME": "1-Gemma-2b-it"},
+    2: {"HF_NAME": "google/gemma-1.1-2b-it", "FOLDER_NAME": "2-Gemma-1.1-2b-it"},
+    3: {"HF_NAME": "google/gemma-1.1-7b-it", "FOLDER_NAME": "3-Gemma-1.1-7b-it"},
+    4: {"HF_NAME": "meta-llama/Meta-Llama-3-8B-Instruct", "FOLDER_NAME": "4-Llama-3-8B-Instruct"},
+    5: {"HF_NAME": "meta-llama/Meta-Llama-3-70B-Instruct", "FOLDER_NAME": "5-Llama-3-70B-Instruct"},
+    6: {"HF_NAME": "meta-llama/Llama-2-7b-chat-hf", "FOLDER_NAME": "6-Llama-2-7b-chat-hf"},
+    7: {"HF_NAME": "meta-llama/Llama-2-13b-chat-hf", "FOLDER_NAME": "7-Llama-2-13b-chat-hf"},
 }
-MODEL_NAME = MODEL_NAMES["2"]
+MODEL_NUMBER = 2
+MODEL_NAME = MODEL_NAMES[MODEL_NUMBER]["HF_NAME"]
+FOLDER_MODEL_NAME = MODEL_NAMES[MODEL_NUMBER]["FOLDER_NAME"]
 
 config = AutoConfig.from_pretrained(MODEL_NAME)
 NUM_LAYERS = config.num_hidden_layers if hasattr(config, 'num_hidden_layers') else config.n_layer
 NUM_HEADS_PER_LAYER = config.num_attention_heads if hasattr(config, 'num_attention_heads') else config.n_head
 NUM_TOTAL_HEADS = NUM_LAYERS * NUM_HEADS_PER_LAYER
-
 MODIFIED_OUTPUT_ATTENTIONS = True
-LOAD_ATTENTION_WEIGHTS = False
+
+GENERATE_RAW_ATTENTION_AND_TIME_SERIES = False
+COMPUTE_PID = False
+GENERATE_ATTENTION_WEIGHTS = False
+LOAD_MODEL = GENERATE_ATTENTION_WEIGHTS or COMPUTE_PID or GENERATE_RAW_ATTENTION_AND_TIME_SERIES
 
 METRICS_TRANSFORMER = ['attention_weights'] if not MODIFIED_OUTPUT_ATTENTIONS else ['projected_Q', 'attention_weights', 'attention_outputs']
 AGGREGRATION_METHODS = ['norm', 'mean', 'entropy', 'max']
@@ -28,21 +33,18 @@ ATTENTION_MEASURE = METRICS_TRANSFORMER[1 if MODIFIED_OUTPUT_ATTENTIONS else 0]
 
 
 # Directories 
-PLOTS_DIR = "../plots/"
-SAVED_DATA_DIR = "../data/"
-RAW_ATTENTION_DIR = SAVED_DATA_DIR + "1-Raw_Attention/" + MODEL_NAME + "/"
-TIME_SERIES_DIR = SAVED_DATA_DIR + "2-Time_Series/" + MODEL_NAME + "/"
-MATRICES_DIR = SAVED_DATA_DIR + "3-Synergy_Redundancy_Matrices/" + MODEL_NAME + "/"
-ATTENTION_WEIGHTS_DIR = SAVED_DATA_DIR + "4-Attention_Weights_Prompts/" + MODEL_NAME + "/"
+PLOTS_DIR = "../plots/" + FOLDER_MODEL_NAME + "/"
+SAVED_DATA_DIR = "../data/" + FOLDER_MODEL_NAME + "/"
 
-PLOTS_TIME_SERIES_DIR = PLOTS_DIR + "1-Time_Series/" + MODEL_NAME + "/"
-PLOTS_SYNERGY_REDUNDANCY_DIR = PLOTS_DIR + "2-Redundancy_Synergy_Matrices/" + MODEL_NAME + "/"
-PLOTS_ALL_PHID_DIR = PLOTS_DIR + "3-All_PhiID_Matrices/" + MODEL_NAME + "/"
-PLOTS_SYNERGY_REDUNDANCY_GRADIENTS = PLOTS_DIR + "4-Redundancy_Synergy_Gradients/" + MODEL_NAME + "/"
-PLOTS_HEAD_ACTIVATIONS_ANALYSIS = PLOTS_DIR + "5-Head_Activations_Analysis/" + MODEL_NAME + "/"
-PLOTS_LDA = PLOTS_DIR + "6-LDA_Head_Activations/" + MODEL_NAME + "/"
-PLOTS_ACTIVATIONS_SYN_RED_GRAD = PLOTS_DIR + "7-Activations_vs_Synergy-Redundancy_Rank_Gradient/" + MODEL_NAME + "/"
-PLOTS_ACTIVATIONS_TASKS = PLOTS_DIR + "8-Most_Activated_Heads_per_Cognitive_Task/" + MODEL_NAME + "/"
+RAW_ATTENTION_DIR = SAVED_DATA_DIR + "1-Raw_Attention/"
+TIME_SERIES_DIR = SAVED_DATA_DIR + "2-Time_Series/"
+MATRICES_DIR = SAVED_DATA_DIR + "3-Synergy_Redundancy_Matrices/"
+ATTENTION_WEIGHTS_DIR = SAVED_DATA_DIR + "4-Attention_Weights_Prompts/"
+
+PLOTS_TIME_SERIES_DIR = PLOTS_DIR + "1-Time_Series/"
+PLOTS_SYNERGY_REDUNDANCY_DIR = PLOTS_DIR + "2-Synergy_Redundancy/"
+PLOTS_HEAD_ACTIVATIONS_COGNITIVE_TASKS = PLOTS_DIR + "3-Head_Activations_Cognitive_Tasks/"
+PLOT_SYNERGY_REDUNDANCY_TASK_CORRELATIONS = PLOTS_DIR + "4-Synergy-Redundancy_vs_Cognitive_Task_Correlations/"
 
 # Prompts
 PROMPTS = {

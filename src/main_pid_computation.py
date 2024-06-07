@@ -14,13 +14,16 @@ import matplotlib.pyplot as plt
 random_input_length, num_tokens_to_generate, temperature = 24, 100, 0.3
 generated_text, attention_params, time_series = {}, {}, {}
 
-for cognitive_task in constants.prompts_2.keys():
+for cognitive_task in constants.PROMPT_CATEGORIES:
     time_series[cognitive_task] = load_time_series(base_load_path=constants.TIME_SERIES_DIR+cognitive_task+".pt")
 
 
 all_matrices, synergy_matrices, redundancy_matrices = {}, {}, {}
-for cognitive_task in list(constants.prompts_2.keys()):
-    print(cognitive_task)
+for cognitive_task in constants.PROMPT_CATEGORIES:
+    print("\n--- Computing PhiID for task ", cognitive_task, " ---")
     all_matrices[cognitive_task], synergy_matrices[cognitive_task], redundancy_matrices[cognitive_task] = compute_PhiID(time_series[cognitive_task],
                 save=True, kind="gaussian", base_save_path=constants.MATRICES_DIR+cognitive_task+'.pt')
-    plot_synergy_redundancy_PhiID(synergy_matrices[cognitive_task], redundancy_matrices[cognitive_task], save=True, base_plot_path=constants.PLOTS_SYNERGY_REDUNDANCY_DIR+cognitive_task+"/")
+
+# Compute and Save Average Prompt Matrices
+all_matrices, synergy_matrices, redundancy_matrices = average_synergy_redundancies_matrices_cognitive_tasks(all_matrices, synergy_matrices, redundancy_matrices)
+save_matrices(all_matrices, synergy_matrices, redundancy_matrices, base_save_path=constants.MATRICES_DIR + 'average_prompts' + '.pt')

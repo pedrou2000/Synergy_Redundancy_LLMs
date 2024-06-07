@@ -75,7 +75,7 @@ def generate_text_with_attention(model, tokenizer, num_tokens_to_generate: int, 
 def save_raw_attention(generated_text, attention_params, base_save_path=None):
     if not base_save_path:
         # Assuming 'constants.MATRICES_DIR' is defined and is a valid path
-        base_save_path = constants.RAW_ATTENTION_DIR + datetime.now().strftime("%Y%m%d_%H%M%S") + '/'
+        base_save_path = constants.RAW_ATTENTION_DIR 
     
     # Extract directory from base_save_path
     dir_path = os.path.dirname(base_save_path)
@@ -189,7 +189,7 @@ def compute_attention_metrics_norms(attention_params, selected_metrics, num_toke
 
 def save_time_series(time_series, base_save_path=None):
     if not base_save_path:
-        base_save_path = constants.TIME_SERIES_DIR  + datetime.now().strftime("%Y%m%d_%H%M%S") + '.pt'
+        base_save_path = constants.TIME_SERIES_DIR  + 'time_series.pt'
     # Extract directory from base_save_path
     dir_path = os.path.dirname(base_save_path)
     
@@ -218,7 +218,7 @@ def smooth_series(series, window_size=3):
 
 def plot_attention_metrics_norms_over_time(time_series, metrics, num_heads_plot=8, base_plot_path=None, smoothing_window=1, save=False, layer_range=None):
     if not base_plot_path:
-        base_plot_path = constants.PLOTS_TIME_SERIES_DIR + datetime.now().strftime("%Y%m%d_%H%M%S") + '/'
+        base_plot_path = constants.PLOTS_TIME_SERIES_DIR 
 
     if layer_range is None:
         layer_start = 0
@@ -227,7 +227,7 @@ def plot_attention_metrics_norms_over_time(time_series, metrics, num_heads_plot=
         layer_start, layer_end = layer_range
         layer_start = max(layer_start - 1, 0)  # Convert to zero-indexed
         layer_end = min(layer_end, len(time_series[next(iter(metrics))]))  # Ensure layer_end does not exceed number of layers
-
+    i = 1
     for metric in metrics:
         num_layers = layer_end - layer_start
         num_tokens_to_generate = len(time_series[metric][0][0])  # Assuming uniform length across heads
@@ -275,10 +275,11 @@ def plot_attention_metrics_norms_over_time(time_series, metrics, num_heads_plot=
             plt.subplots_adjust(top=0.945)
 
         if save:
-            layer_suffix = f'_layers_{layer_start+1}_to_{layer_end}' if layer_range else ''
-            plot_path = f"{base_plot_path}{metric}{layer_suffix}_norms_over_time.png"
+            layer_suffix = f'_Layers_{layer_start+1}_to_{layer_end}' if layer_range else ''
+            plot_path = f"{base_plot_path}{i}-{metric}{layer_suffix}_Norms_over_Time.png"
             os.makedirs(os.path.dirname(plot_path), exist_ok=True)
             plt.savefig(plot_path, bbox_inches='tight')
+            i+=1
         else:
             plt.show()
         plt.close()

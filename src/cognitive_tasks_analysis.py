@@ -60,7 +60,7 @@ def compute_and_plot_attention_heatmap(time_series_attention_weights, plot_heatm
         plt.tight_layout()
         if save:
             if not base_plot_path:
-                base_plot_path = constants.PLOTS_ACTIVATION_HEATMAPS + datetime.now().strftime("%Y%m%d_%H%M%S") + '/'
+                base_plot_path = constants.PLOTS_ACTIVATION_HEATMAPS 
             
             plot_path = f"{base_plot_path}.png"
             os.makedirs(os.path.dirname(plot_path), exist_ok=True)
@@ -71,8 +71,7 @@ def compute_and_plot_attention_heatmap(time_series_attention_weights, plot_heatm
 
     return average_attention_transposed
 
-def plot_attention_weights_comparison(all_attention_weights, save=True, base_plot_path=None, layer_indices=None, 
-                                      filename='head_activations_comparison'):
+def plot_attention_weights_comparison(all_attention_weights, save=True, base_plot_path=None, layer_indices=None):
     stats_dict = {}
     
     for metric in constants.METRICS_TRANSFORMER:
@@ -150,8 +149,8 @@ def plot_attention_weights_comparison(all_attention_weights, save=True, base_plo
 
         if save:
             if not base_plot_path:
-                base_plot_path = constants.PLOTS_HEAD_ACTIVATIONS_COMPARISON + datetime.now().strftime("%Y%m%d_%H%M%S") + '/'
-            plot_path = f"{base_plot_path}{metric}/{filename}.png"
+                base_plot_path = constants.PLOTS_HEAD_ACTIVATIONS_COMPARISON 
+            plot_path = f"{base_plot_path}{metric}/2-Head_Activation_Comparison.png"
             os.makedirs(os.path.dirname(plot_path), exist_ok=True)
             plt.savefig(plot_path, bbox_inches='tight')
             plt.close()  # Close the plot to prevent it from displaying
@@ -181,7 +180,7 @@ def plot_categories_comparison(all_attention_weights, save=False, base_plot_path
     # Plot category comparison
     
     if base_plot_path is None:
-        base_plot_path = constants.PLOTS_HEAD_ACTIVATIONS_ANALYSIS + datetime.now().strftime("%Y%m%d_%H%M%S") + '/'
+        base_plot_path = constants.PLOTS_HEAD_ACTIVATIONS_COGNITIVE_TASKS 
         if save:
             os.makedirs(base_plot_path, exist_ok=True)
 
@@ -211,17 +210,18 @@ def plot_all_heatmaps(all_attention_weights, save=False, base_plot_path=None):
     for metric in all_attention_weights.keys():
 
         if base_plot_path is None:
-            base_plot_path = constants.PLOTS_HEAD_ACTIVATIONS_ANALYSIS + datetime.now().strftime("%Y%m%d_%H%M%S") + '/'
+            base_plot_path = constants.PLOTS_HEAD_ACTIVATIONS_COGNITIVE_TASKS 
             if save:
                 os.makedirs(base_plot_path, exist_ok=True)
-
+        i = 3
         for category, attention_weights in all_attention_weights[metric].items():
-            compute_and_plot_attention_heatmap(attention_weights, plot_heatmap=True, save=save, base_plot_path=base_plot_path + f"{metric}/{category}_heatmap")
+            compute_and_plot_attention_heatmap(attention_weights, plot_heatmap=True, save=save, base_plot_path=base_plot_path + f"{metric}/1-Heatmaps/{i}-{category}")
+            i+=1
 
 def save_attention_weights(attention_weights_prompts, generated_text, base_save_path=None):
     if not base_save_path:
         # Assuming 'constants.MATRICES_DIR' is defined and is a valid path
-        base_save_path = constants.ATTENTION_WEIGHTS_DIR + datetime.now().strftime("%Y%m%d_%H%M%S") + '/'
+        base_save_path = constants.ATTENTION_WEIGHTS_DIR 
     
     # Extract directory from base_save_path
     dir_path = os.path.dirname(base_save_path)
@@ -233,17 +233,15 @@ def save_attention_weights(attention_weights_prompts, generated_text, base_save_
     with open(base_save_path + 'attention_params.pkl', 'wb') as file:
         pickle.dump(attention_weights_prompts, file)
     # Save generated text as a txt file in the same directory
-    with open(base_save_path + 'generated_text.txt', 'w') as file:
-        for category, answers in generated_text.items():
-            file.write(f"{category}:\n")
-            for answer in answers:
-                file.write(f"- {answer}\n")
-            file.write("\n")  # Add an extra newline for better readability
+    for category, answers in generated_text.items():
+        with open(base_save_path + 'answers-' + category + '.txt', 'w') as file:
+            for prompt, answer in zip(constants.PROMPTS[category], answers):
+                file.write(f"--- Prompt ---\n{prompt}\n")
+                file.write(f"--- Answer ---\n{answer}\n"+ "-"*50 + "\n")
 
 def load_attention_weights(n=0, base_plot_path=None):
-    attention_weights_dirs = sorted(os.listdir(constants.ATTENTION_WEIGHTS_DIR))
     if not base_plot_path:
-        file_attention_weights = constants.ATTENTION_WEIGHTS_DIR + attention_weights_dirs[n]
+        file_attention_weights = constants.ATTENTION_WEIGHTS_DIR + 'attention_params.pkl'
 
     with open(file_attention_weights, 'rb') as file:
         attention_weights_prompts = pickle.load(file)

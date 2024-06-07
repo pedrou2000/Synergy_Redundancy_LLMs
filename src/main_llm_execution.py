@@ -17,7 +17,6 @@ device = torch.device("cuda")
 login(token = TOKEN)
 attn_implementation="eager" # GEMMA_ATTENTION_CLASSES = {"eager": GemmaAttention, "flash_attention_2": GemmaFlashAttention2, "sdpa": GemmaSdpaAttention,}
 
-
 tokenizer = AutoTokenizer.from_pretrained(constants.MODEL_NAME, cache_dir=constants.CACHE_DIR_BITBUCKET)
 model = AutoModelForCausalLM.from_pretrained(
     constants.MODEL_NAME, 
@@ -26,15 +25,10 @@ model = AutoModelForCausalLM.from_pretrained(
     attn_implementation=attn_implementation, # Make sure to use the adequate attention layer in order to 
 )
 model.eval()
-print("Loaded Model Name: ", model.config.name_or_path, '\n\n')
-print("Model: ", model)
-print("Attention Layers Implementation: ", model.config._attn_implementation)
-print(f"Number of layers: {constants.NUM_LAYERS}")
-print(f"Number of attention heads per layer: {constants.NUM_HEADS_PER_LAYER}")
 
 
 # Generate Time Series
-print("\n\n--- Generating Time Series ---\n\n")
+print("\n\n\n--- Generating Time Series ---\n\n")
 random_input_length, num_tokens_to_generate, temperature = 24, 100, 0.3
 generated_text, attention_params, time_series = {}, {}, {}
 
@@ -48,16 +42,10 @@ for cognitive_task in constants.PROMPT_CATEGORIES:
     
     time_series[cognitive_task] = compute_attention_metrics_norms(attention_params[cognitive_task], constants.METRICS_TRANSFORMER, num_tokens_to_generate, aggregation_type='norm')
     save_time_series(time_series[cognitive_task], base_save_path=constants.TIME_SERIES_DIR+cognitive_task+".pt")
-    plot_attention_metrics_norms_over_time(time_series[cognitive_task], metrics=constants.METRICS_TRANSFORMER, num_heads_plot=8, 
-        smoothing_window=10, save=True, base_plot_path=constants.PLOTS_TIME_SERIES_DIR+cognitive_task+"/")
-    print(f'Generated Text for {cognitive_task}: {generated_text[cognitive_task]}')
 
 
 # Attention Weights Average Activation per Task Category and Attention Head
-print("\n\n--- Generating Attention Weights ---\n\n")
-base_plot_path = constants.PLOTS_HEAD_ACTIVATIONS_ANALYSIS + datetime.now().strftime("%Y%m%d_%H%M%S") + '/'
+print("\n\n\n--- Generating Attention Weights ---\n\n")
 attention_weights_prompts, generated_text = solve_prompts(constants.PROMPTS, model, tokenizer, device, num_tokens_to_generate=64,temperature=0.7, attention_measure=constants.ATTENTION_MEASURE)
 save_attention_weights(attention_weights_prompts, generated_text)
-summary_stats_prompts = plot_categories_comparison(attention_weights_prompts, save=True, base_plot_path=base_plot_path, split_half=False, split_third=False)
-plot_all_heatmaps(attention_weights_prompts, save=True, base_plot_path=base_plot_path)
 

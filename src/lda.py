@@ -35,9 +35,9 @@ def plot_lda_results(X_r, y, labels, save=False, base_plot_path=None):
 
     if save:
         if not base_plot_path:
-            base_plot_path = constants.PLOTS_LDA + datetime.now().strftime("%Y%m%d_%H%M%S") + '/'
+            base_plot_path = constants.PLOTS_LDA 
         
-        plot_path = f"{base_plot_path}lda.png"
+        plot_path = f"{base_plot_path}3-LDA.png"
         os.makedirs(os.path.dirname(plot_path), exist_ok=True)
         plt.savefig(plot_path, bbox_inches='tight')
         plt.close()
@@ -56,7 +56,7 @@ def perform_lda_analysis(all_attention_weights, n_components=2, save=False, base
     None. Displays a plot of the LDA results.
     """
     if base_plot_path is None:
-        base_plot_path = constants.PLOTS_LDA + datetime.now().strftime("%Y%m%d_%H%M%S") + '/'
+        base_plot_path = constants.PLOTS_HEAD_ACTIVATIONS_COGNITIVE_TASKS 
     for metric, attention_weights in all_attention_weights.items():
         # Reshape the data
         X, y = reshape_data(attention_weights)
@@ -68,4 +68,4 @@ def perform_lda_analysis(all_attention_weights, n_components=2, save=False, base
         labels = list(attention_weights.keys())
 
         # Plot the results
-        plot_lda_results(X_r, y, labels, save, base_plot_path+ metric + '-')
+        plot_lda_results(X_r, y, labels, save, base_plot_path+ metric + '/')
