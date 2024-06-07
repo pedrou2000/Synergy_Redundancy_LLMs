@@ -1,8 +1,6 @@
 **/__pycache__/
 src/hf_token.py
 data/
-backup/
-plots/
 data/1-Raw_Attention/meta-llama
 data/2-Time_Series/meta-llama
 data/3-Synergy_Redundancy_Matrices/meta-llama
