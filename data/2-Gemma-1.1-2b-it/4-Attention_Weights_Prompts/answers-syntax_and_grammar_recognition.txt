@@ -1,0 +1,92 @@
+--- Prompt ---
+Correct the error: He go to school every day.
+--- Answer ---
+Correct the error: He go to school every day.
+
+The correct sentence should be: "He goes to school every day."
+
+In this sentence, the correct verb form is "goes," which is the present tense of "go."Corrected Sentence:
+"He goes to school every day."The error in the sentence was using the present tense "go
+--------------------------------------------------
+--- Prompt ---
+Correct the error: She have two cats and a dogs.
+--- Answer ---
+Correct the error: She have two cats and a dogs.
+
+The correct sentence should be: She has two cats and a dog.
+
+"Have" is used for present tense, while "has" is used for past tense.The sentence "She have two cats and a dogs" contains incorrect tense usage. The correct tense should be "has" to match the
+--------------------------------------------------
+--- Prompt ---
+Correct the error: I eats breakfast at 8:00 in the morning.
+--- Answer ---
+Correct the error: I eats breakfast at 8:00 in the morning.
+
+The correct sentence should be: "I eat breakfast at 8:00 in the morning."
+
+"I eats" is incorrect because it is misspelled.Corrected sentence: "I eat"Corrected sentence is grammatically correct and conveys the intended meaning.Corrected sentence: "I eat breakfast at 
+--------------------------------------------------
+--- Prompt ---
+Correct the error: Every students in the classroom has their own laptop.
+--- Answer ---
+Correct the error: Every students in the classroom has their own laptop.
+
+The correct sentence should be: Every student in the classroom has their own laptop.
+
+"Every students" is incorrect because it uses the plural form of the pronoun "student," which is incorrect in this context.The corrected sentence is "Every student in the classroom has their own laptop." This is correct because
+--------------------------------------------------
+--- Prompt ---
+Correct the error: She don't like going to the park on weekends.
+--- Answer ---
+Correct the error: She don't like going to the park on weekends.
+
+The correct sentence is: "She doesn't like going to the park on weekends."
+
+"Don't" is used for present tense, while "does" is used for past tense.Corrected sentence: "She doesn't like going to the park on weekends."The past tense "
+--------------------------------------------------
+--- Prompt ---
+Correct the error: We was happy to see the rainbow after the storm.
+--- Answer ---
+Correct the error: We was happy to see the rainbow after the storm.
+
+The correct sentence should be: "We were happy to see the rainbow after the storm."
+
+"We was happy to see the rainbow after the storm" is incorrect because it uses the plural form of "be" (were) instead of the singular form (is).The corrected sentence "We were happy
+--------------------------------------------------
+--- Prompt ---
+Correct the error: There is many reasons to celebrate today.
+--- Answer ---
+Correct the error: There is many reasons to celebrate today.
+
+The correct sentence should be:
+
+There are many reasons to celebrate today.The error occurs in the use of "There is" instead of "There are."The corrected sentence correctly uses the correct grammatical structure.The corrected sentence is grammatically correct and conveys the intended meaning accurately.It is important
+--------------------------------------------------
+--- Prompt ---
+Correct the error: Him and I went to the market yesterday.
+--- Answer ---
+Correct the error: Him and I went to the market yesterday.
+
+The correct sentence should be:
+"He and I went to the market yesterday."
+
+"Him" is an object pronoun, while "I" is a subject pronoun. In this sentence, the subject is "He and I," so the correct pronoun to use is "He."The error lies
+--------------------------------------------------
+--- Prompt ---
+Correct the error: The books is on the table.
+--- Answer ---
+Correct the error: The books is on the table.
+
+The correct sentence is: The book is on the table.
+
+"The books is" is incorrect because it is a grammatical error.The corrected sentence is "The book is" because it is the correct present tense form of the verb "be".The books is incorrect because it is a grammatical error
+--------------------------------------------------
+--- Prompt ---
+Correct the error: They walks to school together every morning.
+--- Answer ---
+Correct the error: They walks to school together every morning.
+
+The correct sentence is: They walk to school together every morning.
+
+The error occurs in the use of the present tense "walks," which is incorrect as the subject "they" refers to multiple people. The correct verb form is "walk," which is the present tense tense.The error occurs in
+--------------------------------------------------
