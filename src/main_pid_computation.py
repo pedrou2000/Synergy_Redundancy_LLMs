@@ -21,7 +21,7 @@ MODEL_NAMES = {
     6: {"HF_NAME": "meta-llama/Llama-2-7b-chat-hf", "FOLDER_NAME": "6-Llama-2-7b-chat-hf"},
     7: {"HF_NAME": "meta-llama/Meta-Llama-3-70B-Instruct", "FOLDER_NAME": "7-Llama-3-70B-Instruct"},
 }
-MODEL_NUMBER = 3
+MODEL_NUMBER = 5
 MODEL_NAME = MODEL_NAMES[MODEL_NUMBER]["HF_NAME"]
 FOLDER_MODEL_NAME = MODEL_NAMES[MODEL_NUMBER]["FOLDER_NAME"]
 
@@ -30,6 +30,9 @@ SAVED_DATA_DIR = "../data/" + FOLDER_MODEL_NAME + "/"
 TIME_SERIES_DIR = SAVED_DATA_DIR + "2-Time_Series/"
 MATRICES_DIR = SAVED_DATA_DIR + "3-Synergy_Redundancy_Matrices/"
 
+print("--- Computing PhiID for model: ", MODEL_NAME, " ---\n")
+print('Loading Time Series Data from ', TIME_SERIES_DIR)
+
 # Compute PhiID for all cognitive tasks
 random_input_length, num_tokens_to_generate, temperature = 24, 100, 0.3
 generated_text, attention_params, time_series = {}, {}, {}
@@ -37,7 +40,7 @@ generated_text, attention_params, time_series = {}, {}, {}
 for cognitive_task in constants.PROMPT_CATEGORIES:
     time_series[cognitive_task] = load_time_series(base_load_path=TIME_SERIES_DIR+cognitive_task+".pt")
 
-
+print('Computing PhiID and saving matrices to ', MATRICES_DIR, '\n', '-'*50, '\n\n')
 all_matrices, synergy_matrices, redundancy_matrices = {}, {}, {}
 for cognitive_task in constants.PROMPT_CATEGORIES:
     print("\n--- Computing PhiID for task ", cognitive_task, " ---")

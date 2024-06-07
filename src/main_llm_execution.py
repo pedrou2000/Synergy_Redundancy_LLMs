@@ -27,25 +27,25 @@ model = AutoModelForCausalLM.from_pretrained(
 model.eval()
 
 
-# Generate Time Series
-print("\n\n\n--- Generating Time Series ---\n\n")
-random_input_length, num_tokens_to_generate, temperature = 24, 100, 0.3
-generated_text, attention_params, time_series = {}, {}, {}
+# # Generate Time Series
+# print("\n\n\n--- Generating Time Series ---\n")
+# random_input_length, num_tokens_to_generate, temperature = 24, 100, 0.3
+# generated_text, attention_params, time_series = {}, {}, {}
 
-for cognitive_task in constants.PROMPT_CATEGORIES:
-    print("Cognitive Task: ", cognitive_task)
-    prompt = constants.PROMPTS[cognitive_task][0]
+# for cognitive_task in constants.PROMPT_CATEGORIES:
+#     print("Cognitive Task: ", cognitive_task)
+#     prompt = constants.PROMPTS[cognitive_task][0]
     
-    generated_text[cognitive_task], attention_params[cognitive_task] = generate_text_with_attention(model, tokenizer, 
-        num_tokens_to_generate, device, prompt=prompt, temperature=temperature, modified_output_attentions=constants.MODIFIED_OUTPUT_ATTENTIONS)
-    save_raw_attention(generated_text[cognitive_task], attention_params[cognitive_task],  base_save_path=constants.RAW_ATTENTION_DIR+cognitive_task+"/")
+#     generated_text[cognitive_task], attention_params[cognitive_task] = generate_text_with_attention(model, tokenizer, 
+#         num_tokens_to_generate, device, prompt=prompt, temperature=temperature, modified_output_attentions=constants.MODIFIED_OUTPUT_ATTENTIONS)
+#     save_raw_attention(generated_text[cognitive_task], attention_params[cognitive_task],  base_save_path=constants.RAW_ATTENTION_DIR+cognitive_task+"/")
     
-    time_series[cognitive_task] = compute_attention_metrics_norms(attention_params[cognitive_task], constants.METRICS_TRANSFORMER, num_tokens_to_generate, aggregation_type='norm')
-    save_time_series(time_series[cognitive_task], base_save_path=constants.TIME_SERIES_DIR+cognitive_task+".pt")
+#     time_series[cognitive_task] = compute_attention_metrics_norms(attention_params[cognitive_task], constants.METRICS_TRANSFORMER, num_tokens_to_generate, aggregation_type='norm')
+#     save_time_series(time_series[cognitive_task], base_save_path=constants.TIME_SERIES_DIR+cognitive_task+".pt")
 
 
 # Attention Weights Average Activation per Task Category and Attention Head
-print("\n\n\n--- Generating Attention Weights ---\n\n")
+print("\n\n\n--- Generating Attention Weights ---\n")
 attention_weights_prompts, generated_text = solve_prompts(constants.PROMPTS, model, tokenizer, device, num_tokens_to_generate=64,temperature=0.7, attention_measure=constants.ATTENTION_MEASURE)
 save_attention_weights(attention_weights_prompts, generated_text)
 
