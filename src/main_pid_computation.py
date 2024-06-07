@@ -21,7 +21,7 @@ MODEL_NAMES = {
     6: {"HF_NAME": "meta-llama/Llama-2-7b-chat-hf", "FOLDER_NAME": "6-Llama-2-7b-chat-hf"},
     7: {"HF_NAME": "meta-llama/Meta-Llama-3-70B-Instruct", "FOLDER_NAME": "7-Llama-3-70B-Instruct"},
 }
-MODEL_NUMBER = 5
+MODEL_NUMBER = 6
 MODEL_NAME = MODEL_NAMES[MODEL_NUMBER]["HF_NAME"]
 FOLDER_MODEL_NAME = MODEL_NAMES[MODEL_NUMBER]["FOLDER_NAME"]
 
@@ -44,7 +44,7 @@ print('Computing PhiID and saving matrices to ', MATRICES_DIR, '\n', '-'*50, '\n
 all_matrices, synergy_matrices, redundancy_matrices = {}, {}, {}
 for cognitive_task in constants.PROMPT_CATEGORIES:
     print("\n--- Computing PhiID for task ", cognitive_task, " ---")
-    all_matrices[cognitive_task], synergy_matrices[cognitive_task], redundancy_matrices[cognitive_task] = compute_PhiID(time_series[cognitive_task],
+    all_matrices[cognitive_task], synergy_matrices[cognitive_task], redundancy_matrices[cognitive_task] = compute_PhiID_parallel(time_series[cognitive_task],
                 save=True, kind="gaussian", base_save_path=MATRICES_DIR+cognitive_task+'.pt')
 
 # Compute and Save Average Prompt Matrices

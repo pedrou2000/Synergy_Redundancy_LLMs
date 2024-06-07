@@ -1,4 +1,5 @@
 from phyid.calculate import calc_PhiID 
+from concurrent.futures import ProcessPoolExecutor, as_completed
 import numpy as np
 import os
 import matplotlib.pyplot as plt
@@ -56,6 +57,56 @@ def compute_PhiID(time_series, tau=1, kind="gaussian", redundancy_measure="MMI",
 
     if save:
          save_matrices(all_matrices, synergy_matrices, redundancy_matrices, base_save_path=base_save_path)
+    
+    return all_matrices, synergy_matrices, redundancy_matrices
+
+def process_pair(src_idx, trg_idx, src, trg, tau, kind, redundancy_measure):
+    check_and_modify_variance(src, src_idx)
+    check_and_modify_variance(trg, trg_idx)
+    atoms_res, _ = calc_PhiID(src, trg, tau, kind, redundancy_measure)
+    return (src_idx, trg_idx, atoms_res)
+
+def compute_PhiID_parallel(time_series, tau=1, kind="gaussian", redundancy_measure="MMI", save=False, base_save_path=None):
+    metrics = list(time_series.keys())
+    all_matrices = {metric: {} for metric in metrics}
+
+    for metric in metrics:
+        print(f"Calculating PhiID for metric: {metric}")
+        num_layers = len(time_series[metric])
+        num_heads_per_layer = len(time_series[metric][0])
+        total_heads = num_layers * num_heads_per_layer
+        
+        example_res, _ = calc_PhiID(time_series[metric][0][0], time_series[metric][0][1], tau, kind, redundancy_measure)
+        keys = list(example_res.keys())
+        
+        global_matrices = {key: np.zeros((total_heads, total_heads)) for key in keys}
+        
+        flat_time_series = [time_series[metric][layer][head] for layer in range(num_layers) for head in range(num_heads_per_layer)] # Flatten the time series
+        
+        tasks = []
+        num_workers = 4  # Set the number of workers you want to use
+        with ProcessPoolExecutor(max_workers=num_workers) as executor:
+            for src_idx in range(total_heads):
+                if src_idx % 50 == 0:
+                    print(f"Submitting tasks for head {src_idx}...")
+                for trg_idx in range(total_heads):
+                    if src_idx != trg_idx:
+                        src = flat_time_series[src_idx]
+                        trg = flat_time_series[trg_idx]
+                        tasks.append(executor.submit(process_pair, src_idx, trg_idx, src, trg, tau, kind, redundancy_measure))
+            
+            for future in as_completed(tasks):
+                src_idx, trg_idx, atoms_res = future.result()
+                for key in keys:
+                    global_matrices[key][src_idx, trg_idx] = np.mean(atoms_res[key])
+        
+        all_matrices[metric] = global_matrices
+    
+    synergy_matrices = {metric: all_matrices[metric]['sts'] for metric in metrics}
+    redundancy_matrices = {metric: all_matrices[metric]['rtr'] for metric in metrics}
+
+    if save:
+        save_matrices(all_matrices, synergy_matrices, redundancy_matrices, base_save_path=base_save_path)
     
     return all_matrices, synergy_matrices, redundancy_matrices
 
