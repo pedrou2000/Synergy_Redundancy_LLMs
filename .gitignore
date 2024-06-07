@@ -1,7 +1,3 @@
 **/__pycache__/
 src/hf_token.py
-data/
-data/1-Raw_Attention/meta-llama
-data/2-Time_Series/meta-llama
-data/3-Synergy_Redundancy_Matrices/meta-llama
-data/4-Attention_Weights_Prompts/meta-llama
+data/2-Gemma-1.1-2b-it/1-Raw_Attention/
