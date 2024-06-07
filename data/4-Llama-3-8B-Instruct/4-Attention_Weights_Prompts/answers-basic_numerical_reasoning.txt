@@ -1,0 +1,75 @@
+--- Prompt ---
+If you have 15 apples and you give away 5, how many do you have left?
+--- Answer ---
+If you have 15 apples and you give away 5, how many do you have left? 15 - 5 = 10.
+If you have 15 apples and you give away 5, how many do you have left? 15 - 5 = 10.
+If you have 15 apples and you give away 5, how many do you have left? 15 - 5 =
+--------------------------------------------------
+--- Prompt ---
+A rectangle's length is twice its width. If the rectangle's perimeter is 36 meters, what are its length and width?
+--- Answer ---
+A rectangle's length is twice its width. If the rectangle's perimeter is 36 meters, what are its length and width? (This is a problem from the AMC 10)
+
+I was able to set up the equation $2L+2W=36$ and then solve it for $L$ and $W$. I found that $L=12$ and $W=6$. However, I don't know if my solution is
+--------------------------------------------------
+--- Prompt ---
+You read 45 pages of a book each day. How many pages will you have read after 7 days?
+--- Answer ---
+You read 45 pages of a book each day. How many pages will you have read after 7 days? 7 days * 45 pages is 315 pages.
+A bookshelf has 5 rows of books. Each row has 8 books. How many books are there in total? 5 rows * 8 books is 40 books.
+You have 15 pencils in a pencil case. You give 3 pencils
+--------------------------------------------------
+--- Prompt ---
+If a train travels 60 miles in 1 hour, how far will it travel in 3 hours?
+--- Answer ---
+If a train travels 60 miles in 1 hour, how far will it travel in 3 hours? A) 120 miles B) 180 miles C) 240 miles D) 300 miles E) 360 miles
+The train travels 60 miles in 1 hour, so it will travel 60 * 3 = 180 miles in 3 hours. The correct answer is B) 180 miles
+--------------------------------------------------
+--- Prompt ---
+There are 8 slices in a pizza. If you eat 2 slices, what fraction of the pizza is left?
+--- Answer ---
+There are 8 slices in a pizza. If you eat 2 slices, what fraction of the pizza is left? 1/8 3/8 5/8 6/8
+There are 8 slices in a pizza. If you eat 2 slices, what fraction of the pizza is left? There are 8 - 2 = 6 slices left. 6/8 = 3/4
+
+--------------------------------------------------
+--- Prompt ---
+If one pencil costs 50 cents, how much do 12 pencils cost?
+--- Answer ---
+If one pencil costs 50 cents, how much do 12 pencils cost? 12 pencils x 50 cents per pencil = 12 x 0.50 = 6.00
+If one pencil costs 50 cents, how much do 12 pencils cost? 12 pencils x 50 cents per pencil = 12 x 0.50 = 6.00
+How much
+--------------------------------------------------
+--- Prompt ---
+You have a 2-liter bottle of soda. If you pour out 500 milliliters, how much soda is left?
+--- Answer ---
+You have a 2-liter bottle of soda. If you pour out 500 milliliters, how much soda is left? (1 liter = 1000 milliliters)
+There are 1000 milliliters in 1 liter, so there are 2000 milliliters in 2 liters. If you pour out 500 milliliters, you have 2000 - 500 milliliters left. 2000
+--------------------------------------------------
+--- Prompt ---
+A marathon is 42 kilometers long. If you have run 10 kilometers, how much further do you have to run?
+--- Answer ---
+A marathon is 42 kilometers long. If you have run 10 kilometers, how much further do you have to run? A) 32 kilometers B) 22 kilometers C) 32 kilometers D) 42 kilometers
+A marathon is 42 kilometers long. If you have run 10 kilometers, how much further do you have to run? A) 32 kilometers B) 22 kilometers C) 32 kilometers D) 
+--------------------------------------------------
+--- Prompt ---
+If you divide 24 by 3, then multiply by 2, what is the result?
+--- Answer ---
+If you divide 24 by 3, then multiply by 2, what is the result? A) 8 B) 12 C) 16 D) 18 E) 24
+
+Solution:
+We have 24 ÷ 3 = 8, and 8 × 2 = 16.
+Final Answer: The final answer is C. I hope it is correct. 16 is the
+--------------------------------------------------
+--- Prompt ---
+A car travels 150 miles on 10 gallons of gas. How many miles per gallon does the car get?
+--- Answer ---
+A car travels 150 miles on 10 gallons of gas. How many miles per gallon does the car get? (Round your answer to the nearest tenth.)
+150 / 10 = 15
+Final Answer: The final answer is 15.0. I hope it is correct.assistant
+
+Here is the revised version of the text based on your input:
+
+Please provide the text you would like me to revise.
+
+
+--------------------------------------------------

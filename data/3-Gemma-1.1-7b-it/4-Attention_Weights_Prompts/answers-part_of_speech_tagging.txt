@@ -1,0 +1,138 @@
+--- Prompt ---
+Identify the parts of speech in the sentence: Quickly, the agile cat climbed the tall tree.
+--- Answer ---
+Identify the parts of speech in the sentence: Quickly, the agile cat climbed the tall tree.
+
+**Answers:**
+
+* **Quickly:** Adverb
+* **the agile cat:** Subject
+* **climbed:** Verb
+* **the tall tree:** Object**Note:** An adverb modifies a verb or an adjective, a subject is the performing or acting entity in a sentence, a verb is the action
+--------------------------------------------------
+--- Prompt ---
+Identify the parts of speech in the sentence: She whispered a secret to her friend during the boring lecture.
+--- Answer ---
+Identify the parts of speech in the sentence: She whispered a secret to her friend during the boring lecture.
+
+**She** - subject
+**whispered** - verb
+**a secret** - object
+**to her friend** - prepositional phrase
+**during the boring lecture** - adverbial phrase**Note:** A prepositional phrase consists of a preposition and its object, while an adverbial phrase consists of
+--------------------------------------------------
+--- Prompt ---
+Identify the parts of speech in the sentence: The sun sets in the west.
+--- Answer ---
+Identify the parts of speech in the sentence: The sun sets in the west.
+
+**The sun** - noun
+**sets** - verb
+**in the west** - prepositional phrase**The sentence is a simple sentence consisting of a noun, a verb, and a prepositional phrase.****Parts of speech:**
+
+- Noun: The sun
+- Verb: sets
+-
+--------------------------------------------------
+--- Prompt ---
+Identify the parts of speech in the sentence: Can you believe this amazing view?
+--- Answer ---
+Identify the parts of speech in the sentence: Can you believe this amazing view?
+
+**Answer:**
+
+* **Can:** Auxiliary verb
+* **you:** Pronoun
+* **believe:** Verb
+* **this:** Determiner
+* **amazing:** Adjective
+* **view:** Noun**Please note:** "view" is the noun in the sentence, not an adjective.
+--------------------------------------------------
+--- Prompt ---
+Identify the parts of speech in the sentence: He quickly finished his homework.
+--- Answer ---
+Identify the parts of speech in the sentence: He quickly finished his homework.
+
+**Answer:**
+
+* **He:** Pronoun
+* **quickly:** Adverb
+* **finished:** Verb
+* **his:** Adjective
+* **homework:** Noun**Note:** An adverb modifies a verb or an adjective, and a pronoun replaces a noun.**Sentence Structure:**
+
+1
+--------------------------------------------------
+--- Prompt ---
+Identify the parts of speech in the sentence: The beautifully decorated cake was a sight to behold.
+--- Answer ---
+Identify the parts of speech in the sentence: The beautifully decorated cake was a sight to behold.
+
+The parts of speech in the sentence are:
+
+- **The:** determiner
+- **beautifully:** adverb
+- **decorated:** past participle
+- **cake:** noun
+- **was:** verb
+- **a:** determiner
+- **sight:** noun
+- **to:** preposition
+-
+--------------------------------------------------
+--- Prompt ---
+Identify the parts of speech in the sentence: They will travel to Japan next month.
+--- Answer ---
+Identify the parts of speech in the sentence: They will travel to Japan next month.
+
+**Answer:**
+
+* **They** - Pronoun
+* **will** - Auxiliary verb
+* **travel** - Main verb
+* **to Japan** - Prepositional phrase
+* **next month** - Adverbial phrase**Note:** A prepositional phrase consists of a preposition and its
+--------------------------------------------------
+--- Prompt ---
+Identify the parts of speech in the sentence: My favorite book was lost.
+--- Answer ---
+Identify the parts of speech in the sentence: My favorite book was lost.
+
+**My** - Pronoun
+**favorite** - Adjective
+**book** - Noun
+**was** - Verb
+**lost** - Adverb**Therefore, the sentence consists of a pronoun, an adjective, a noun, a verb, and an adverb.****Note:** An adverb modifies
+--------------------------------------------------
+--- Prompt ---
+Identify the parts of speech in the sentence: The loud music could be heard from miles away.
+--- Answer ---
+Identify the parts of speech in the sentence: The loud music could be heard from miles away.
+
+**Answer:**
+
+- **The:** definite article
+- **loud:** adjective
+- **music:** noun
+- **could:** modal verb
+- **be:** to be verb
+- **heard:** past participle
+- **from:** preposition
+- **miles:** noun
+- **away:** adverb
+--------------------------------------------------
+--- Prompt ---
+Identify the parts of speech in the sentence: She sold all of her paintings at the art show.
+--- Answer ---
+Identify the parts of speech in the sentence: She sold all of her paintings at the art show.
+
+**Subject:** She
+
+**Verb:** sold
+
+**Preposition:** all of
+
+**Noun:** paintings
+
+**Adverbial phrase:** at the art show**Note:** "All of" is a prepositional phrase that modifies the noun "paintings.""At the art show" is an adverb
+--------------------------------------------------

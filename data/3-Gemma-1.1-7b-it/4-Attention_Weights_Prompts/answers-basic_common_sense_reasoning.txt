@@ -1,0 +1,134 @@
+--- Prompt ---
+If it starts raining while the sun is shining, what weather phenomenon might you expect to see?
+--- Answer ---
+If it starts raining while the sun is shining, what weather phenomenon might you expect to see?
+
+**A) Tornado**
+**B) Cumulus clouds**
+**C) Rainbow**
+**D) Fog**
+
+**Answer:** **C) Rainbow**
+
+**Explanation:** A rainbow forms when sunlight is refracted (bent) by water droplets suspended in the air. When rain begins after a period
+--------------------------------------------------
+--- Prompt ---
+Why do people wear sunglasses?
+--- Answer ---
+Why do people wear sunglasses?
+
+* To protect their eyes from UV rays
+* To look cool
+* To block out glare
+* All of the above
+
+
+**The answer is:** All of the above.
+
+Sunglasses are worn for multiple purposes, including protecting eyes from UV rays, blocking out glare, and enhancing style.**Explanation
+--------------------------------------------------
+--- Prompt ---
+What might you use to write on a chalkboard?
+--- Answer ---
+What might you use to write on a chalkboard?
+
+**Possible answers:**
+
+- Chalk
+- Markers
+- Liquid chalk
+- Pencils
+- Paper
+
+**Correct answer:** Chalk.
+
+Chalk is the traditional and most commonly used writing material for chalkboards.**Explanation of incorrect answers:**
+
+- Markers and liquid chalk are better suited for whiteboard surfaces,
+--------------------------------------------------
+--- Prompt ---
+Why would you put a letter in an envelope?
+--- Answer ---
+Why would you put a letter in an envelope?
+
+To seal the letter and protect its contents from water or other elements.**The correct answer is:** To seal the letter and protect its contents from water or other elements.Envelopes are used to protect the contents of a letter from moisture, dust, and other environmental factors.**Note:** The primary
+--------------------------------------------------
+--- Prompt ---
+If you're cold, what might you do to get warm?
+--- Answer ---
+If you're cold, what might you do to get warm?
+
+Here are some possible answers:
+
+- Put on a sweater
+- Turn on the heating
+- Drink a warm beverage
+- Take a warm bath or shower
+- Bundle up in blankets
+
+Choose the most appropriate and efficient answer from the list.
+
+
+
+**Answer:**
+
+Take a warm bath or shower.
+
+
+--------------------------------------------------
+--- Prompt ---
+What is the purpose of a refrigerator?
+--- Answer ---
+What is the purpose of a refrigerator?
+
+**Answer:**
+
+The purpose of a refrigerator is to **maintain a specific temperature lower than the surrounding environment** and provide a controlled environment for storing food and other perishable items. It regulates temperature through the use of a compressor, condenser, evaporator, and expansion valve, which work together to extract heat from the contents and
+--------------------------------------------------
+--- Prompt ---
+Why might someone plant a tree?
+--- Answer ---
+Why might someone plant a tree?
+
+* To provide shade
+* To increase biodiversity
+* To combat climate change
+* To commemorate a special event
+* All of the above
+
+**Answer:**
+
+**All of the above.**
+
+Planting a tree serves multiple purposes. It can provide shade to cool a space, promote biodiversity by creating a habitat for
+--------------------------------------------------
+--- Prompt ---
+What happens to ice when it's left out in the sun?
+--- Answer ---
+What happens to ice when it's left out in the sun?
+
+**Answer:**
+
+When ice is left out in the sun, the heat from the sun causes the molecules of the ice to gain energy and move faster. This increases the kinetic energy of the ice, which leads to the bonds between the molecules breaking and the ice melting into liquid water.**The process is called
+--------------------------------------------------
+--- Prompt ---
+Why do people shake hands when they meet?
+--- Answer ---
+Why do people shake hands when they meet?
+
+The tradition of shaking hands when people meet is believed to have originated in ancient Greece. The ancient Greeks used their hands to greet each other as a sign of peace and goodwill. This tradition was later adopted by the Romans and other cultures.
+
+In modern times, shaking hands is still a common way to greet people,
+--------------------------------------------------
+--- Prompt ---
+What can you use to measure the length of a desk?
+--- Answer ---
+What can you use to measure the length of a desk?
+
+A ruler
+A measuring tape
+A yardstick
+All of the above**Answer:** All of the above.
+
+A ruler, measuring tape, or yardstick can be used to measure the length of a desk.**Correct Answer:** All of the above**Explanation:** All of the listed items
+--------------------------------------------------

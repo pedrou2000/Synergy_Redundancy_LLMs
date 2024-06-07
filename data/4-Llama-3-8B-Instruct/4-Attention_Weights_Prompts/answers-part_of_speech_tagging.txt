@@ -1,0 +1,100 @@
+--- Prompt ---
+Identify the parts of speech in the sentence: Quickly, the agile cat climbed the tall tree.
+--- Answer ---
+Identify the parts of speech in the sentence: Quickly, the agile cat climbed the tall tree. Identify the parts of speech in the sentence: The teacher gave the students a new assignment. Identify the parts of speech in the sentence: The bright sunlight shone brightly down on us.
+Identify the parts of speech in the sentence: Quickly, the agile cat climbed the tall tree.
+Quickly: adverb (mod
+--------------------------------------------------
+--- Prompt ---
+Identify the parts of speech in the sentence: She whispered a secret to her friend during the boring lecture.
+--- Answer ---
+Identify the parts of speech in the sentence: She whispered a secret to her friend during the boring lecture. Identify the parts of speech in the sentence: She whispered a secret to her friend during the boring lecture.
+
+Identify the parts of speech in the sentence: She whispered a secret to her friend during the boring lecture.
+
+Here are the parts of speech for each word in the sentence:
+
+* She: pronoun (subject)
+
+--------------------------------------------------
+--- Prompt ---
+Identify the parts of speech in the sentence: The sun sets in the west.
+--- Answer ---
+Identify the parts of speech in the sentence: The sun sets in the west.... 5.
+Identify the parts of speech in the sentence: The sun sets in the west.... 5.
+Identify the parts of speech in the sentence: The sun sets in the west.
+A. The
+B. sun
+C. sets
+D. in
+E. the
+F.
+--------------------------------------------------
+--- Prompt ---
+Identify the parts of speech in the sentence: Can you believe this amazing view?
+--- Answer ---
+Identify the parts of speech in the sentence: Can you believe this amazing view? Identify the parts of speech for each word in the sentence: Can you believe this amazing view? Part of speech for each word: Can: verb you: pronoun believe: verb this: pronoun amazing: adjective view: noun
+The parts of speech for each word in the sentence "Can you believe this amazing view
+--------------------------------------------------
+--- Prompt ---
+Identify the parts of speech in the sentence: He quickly finished his homework.
+--- Answer ---
+Identify the parts of speech in the sentence: He quickly finished his homework. Identify the parts of speech in the sentence: The teacher gave the students a long list of assignments.
+What is the main difference between a verb and a verb phrase?
+What is the difference between a clause and a phrase?
+What is the main function of a preposition?
+What is the difference between a noun and a pron
+--------------------------------------------------
+--- Prompt ---
+Identify the parts of speech in the sentence: The beautifully decorated cake was a sight to behold.
+--- Answer ---
+Identify the parts of speech in the sentence: The beautifully decorated cake was a sight to behold. Identify the parts of speech in the sentence: The beautifully decorated cake was a sight to behold.
+Identify the parts of speech in the sentence: The beautifully decorated cake was a sight to behold.
+
+**Parts of Speech:**
+
+1. **The** - Article (a type of noun)
+2. **beautifully**
+--------------------------------------------------
+--- Prompt ---
+Identify the parts of speech in the sentence: They will travel to Japan next month.
+--- Answer ---
+Identify the parts of speech in the sentence: They will travel to Japan next month. Identify the parts of speech in the sentence: The new student was very nervous.
+Identify the parts of speech for each word in the sentence: The sun is shining brightly in the sky.
+Identify the parts of speech for each word in the sentence: The teacher gave the students a lot of homework.
+Identify the
+--------------------------------------------------
+--- Prompt ---
+Identify the parts of speech in the sentence: My favorite book was lost.
+--- Answer ---
+Identify the parts of speech in the sentence: My favorite book was lost. Identify the parts of speech for each word:
+1. My: ________
+2. favorite: ________
+3. book: ________
+4. was: ________
+5. lost: ________
+Answer: 1. My: pronoun
+2. favorite: adjective
+3. book: noun
+4. was
+--------------------------------------------------
+--- Prompt ---
+Identify the parts of speech in the sentence: The loud music could be heard from miles away.
+--- Answer ---
+Identify the parts of speech in the sentence: The loud music could be heard from miles away. Identify the parts of speech in the sentence: The loud music could be heard from miles away.
+Identify the parts of speech in the sentence: The loud music could be heard from miles away.
+
+**Parts of Speech in the Sentence:**
+1. **The**: **Article** (a type of noun)
+2.
+--------------------------------------------------
+--- Prompt ---
+Identify the parts of speech in the sentence: She sold all of her paintings at the art show.
+--- Answer ---
+Identify the parts of speech in the sentence: She sold all of her paintings at the art show. Identify the parts of speech in the sentence: She sold all of her paintings at the art show.
+The sentence is: She sold all of her paintings at the art show.
+Here is the breakdown of the parts of speech:
+1. She - pronoun (subject)
+2. sold - verb (action)
+3.
+--------------------------------------------------
