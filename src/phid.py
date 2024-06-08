@@ -69,6 +69,9 @@ def process_pair(src_idx, trg_idx, src, trg, tau, kind, redundancy_measure):
 def compute_PhiID_parallel(time_series, tau=1, kind="gaussian", redundancy_measure="MMI", save=False, base_save_path=None):
     metrics = list(time_series.keys())
     all_matrices = {metric: {} for metric in metrics}
+    # Obtain and Print the maximum number of threads
+    max_threads = os.cpu_count()
+    print(f"Maximum number of threads: {max_threads}")
 
     for metric in metrics:
         print(f"Calculating PhiID for metric: {metric}")
@@ -84,8 +87,7 @@ def compute_PhiID_parallel(time_series, tau=1, kind="gaussian", redundancy_measu
         flat_time_series = [time_series[metric][layer][head] for layer in range(num_layers) for head in range(num_heads_per_layer)] # Flatten the time series
         
         tasks = []
-        num_workers = 4  # Set the number of workers you want to use
-        with ProcessPoolExecutor(max_workers=num_workers) as executor:
+        with ProcessPoolExecutor(max_workers=max_threads) as executor:
             for src_idx in range(total_heads):
                 if src_idx % 50 == 0:
                     print(f"Submitting tasks for head {src_idx}...")
