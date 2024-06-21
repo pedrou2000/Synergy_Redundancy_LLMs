@@ -36,11 +36,7 @@ def generate_text_with_attention(model, tokenizer, num_tokens_to_generate: int, 
     attention_params = {}
 
     for t in range(num_tokens_to_generate):
-        if t % 5 == 0:  # Monitor memory usage every 5 tokens
-            # print(f"Generating token {t+1}/{num_tokens_to_generate}...")
-            # print(f"RAM usage after generating {t+1} tokens: {psutil.virtual_memory().percent}%")
-            gc.collect()  # Explicitly invoke garbage collection
-        # Use torch.no_grad() to disable gradient calculations and reduce memory consumption
+        gc.collect()  # Explicitly invoke garbage collection
         with torch.no_grad():
             outputs = model(generated_ids, output_attentions=True)
         next_token_logits = outputs.logits[:, -1, :]  # Logits for the next token predictions
@@ -62,6 +58,9 @@ def generate_text_with_attention(model, tokenizer, num_tokens_to_generate: int, 
                     if key not in attention_params:
                         attention_params[key] = []
                     attention_params[key].append(value[0]) # Remove the batch dimension
+        # Clean gpu memory
+        del outputs
+        torch.cuda.empty_cache()
 
     # Convert time-step dictionaries into tensors where applicable
     for key in attention_params.keys():

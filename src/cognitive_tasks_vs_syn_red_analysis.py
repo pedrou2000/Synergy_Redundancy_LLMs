@@ -14,15 +14,15 @@ def sort_categories(categories):
     return categories
 
 
-def plot_all_category_diffs_vs_syn_red_grad_rank(stats_dicts, gradient_ranks, save=False, base_plot_path=None, 
-                            reorder=True, per_layer=False, num_heads_per_layer=constants.NUM_HEADS_PER_LAYER):
+def plot_all_category_diffs_vs_syn_red_grad_rank(stats_dicts, gradient_ranks, ranks_per_layer_mean, save=False, base_plot_path=None, 
+            reorder=True, per_layer=False, num_heads_per_layer=constants.NUM_HEADS_PER_LAYER, baseline_rest=False):
     results = {}
     for metric in constants.METRICS_TRANSFORMER:
         results[metric] = {}
 
     for metric, stats_dict in stats_dicts.items():
-
-        categories = constants.PROMPT_CATEGORIES
+        categories = list(constants.PROMPT_CATEGORIES )
+        categories.remove(constants.RESTING_STATE_CATEGORY) if constants.USING_REST_STATE else None
         categories = sort_categories(categories)
         slopes = []
         correlations = []
@@ -47,12 +47,24 @@ def plot_all_category_diffs_vs_syn_red_grad_rank(stats_dicts, gradient_ranks, sa
         for i, category in enumerate(categories):
             stats_category = stats_dict[category]
 
-            if per_layer:
-                stats_category_means = np.mean(stats_category[:, :, 0].reshape(-1, num_heads_per_layer), axis=1)
-            else:
-                stats_category_means = stats_category[:, :, 0].flatten()
+            if baseline_rest:
+                stats_rest = stats_dict[constants.RESTING_STATE_CATEGORY]
 
-            diff_means = stats_category_means - global_mean
+                if per_layer:
+                    stats_category_means = np.mean(stats_category[:, :, 0].reshape(-1, num_heads_per_layer), axis=1)
+                    stats_rest_means = np.mean(stats_rest[:, :, 0].reshape(-1, num_heads_per_layer), axis=1)
+                else:
+                    stats_category_means = stats_category[:, :, 0].flatten()
+                    stats_rest_means = stats_rest[:, :, 0].flatten()
+
+                diff_means = stats_category_means - stats_rest_means
+            else:
+                if per_layer:
+                    stats_category_means = np.mean(stats_category[:, :, 0].reshape(-1, num_heads_per_layer), axis=1)
+                else:
+                    stats_category_means = stats_category[:, :, 0].flatten()
+
+                diff_means = stats_category_means - global_mean
 
             gradient_ranks_ordered = np.array([gradient_ranks[i] for i in range(1, len(diff_means) + 1)])
             reorder_indices = np.argsort(gradient_ranks_ordered)
@@ -71,9 +83,13 @@ def plot_all_category_diffs_vs_syn_red_grad_rank(stats_dicts, gradient_ranks, sa
                 ax.set_xticks(range(num_layers))  # Set tick positions starting from 0
                 ax.set_xticklabels([str(i+1) for i in range(num_layers)])  # Label from 1 to num_layers
 
+            # Compute the correlation
+            correlation_matrix_syn_red = np.corrcoef(ranks_per_layer_mean[metric], diff_means_reordered)
+            correlation_coefficient_syn_red = correlation_matrix_syn_red[0, 1]
+
 
             ax.plot(diff_means_reordered, marker='o', linestyle='-', color='darkblue', label='Original Data')
-            ax.plot(x, slope * x + intercept, color='red', label=f'Linear Regression (Pearson Corr {correlation_coefficient:.2f})')
+            ax.plot(x, slope * x + intercept, color='red', label=f'Linear Regression (Pearson Corr {correlation_coefficient:.2f}, Syn-Red Corr {correlation_coefficient_syn_red:.2f})')
             ax.set_title(f'{category}')
             ax.set_xlabel('Synergy - Redundancy Gradient Rank' if reorder else 'Layer Index' if per_layer else 'Head Index')
             ax.set_ylabel('Diff in Avg Activation')
@@ -236,57 +252,59 @@ def plot_rank_most_activated_heads_per_task(stats_dicts, gradient_rankss, top_ns
                 base_plot_path = constants.PLOT_SYNERGY_REDUNDANCY_TASK_CORRELATIONS + metric+ '/4-Average_Rank_Top_Heads_Activated_per_Task/'
                 os.makedirs(base_plot_path, exist_ok=True)
         for top_n in top_ns:
-            for metric, stats_dict in stats_dicts.items():
-                categories = constants.PROMPT_CATEGORIES
-                
-                # Initialize a dictionary to store the average ranks for each task
-                avg_rank_per_task = {task: [] for task in categories}
+            # for metric, stats_dict in stats_dicts.items():
+            stats_dict = stats_dicts[metric]
+            categories = list(constants.PROMPT_CATEGORIES)
+            categories.remove(constants.RESTING_STATE_CATEGORY) if constants.USING_REST_STATE else None
+            
+            # Initialize a dictionary to store the average ranks for each task
+            avg_rank_per_task = {task: [] for task in categories}
 
-                # Calculate the average activation for each head across all tasks
-                head_avg_activations = {}
-                for layer in range(constants.NUM_LAYERS):  
-                    for head_idx in range(constants.NUM_HEADS_PER_LAYER): 
-                        activations = [stats_dict[task][layer][head_idx][0] for task in categories]
+            # Calculate the average activation for each head across all tasks
+            head_avg_activations = {}
+            for layer in range(constants.NUM_LAYERS):  
+                for head_idx in range(constants.NUM_HEADS_PER_LAYER): 
+                    activations = [stats_dict[task][layer][head_idx][0] for task in categories]
+                    head_number = get_head_number(layer, head_idx)
+                    head_avg_activations[head_number] = np.mean(activations)
+            
+            # For each task, find the top 10 heads based on their activation compared to their average
+            for task in categories:
+                head_activations = []
+                for layer in range(constants.NUM_LAYERS):
+                    for head_idx in range(constants.NUM_HEADS_PER_LAYER):
                         head_number = get_head_number(layer, head_idx)
-                        head_avg_activations[head_number] = np.mean(activations)
+                        activation = stats_dict[task][layer][head_idx][0]
+                        if activation > head_avg_activations[head_number]:
+                            head_activations.append((head_number, activation- head_avg_activations[head_number]))
                 
-                # For each task, find the top 10 heads based on their activation compared to their average
-                for task in categories:
-                    head_activations = []
-                    for layer in range(constants.NUM_LAYERS):
-                        for head_idx in range(constants.NUM_HEADS_PER_LAYER):
-                            head_number = get_head_number(layer, head_idx)
-                            activation = stats_dict[task][layer][head_idx][0]
-                            if activation > head_avg_activations[head_number]:
-                                head_activations.append((head_number, activation- head_avg_activations[head_number]))
-                    
-                    # Sort by activation and take the top N
-                    top_heads = sorted(head_activations, key=lambda x: x[1], reverse=True)[:top_n]
-                    # print(task, top_heads)
-                    
-                    # Gather the synergy-redundancy ranks of these heads
-                    ranks = [gradient_ranks[head] for head, _ in top_heads]
-                    avg_rank_per_task[task].append(np.mean(ranks))  # Store the average rank
-
-                # Plot the average synergy-redundancy ranks for each task
-                fig, ax = plt.subplots(figsize=(14, 5))
-                tasks = list(avg_rank_per_task.keys())
-                avg_ranks = [np.mean(avg_rank_per_task[task]) for task in tasks]
+                # Sort by activation and take the top N
+                top_heads = sorted(head_activations, key=lambda x: x[1], reverse=True)[:top_n]
+                # print(task, top_heads)
                 
-                ax.bar(tasks, avg_ranks, color='green')
-                ax.set_title('Average Synergy-Redundancy Rank of Top ' +str(top_n) +' Activated Heads per Task')
-                ax.set_xlabel('Task')
-                ax.set_ylabel('Average Rank')
-                ax.tick_params(axis='x', rotation=5)
+                # Gather the synergy-redundancy ranks of these heads
+                ranks = [gradient_ranks[head] for head, _ in top_heads]
+                avg_rank_per_task[task].append(np.mean(ranks))  # Store the average rank
 
-                plt.tight_layout()
-                if save:
-                    plot_path = f"{base_plot_path}{top_n}_Most_Activated_Heads_per_Task.png"
-                    os.makedirs(os.path.dirname(plot_path), exist_ok=True)
-                    plt.savefig(plot_path, bbox_inches='tight')
-                    plt.close()  # Close the plot to prevent it from displaying
-                else:
-                    plt.show()
+            # Plot the average synergy-redundancy ranks for each task
+            fig, ax = plt.subplots(figsize=(14, 5))
+            tasks = list(avg_rank_per_task.keys())
+            avg_ranks = [np.mean(avg_rank_per_task[task]) for task in tasks]
+            
+            ax.bar(tasks, avg_ranks, color='green')
+            ax.set_title('Average Synergy-Redundancy Rank of Top ' +str(top_n) +' Activated Heads per Task')
+            ax.set_xlabel('Task')
+            ax.set_ylabel('Average Rank')
+            ax.tick_params(axis='x', rotation=5)
+
+            plt.tight_layout()
+            if save:
+                plot_path = f"{base_plot_path}{top_n}_Most_Activated_Heads_per_Task.png"
+                os.makedirs(os.path.dirname(plot_path), exist_ok=True)
+                plt.savefig(plot_path, bbox_inches='tight')
+                plt.close()  # Close the plot to prevent it from displaying
+            else:
+                plt.show()
         base_plot_path = None
 
 def plot_average_head_activation_per_task(stats_dicts):

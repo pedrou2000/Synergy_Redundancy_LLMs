@@ -12,7 +12,7 @@ MODEL_NAMES = {
     6: {"HF_NAME": "meta-llama/Llama-2-7b-chat-hf", "FOLDER_NAME": "6-Llama-2-7b-chat-hf"},
     7: {"HF_NAME": "meta-llama/Meta-Llama-3-70B-Instruct", "FOLDER_NAME": "7-Llama-3-70B-Instruct"},
 }
-MODEL_NUMBER = 5
+MODEL_NUMBER = 2
 MODEL_NAME = MODEL_NAMES[MODEL_NUMBER]["HF_NAME"]
 FOLDER_MODEL_NAME = MODEL_NAMES[MODEL_NUMBER]["FOLDER_NAME"]
 
@@ -21,11 +21,14 @@ NUM_LAYERS = config.num_hidden_layers if hasattr(config, 'num_hidden_layers') el
 NUM_HEADS_PER_LAYER = config.num_attention_heads if hasattr(config, 'num_attention_heads') else config.n_head
 NUM_TOTAL_HEADS = NUM_LAYERS * NUM_HEADS_PER_LAYER
 MODIFIED_OUTPUT_ATTENTIONS = True
+USING_REST_STATE = False
 
 GENERATE_RAW_ATTENTION_AND_TIME_SERIES = False
 COMPUTE_PID = False
+COMPUTE_GRAPH_THEORETICAL_PROPERTIES = False
 GENERATE_ATTENTION_WEIGHTS = False
 LOAD_MODEL = GENERATE_ATTENTION_WEIGHTS or COMPUTE_PID or GENERATE_RAW_ATTENTION_AND_TIME_SERIES
+SAVE_PLOTS = True
 
 METRICS_TRANSFORMER = ['attention_weights'] if not MODIFIED_OUTPUT_ATTENTIONS else ['projected_Q', 'attention_weights', 'attention_outputs']
 AGGREGRATION_METHODS = ['norm', 'mean', 'entropy', 'max']
@@ -48,7 +51,19 @@ PLOT_SYNERGY_REDUNDANCY_TASK_CORRELATIONS = PLOTS_DIR + "4-Synergy-Redundancy_vs
 
 # Prompts
 PROMPTS = {
-    "syntax_and_grammar_recognition": [
+    "simple_maths": [
+        "If you have 15 apples and you give away 5, how many do you have left?",
+        "A rectangle's length is twice its width. If the rectangle's perimeter is 36 meters, what are its length and width?",
+        "You read 45 pages of a book each day. How many pages will you have read after 7 days?",
+        "If a train travels 60 miles in 1 hour, how far will it travel in 3 hours?",
+        "There are 8 slices in a pizza. If you eat 2 slices, what fraction of the pizza is left?",
+        "If one pencil costs 50 cents, how much do 12 pencils cost?",
+        "You have a 2-liter bottle of soda. If you pour out 500 milliliters, how much soda is left?",
+        "A marathon is 42 kilometers long. If you have run 10 kilometers, how much further do you have to run?",
+        "If you divide 24 by 3, then multiply by 2, what is the result?",
+        "A car travels 150 miles on 10 gallons of gas. How many miles per gallon does the car get?"
+    ],
+    "syntax_and_grammar_correction": [
         "Correct the error: He go to school every day.",
         "Correct the error: She have two cats and a dogs.",
         "Correct the error: I eats breakfast at 8:00 in the morning.",
@@ -72,18 +87,6 @@ PROMPTS = {
         "Identify the parts of speech in the sentence: The loud music could be heard from miles away.",
         "Identify the parts of speech in the sentence: She sold all of her paintings at the art show."
     ], 
-    "basic_numerical_reasoning": [
-        "If you have 15 apples and you give away 5, how many do you have left?",
-        "A rectangle's length is twice its width. If the rectangle's perimeter is 36 meters, what are its length and width?",
-        "You read 45 pages of a book each day. How many pages will you have read after 7 days?",
-        "If a train travels 60 miles in 1 hour, how far will it travel in 3 hours?",
-        "There are 8 slices in a pizza. If you eat 2 slices, what fraction of the pizza is left?",
-        "If one pencil costs 50 cents, how much do 12 pencils cost?",
-        "You have a 2-liter bottle of soda. If you pour out 500 milliliters, how much soda is left?",
-        "A marathon is 42 kilometers long. If you have run 10 kilometers, how much further do you have to run?",
-        "If you divide 24 by 3, then multiply by 2, what is the result?",
-        "A car travels 150 miles on 10 gallons of gas. How many miles per gallon does the car get?"
-    ],
     "basic_common_sense_reasoning": [
         "If it starts raining while the sun is shining, what weather phenomenon might you expect to see?",
         "Why do people wear sunglasses?",
@@ -123,3 +126,5 @@ PROMPTS = {
 }
 
 PROMPT_CATEGORIES = list(PROMPTS.keys())
+RESTING_STATE_CATEGORY = "resting_state"
+PROMPT_CATEGORIES.append(RESTING_STATE_CATEGORY) if USING_REST_STATE else None

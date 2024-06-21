@@ -5,8 +5,7 @@ import matplotlib.pyplot as plt
 from scipy import stats
 import pickle
 
-def generate_and_analyze_prompts(prompts, model, tokenizer, device, num_tokens_to_generate=128, aggregation_type='norm', 
-                                 attention_measure="attention_weights", temperature=0.7):
+def generate_and_analyze_prompts(prompts, model, tokenizer, device, num_tokens_to_generate=128, aggregation_type='norm', temperature=0.7):
     # List to hold averaged attention weights for each prompt
     averaged_attention_weights_per_prompt = {}
     generated_texts = []
@@ -35,6 +34,58 @@ def generate_and_analyze_prompts(prompts, model, tokenizer, device, num_tokens_t
         # Since we want [constants.NUM_LAYERS, constants.NUM_HEADS_PER_LAYER, num_prompts], we transpose the axes
         final_tensor[attention_measure] = category_attention_weights_tensor[attention_measure].transpose(0, 1).transpose(1, 2)
     return final_tensor, generated_texts
+
+
+def generate_and_analyze_rest(n_prompts, model, tokenizer, device, num_tokens_to_generate=128, aggregation_type='norm', 
+                              random_input_length=10, temperature=2):
+    # List to hold averaged attention weights for each prompt
+    averaged_attention_weights_per_prompt = {}
+    generated_texts = []
+    for attention_measure in constants.METRICS_TRANSFORMER:
+        averaged_attention_weights_per_prompt[attention_measure] = []
+
+    for i in range(n_prompts):
+        print(f"Generating resting state {i+1}/{n_prompts}")
+        generated_text, attention_params = simulate_resting_state_attention(model, tokenizer, num_tokens_to_generate, device, temperature=temperature, random_input_length=random_input_length)
+        generated_texts.append(generated_text)
+
+        time_series = compute_attention_metrics_norms(attention_params, constants.METRICS_TRANSFORMER, num_tokens_to_generate, aggregation_type=aggregation_type)
+
+        for attention_measure in constants.METRICS_TRANSFORMER:
+            # Average the attention weights across all timesteps for each prompt
+            avg_attention_weights = torch.mean(time_series[attention_measure], axis=2)
+            # Move the averaged attention weights to the CPU
+            avg_attention_weights = avg_attention_weights.cpu()
+            # Collect averaged attention weights
+            averaged_attention_weights_per_prompt[attention_measure].append(avg_attention_weights)
+    category_attention_weights_tensor, final_tensor = {}, {}
+    for attention_measure in constants.METRICS_TRANSFORMER:
+        # Stack the averaged attention weights for each prompt
+        category_attention_weights_tensor[attention_measure] = torch.tensor(np.array(averaged_attention_weights_per_prompt[attention_measure]))
+        # Since we want [num_layers, num_heads, num_prompts], we transpose the axes
+        final_tensor[attention_measure] = category_attention_weights_tensor[attention_measure].transpose(0, 1).transpose(1, 2)
+    return final_tensor, generated_texts
+
+def solve_prompts(prompts_dict, model, tokenizer, device, num_tokens_to_generate=128,temperature=0.7, resting_state="resting_state"):
+    # Generate and analyze prompts for each category only once
+
+    all_attention_weights, generated_text = {}, {}
+    for metric in constants.METRICS_TRANSFORMER:
+        all_attention_weights[metric] = {}
+
+    for category in list(prompts_dict.keys()):
+        print(f"Analyzing category: {category}")
+        if category == resting_state:
+            final_tensor, generated_texts = generate_and_analyze_rest(len(constants.PROMPTS[constants.PROMPT_CATEGORIES[0]]), model, tokenizer, device, num_tokens_to_generate, 
+                                                                temperature=temperature)
+        else:
+            final_tensor, generated_texts = generate_and_analyze_prompts(prompts_dict[category], model, tokenizer, device, num_tokens_to_generate, 
+                                                            temperature=temperature)
+        for metric in constants.METRICS_TRANSFORMER:
+            all_attention_weights[metric][category] = final_tensor[metric]
+        generated_text[category] = generated_texts
+
+    return all_attention_weights, generated_text
 
 def compute_and_plot_attention_heatmap(time_series_attention_weights, plot_heatmap=True, save=True, base_plot_path=None):
     # Convert to numpy array for easier manipulation
@@ -159,23 +210,6 @@ def plot_attention_weights_comparison(all_attention_weights, save=True, base_plo
 
     return stats_dict
 
-def solve_prompts(prompts_dict, model, tokenizer, device, num_tokens_to_generate=128,temperature=0.7, attention_measure=constants.ATTENTION_MEASURE):
-    # Generate and analyze prompts for each category only once
-
-    all_attention_weights, generated_text = {}, {}
-    for metric in constants.METRICS_TRANSFORMER:
-        all_attention_weights[metric] = {}
-
-    for category in list(prompts_dict.keys()):
-        print(f"Analyzing category: {category}")
-        results, generated_texts = generate_and_analyze_prompts(prompts_dict[category], model, tokenizer, device, num_tokens_to_generate, 
-                                                            attention_measure=attention_measure, temperature=temperature)
-        for metric in constants.METRICS_TRANSFORMER:
-            all_attention_weights[metric][category] = results[metric]
-        generated_text[category] = generated_texts
-
-    return all_attention_weights, generated_text
-
 def plot_categories_comparison(all_attention_weights, save=False, base_plot_path=None, split_half=False, split_third=False):
     # Plot category comparison
     
@@ -218,7 +252,7 @@ def plot_all_heatmaps(all_attention_weights, save=False, base_plot_path=None):
             compute_and_plot_attention_heatmap(attention_weights, plot_heatmap=True, save=save, base_plot_path=base_plot_path + f"{metric}/1-Heatmaps/{i}-{category}")
             i+=1
 
-def save_attention_weights(attention_weights_prompts, generated_text, base_save_path=None):
+def save_attention_weights(attention_weights_prompts, generated_text, base_save_path=None, merge=False):
     if not base_save_path:
         # Assuming 'constants.MATRICES_DIR' is defined and is a valid path
         base_save_path = constants.ATTENTION_WEIGHTS_DIR 
@@ -229,19 +263,35 @@ def save_attention_weights(attention_weights_prompts, generated_text, base_save_
     # Create the directory if it does not exist
     os.makedirs(dir_path, exist_ok=True)
     
+    if merge:
+        attention_weights_prompts_old = load_attention_weights()
+        for metric in constants.METRICS_TRANSFORMER:
+            for category in attention_weights_prompts[metric].keys():
+                attention_weights_prompts_old[metric][category] = attention_weights_prompts[metric][category]
+        attention_weights_prompts = attention_weights_prompts_old
+    
     # Now save the file
     with open(base_save_path + 'attention_params.pkl', 'wb') as file:
         pickle.dump(attention_weights_prompts, file)
     # Save generated text as a txt file in the same directory
     for category, answers in generated_text.items():
         with open(base_save_path + 'answers-' + category + '.txt', 'w') as file:
-            for prompt, answer in zip(constants.PROMPTS[category], answers):
+            if category == "resting_state":
+                prompts = ["Resting state"*len(answers)]
+            else:
+                prompts = constants.PROMPTS[category]
+            
+            for prompt, answer in zip(prompts, answers):
                 file.write(f"--- Prompt ---\n{prompt}\n")
                 file.write(f"--- Answer ---\n{answer}\n"+ "-"*50 + "\n")
+ 
+
 
 def load_attention_weights(n=0, base_plot_path=None):
     if not base_plot_path:
         file_attention_weights = constants.ATTENTION_WEIGHTS_DIR + 'attention_params.pkl'
+    else:
+        file_attention_weights = base_plot_path + 'attention_params.pkl'
 
     with open(file_attention_weights, 'rb') as file:
         attention_weights_prompts = pickle.load(file)

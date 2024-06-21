@@ -608,7 +608,30 @@ def plot_average_ranks_per_layer(gradient_ranks, base_plot_path=None, save=False
         plt.close()
     return ranks_per_layer_mean, ranks_per_layer_std
 
-
+def plot_overlay_ranks_per_layer(ranks_per_layer_mean, save=False, base_plot_path=None):
+    for metric in constants.METRICS_TRANSFORMER:
+        plt.figure(figsize=(16, 6))
+        for prompt_category_name, item in ranks_per_layer_mean.items():
+            item = item[metric]
+            num_layers = len(item)
+            plt.plot(range(1, num_layers + 1), item, marker='o', linestyle='-', label=prompt_category_name)
+        
+        plt.xlabel('Layer')
+        plt.ylabel('Average Rank')
+        plt.title(f'Overlay of Average {metric.replace("_", " ").title()} Rank per Layer for All Prompt Categories')
+        plt.grid(True, which='both', linestyle='--', linewidth=0.5)
+        plt.legend(title='Prompt Category')
+        
+        # Set x-axis to label each layer explicitly
+        plt.xticks(range(1, num_layers + 1), [str(i) for i in range(1, num_layers + 1)])
+        if save:
+            if base_plot_path is None:
+                base_plot_path = constants.PLOTS_SYNERGY_REDUNDANCY_DIR + 'overlay_ranks_per_layer/'
+            os.makedirs(os.path.dirname(base_plot_path), exist_ok=True)
+            plt.savefig(base_plot_path+ metric + '.png')
+        else: 
+            plt.show()
+        plt.close()
 
 
 
