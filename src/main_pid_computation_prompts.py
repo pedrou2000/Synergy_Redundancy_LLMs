@@ -17,11 +17,12 @@ MODEL_NAMES = {
     2: {"HF_NAME": "google/gemma-1.1-2b-it", "FOLDER_NAME": "2-Gemma-1.1-2b-it"},
     3: {"HF_NAME": "google/gemma-1.1-7b-it", "FOLDER_NAME": "3-Gemma-1.1-7b-it"},
     4: {"HF_NAME": "meta-llama/Meta-Llama-3-8B-Instruct", "FOLDER_NAME": "4-Llama-3-8B-Instruct"},
-    5: {"HF_NAME": "meta-llama/Llama-2-13b-chat-hf", "FOLDER_NAME": "5-Llama-2-13b-chat-hf"},
-    6: {"HF_NAME": "meta-llama/Llama-2-7b-chat-hf", "FOLDER_NAME": "6-Llama-2-7b-chat-hf"},
-    7: {"HF_NAME": "meta-llama/Meta-Llama-3-70B-Instruct", "FOLDER_NAME": "7-Llama-3-70B-Instruct"},
+    5: {"HF_NAME": "google/gemma-2-9b-it", "FOLDER_NAME": "5-Gemma-2-9B-Instruct"},
+    6: {"HF_NAME": "meta-llama/Llama-2-13b-chat-hf", "FOLDER_NAME": "5-Llama-2-13b-chat-hf"},
+    7: {"HF_NAME": "meta-llama/Llama-2-7b-chat-hf", "FOLDER_NAME": "6-Llama-2-7b-chat-hf"},
+    8: {"HF_NAME": "meta-llama/Meta-Llama-3-70B-Instruct", "FOLDER_NAME": "7-Llama-3-70B-Instruct"},
 }
-MODEL_NUMBER = 5
+MODEL_NUMBER = 2
 MODEL_NAME = MODEL_NAMES[MODEL_NUMBER]["HF_NAME"]
 FOLDER_MODEL_NAME = MODEL_NAMES[MODEL_NUMBER]["FOLDER_NAME"]
 
@@ -35,18 +36,28 @@ print('Loading Time Series Data from ', TIME_SERIES_DIR)
 
 # Compute PhiID for all cognitive tasks
 random_input_length, num_tokens_to_generate, temperature = 24, 100, 0.3
-generated_text, attention_params, time_series = {}, {}, {}
+generated_text = {cognitive_task: {} for cognitive_task in constants.PROMPT_CATEGORIES}
+attention_params = {cognitive_task: {} for cognitive_task in constants.PROMPT_CATEGORIES}
+time_series = {cognitive_task: {} for cognitive_task in constants.PROMPT_CATEGORIES}
 
 categories = constants.PROMPT_CATEGORIES
 for cognitive_task in categories:
-    time_series[cognitive_task] = load_time_series(base_load_path=TIME_SERIES_DIR+cognitive_task+".pt")
+    for n_prompt, prompt in enumerate(constants.PROMPTS[cognitive_task]):
+        time_series[cognitive_task][n_prompt] = load_time_series(base_load_path=TIME_SERIES_DIR+cognitive_task+"/"+str(n_prompt) + ".pt")
 
 print('Computing PhiID and saving matrices to ', MATRICES_DIR, '\n', '-'*50, '\n\n')
-all_matrices, synergy_matrices, redundancy_matrices = {}, {}, {}
+all_matrices = {task: {} for task in categories}
+synergy_matrices = {task: {} for task in categories}
+redundancy_matrices = {task: {} for task in categories}
+
 for cognitive_task in categories:
     print("\n--- Computing PhiID for task ", cognitive_task, " ---")
-    all_matrices[cognitive_task], synergy_matrices[cognitive_task], redundancy_matrices[cognitive_task] = compute_PhiID(time_series[cognitive_task],
-                save=True, kind="gaussian", base_save_path=MATRICES_DIR+cognitive_task+'.pt')
+    for n_prompt, prompt in enumerate(constants.PROMPTS[cognitive_task]):
+        print("\nPrompt: ", n_prompt)
+        all_matrices[cognitive_task][n_prompt], synergy_matrices[cognitive_task][n_prompt], redundancy_matrices[cognitive_task][n_prompt] = compute_PhiID(
+            time_series[cognitive_task][n_prompt], save=True, kind="gaussian", base_save_path=MATRICES_DIR+cognitive_task+'/' + str(n_prompt) + '.pt')
+        graph_theoretical_results = compare_synergy_redundancy(synergy_matrices[cognitive_task][n_prompt], redundancy_matrices[cognitive_task][n_prompt])
+        save_graph_theoretical_results(graph_theoretical_results, file_name=str(n_prompt), base_save_path = constants.GRAPH_METRICS_DIR + cognitive_task + '/')
 
 # Compute and Save Average Prompt Matrices
 all_matrices, synergy_matrices, redundancy_matrices = average_synergy_redundancies_matrices_cognitive_tasks(all_matrices, synergy_matrices, redundancy_matrices)

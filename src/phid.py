@@ -139,29 +139,32 @@ def load_matrices(matrices_number=0, base_save_path=None):
 
 def average_synergy_redundancies_matrices_cognitive_tasks(all_matrices, synergy_matrices, redundancy_matrices):
     # Initialize the result dictionary dynamically
+    # all_matrices is a
     average_matrices = {}
-    num_matrices = len(all_matrices.keys())
+    num_matrices = len(all_matrices.keys()) * len(all_matrices[list(all_matrices.keys())[0]].keys())
 
     # Extract the structure dynamically
-    for key1 in all_matrices.keys():
-        for key2 in all_matrices[key1].keys():
-            if key2 not in average_matrices:
-                average_matrices[key2] = {}
-            for key3 in all_matrices[key1][key2].keys():
-                if key3 not in average_matrices[key2]:
-                    average_matrices[key2][key3] = np.zeros(all_matrices[key1][key2][key3].shape)
+    for task_category in all_matrices.keys():
+        for n_prompt in all_matrices[task_category].keys():
+            for metric in all_matrices[task_category][n_prompt].keys():
+                if metric not in average_matrices:
+                    average_matrices[metric] = {}
+                for phid_atom in all_matrices[task_category][n_prompt][metric].keys():
+                    if phid_atom not in average_matrices[metric]:
+                        average_matrices[metric][phid_atom] = np.zeros(all_matrices[task_category][n_prompt][metric][phid_atom].shape)
 
     # Iterate over each key in the first dimension of all_matrices
-    for key1 in all_matrices.keys():
-        for key2 in all_matrices[key1].keys():
-            for key3 in all_matrices[key1][key2].keys():
-                # Sum the matrices
-                average_matrices[key2][key3] += all_matrices[key1][key2][key3]
+    for task_category in all_matrices.keys():
+        for n_prompt in all_matrices[task_category].keys():
+            for metric in all_matrices[task_category][n_prompt].keys():
+                for phid_atom in all_matrices[task_category][n_prompt][metric].keys():
+                    # Sum the matrices
+                    average_matrices[metric][phid_atom] += all_matrices[task_category][n_prompt][metric][phid_atom]
     
     # Compute the average by dividing by the number of matrices
-    for key2 in average_matrices.keys():
-        for key3 in average_matrices[key2].keys():
-            average_matrices[key2][key3] /= num_matrices
+    for metric in average_matrices.keys():
+        for phid_atom in average_matrices[metric].keys():
+            average_matrices[metric][phid_atom] /= num_matrices
 
     average_synergy_matrices = {metric: average_matrices[metric]['sts'] for metric in average_matrices.keys()}
     average_redundancy_matrices = {metric: average_matrices[metric]['rtr'] for metric in average_matrices.keys()}
@@ -608,30 +611,7 @@ def plot_average_ranks_per_layer(gradient_ranks, base_plot_path=None, save=False
         plt.close()
     return ranks_per_layer_mean, ranks_per_layer_std
 
-def plot_overlay_ranks_per_layer(ranks_per_layer_mean, save=False, base_plot_path=None):
-    for metric in constants.METRICS_TRANSFORMER:
-        plt.figure(figsize=(16, 6))
-        for prompt_category_name, item in ranks_per_layer_mean.items():
-            item = item[metric]
-            num_layers = len(item)
-            plt.plot(range(1, num_layers + 1), item, marker='o', linestyle='-', label=prompt_category_name)
-        
-        plt.xlabel('Layer')
-        plt.ylabel('Average Rank')
-        plt.title(f'Overlay of Average {metric.replace("_", " ").title()} Rank per Layer for All Prompt Categories')
-        plt.grid(True, which='both', linestyle='--', linewidth=0.5)
-        plt.legend(title='Prompt Category')
-        
-        # Set x-axis to label each layer explicitly
-        plt.xticks(range(1, num_layers + 1), [str(i) for i in range(1, num_layers + 1)])
-        if save:
-            if base_plot_path is None:
-                base_plot_path = constants.PLOTS_SYNERGY_REDUNDANCY_DIR + 'overlay_ranks_per_layer/'
-            os.makedirs(os.path.dirname(base_plot_path), exist_ok=True)
-            plt.savefig(base_plot_path+ metric + '.png')
-        else: 
-            plt.show()
-        plt.close()
+
 
 
 

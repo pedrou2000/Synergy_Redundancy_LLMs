@@ -2,21 +2,23 @@
 Correct the error: He go to school every day.
 --- Answer ---
 Correct the error: He go to school every day.
-The correct sentence is: He goes to school every day.
 
-Explanation:
-In this sentence, we are talking about a habitual action that happens every day. So we use the present tense of the verb "go." The correct form is "goes."Hope this helps!**Corrected sentence:** He goes
+**Corrected:** He goes to school every day.
+
+**Explanation:**
+In this sentence, we need to use the third person singular form of the verb "to go," which is "goes." So the correct sentence is "He goes to school every day."**Note:**
+* The contraction "go
 --------------------------------------------------
 --- Prompt ---
 Correct the error: She have two cats and a dogs.
 --- Answer ---
 Correct the error: She have two cats and a dogs.
 
-She has two cats and a dog.
+**Corrected:** She has two cats and a dog.
 
-The subject is she, so the verb should be has.**The corrected sentence is: She has two cats and a dog.****Explanation of the error:**
-
-* The sentence originally has "She have two cats and a dogs." This is incorrect because "
+**Explanation of the correction:**
+* The subject is "she", which is a singular third-person pronoun. Therefore, we need to use the singular form of the verb "has".
+* "Cats and a dog" is a plural noun phrase
 --------------------------------------------------
 --- Prompt ---
 Correct the error: I eats breakfast at 8:00 in the morning.
@@ -25,19 +27,19 @@ Correct the error: I eats breakfast at 8:00 in the morning.
 
 **Corrected:** I eat breakfast at 8:00 in the morning.
 
-**Explanation of the correction:**
-* The subject of the sentence is "I", which is a singular pronoun. Therefore, the verb should be "eat" instead of "eats".**The corrected sentence is: "I
+**Explanation:**
+In this sentence, the subject is "I", which is a singular pronoun. Therefore, the correct verb form is "eat", not "eats".**Note:** The past tense of "eat" is
 --------------------------------------------------
 --- Prompt ---
 Correct the error: Every students in the classroom has their own laptop.
 --- Answer ---
 Correct the error: Every students in the classroom has their own laptop.
 
-**Corrected:** Every student in the classroom has their own laptop.
+**Corrected sentence:** Every student in the classroom has their own laptop.
 
 **Explanation of the correction:**
-* "Every students" should be "Every student" as "student" is a singular noun and "Every" refers to a singular entity.
-* "has their own laptop" should be "has his
+* "Every students" should be "Every student" as "student" is a singular noun.
+* "has" should be "have" as the subject is "Every student".**Note
 --------------------------------------------------
 --- Prompt ---
 Correct the error: She don't like going to the park on weekends.
@@ -46,46 +48,46 @@ Correct the error: She don't like going to the park on weekends.
 
 She doesn't like going to the park on weekends.
 
-The correct sentence is "She doesn't like going to the park on weekends." as "doesn't" is a contraction of "does not" and it is used to indicate that the subject does not like something.**Corrected Sentence:**
+The correct sentence is "She doesn't like going to the park on weekends." because "doesn't" is a contraction of "does not" and it is used to indicate that the subject does not like something.**Corrected Sentence:**
 --------------------------------------------------
 --- Prompt ---
 Correct the error: We was happy to see the rainbow after the storm.
 --- Answer ---
 Correct the error: We was happy to see the rainbow after the storm.
 
-Corrected sentence: We were happy to see the rainbow after the storm.
+The correct sentence is: We were happy to see the rainbow after the storm.
 
-**Explanation:**
-In this sentence, the correct form is "were" instead of "was". "Were" is the correct plural past tense of "to be".**Note:**
-"We was" is incorrect. It should
+"We was" should be "We were" because "we" is a plural pronoun and requires a plural verb.**Corrected sentence:** We were happy to see the rainbow after the storm.**Explanation of the error
 --------------------------------------------------
 --- Prompt ---
 Correct the error: There is many reasons to celebrate today.
 --- Answer ---
 Correct the error: There is many reasons to celebrate today.
 
-**Corrected:** There are many reasons to celebrate today.
+The corrected sentence: There are many reasons to celebrate today.
 
 **Explanation:**
-The sentence should use the plural form "are" instead of the singular form "is" because it refers to multiple reasons.**Note:** In formal writing, it is more appropriate to use the plural form even if there is only
+* The sentence should use "are" instead of "is" because "many" is a plural noun and requires a plural verb.
+* "There is" is used for singular subjects, but "many" is a plural
 --------------------------------------------------
 --- Prompt ---
 Correct the error: Him and I went to the market yesterday.
 --- Answer ---
 Correct the error: Him and I went to the market yesterday.
 
-The correct sentence is: My friend and I went to the market yesterday.**Explanation:**
-- "Him and I" is incorrect.
-- "My friend and I" is the correct grammatical structure to refer to two people.**The corrected sentence conveys the same meaning as the original sentence but uses
+The correct sentence is: **I went to the market with him yesterday.**
+
+**Explanation:**
+- The subject of the sentence is "I". So, the correct pronoun to refer to the person who went with you is "him".
+- The correct sentence structure is "I went to the market with him
 --------------------------------------------------
 --- Prompt ---
 Correct the error: The books is on the table.
 --- Answer ---
-Correct the error: The books is on the table.
+Correct the error: The books is on the table. The correct sentence is: The books are on the table.
 
-The correct sentence is: The books are on the table.
-
-"The books is" is incorrect because "is" is a singular verb and "books" is a plural noun. The correct verb to use is "are."**The corrected sentence:** The books are on the table.**Explanation of
+**Explanation:**
+In this sentence, we are talking about multiple books, so we use the plural form of the noun "book" which is "books". The correct sentence should be: "The books are on the table."**Corrected Sentence:**
 --------------------------------------------------
 --- Prompt ---
 Correct the error: They walks to school together every morning.
@@ -95,5 +97,5 @@ Correct the error: They walks to school together every morning.
 **Corrected:** They walk to school together every morning.
 
 **Explanation:**
-In this sentence, the subject is "they," which is a plural pronoun. Therefore, the verb should be "walk" instead of "walks."**Note:** The correct form of the sentence is "They walk to school together
+In this sentence, the subject is "they," which is a plural pronoun. Therefore, the correct verb is "walk," which is the singular form.**Note:** The plural form of "walk" is "walk."
 --------------------------------------------------

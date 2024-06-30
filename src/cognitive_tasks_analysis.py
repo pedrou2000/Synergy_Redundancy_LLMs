@@ -124,14 +124,15 @@ def compute_and_plot_attention_heatmap(time_series_attention_weights, plot_heatm
 
 def plot_attention_weights_comparison(all_attention_weights, save=True, base_plot_path=None, layer_indices=None):
     stats_dict = {}
+    categories = list(all_attention_weights[list(all_attention_weights.keys())[0]].keys())
     
     for metric in constants.METRICS_TRANSFORMER:
         # Initialize the dictionary to store means and stds for all layers
-        stats_dict[metric] = {category: np.zeros((constants.NUM_LAYERS, constants.NUM_HEADS_PER_LAYER, 2)) for category in constants.PROMPT_CATEGORIES}
+        stats_dict[metric] = {category: np.zeros((constants.NUM_LAYERS, constants.NUM_HEADS_PER_LAYER, 2)) for category in categories}
 
         # Compute stats for all layers
         for layer_idx in range(constants.NUM_LAYERS):
-            for category in constants.PROMPT_CATEGORIES:
+            for category in categories:
                 attention_weights = all_attention_weights[metric][category]
                 layer_attention = np.array(attention_weights[layer_idx])
                 means = np.mean(layer_attention, axis=1).flatten()
@@ -157,7 +158,7 @@ def plot_attention_weights_comparison(all_attention_weights, save=True, base_plo
         for layer_idx in range(layer_start, layer_end):
             ax = plt.subplot(layer_end - layer_start, 1, layer_idx - layer_start + 1)
             
-            for cat_idx, category in enumerate(constants.PROMPT_CATEGORIES):
+            for cat_idx, category in enumerate(categories):
                 means = stats_dict[metric][category][layer_idx, :, 0]
                 stds = stats_dict[metric][category][layer_idx, :, 1] if not np.isnan(stats_dict[metric][category][layer_idx, 0, 1]) else None
                 label = f'{category}' if stds is not None else category

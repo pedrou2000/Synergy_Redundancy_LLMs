@@ -8,11 +8,12 @@ MODEL_NAMES = {
     2: {"HF_NAME": "google/gemma-1.1-2b-it", "FOLDER_NAME": "2-Gemma-1.1-2b-it"},
     3: {"HF_NAME": "google/gemma-1.1-7b-it", "FOLDER_NAME": "3-Gemma-1.1-7b-it"},
     4: {"HF_NAME": "meta-llama/Meta-Llama-3-8B-Instruct", "FOLDER_NAME": "4-Llama-3-8B-Instruct"},
-    5: {"HF_NAME": "meta-llama/Llama-2-13b-chat-hf", "FOLDER_NAME": "5-Llama-2-13b-chat-hf"},
-    6: {"HF_NAME": "meta-llama/Llama-2-7b-chat-hf", "FOLDER_NAME": "6-Llama-2-7b-chat-hf"},
-    7: {"HF_NAME": "meta-llama/Meta-Llama-3-70B-Instruct", "FOLDER_NAME": "7-Llama-3-70B-Instruct"},
+    5: {"HF_NAME": "google/gemma-2-9b-it", "FOLDER_NAME": "5-Gemma-2-9B-Instruct"},
+    6: {"HF_NAME": "meta-llama/Llama-2-13b-chat-hf", "FOLDER_NAME": "5-Llama-2-13b-chat-hf"},
+    7: {"HF_NAME": "meta-llama/Llama-2-7b-chat-hf", "FOLDER_NAME": "6-Llama-2-7b-chat-hf"},
+    8: {"HF_NAME": "meta-llama/Meta-Llama-3-70B-Instruct", "FOLDER_NAME": "7-Llama-3-70B-Instruct"},
 }
-MODEL_NUMBER = 2
+MODEL_NUMBER = 4
 MODEL_NAME = MODEL_NAMES[MODEL_NUMBER]["HF_NAME"]
 FOLDER_MODEL_NAME = MODEL_NAMES[MODEL_NUMBER]["FOLDER_NAME"]
 
@@ -43,11 +44,15 @@ RAW_ATTENTION_DIR = SAVED_DATA_DIR + "1-Raw_Attention/"
 TIME_SERIES_DIR = SAVED_DATA_DIR + "2-Time_Series/"
 MATRICES_DIR = SAVED_DATA_DIR + "3-Synergy_Redundancy_Matrices/"
 ATTENTION_WEIGHTS_DIR = SAVED_DATA_DIR + "4-Attention_Weights_Prompts/"
+GRAPH_METRICS_DIR = SAVED_DATA_DIR + "5-Graph_Theoretical_Properties/"
 
 PLOTS_TIME_SERIES_DIR = PLOTS_DIR + "1-Time_Series/"
 PLOTS_SYNERGY_REDUNDANCY_DIR = PLOTS_DIR + "2-Synergy_Redundancy/"
 PLOTS_HEAD_ACTIVATIONS_COGNITIVE_TASKS = PLOTS_DIR + "3-Head_Activations_Cognitive_Tasks/"
 PLOT_SYNERGY_REDUNDANCY_TASK_CORRELATIONS = PLOTS_DIR + "4-Synergy-Redundancy_vs_Cognitive_Task_Correlations/"
+
+MODEL_COMPARISON_DIR = "../plots/" + "0-Model_Comparison/"
+MODEL_COMPARISON_GRAPH_THEORETICAL_DIR = MODEL_COMPARISON_DIR + "1-Graph_Theoretical_Analysis/"
 
 # Prompts
 PROMPTS = {

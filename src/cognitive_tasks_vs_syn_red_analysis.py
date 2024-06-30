@@ -194,6 +194,7 @@ def get_layer_and_head(head_number):
     Returns:
     tuple: (layer, head_index), where both are zero-indexed.
     """
+    # print("Number of heads per layer: ", constants.NUM_HEADS_PER_LAYER, "Number heads: ", head_number//constants.NUM_HEADS_PER_LAYER, " Head Number: ", head_number)
     head_number -= 1  # Adjust for zero-indexing
     return head_number // constants.NUM_HEADS_PER_LAYER, head_number % constants.NUM_HEADS_PER_LAYER
 
@@ -254,9 +255,14 @@ def plot_rank_most_activated_heads_per_task(stats_dicts, gradient_rankss, top_ns
         for top_n in top_ns:
             # for metric, stats_dict in stats_dicts.items():
             stats_dict = stats_dicts[metric]
-            categories = list(constants.PROMPT_CATEGORIES)
-            categories.remove(constants.RESTING_STATE_CATEGORY) if constants.USING_REST_STATE else None
-            
+            categories = list(stats_dict.keys())
+            if constants.RESTING_STATE_CATEGORY in categories:
+                categories.remove(constants.RESTING_STATE_CATEGORY)
+
+            # Reorder such that 'basic_numerical_reasoning' goes first if it exists in the list
+            if 'basic_numerical_reasoning' in categories:
+                categories.remove('basic_numerical_reasoning')
+                categories.insert(0, 'basic_numerical_reasoning')           
             # Initialize a dictionary to store the average ranks for each task
             avg_rank_per_task = {task: [] for task in categories}
 

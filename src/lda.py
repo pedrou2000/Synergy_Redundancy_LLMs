@@ -58,6 +58,10 @@ def perform_lda_analysis(all_attention_weights, n_components=2, save=False, base
     if base_plot_path is None:
         base_plot_path = constants.PLOTS_HEAD_ACTIVATIONS_COGNITIVE_TASKS 
     for metric, attention_weights in all_attention_weights.items():
+        # Remove resting state category if in data
+        if constants.RESTING_STATE_CATEGORY in attention_weights.keys():
+            attention_weights.pop(constants.RESTING_STATE_CATEGORY)
+
         # Reshape the data
         X, y = reshape_data(attention_weights)
 
