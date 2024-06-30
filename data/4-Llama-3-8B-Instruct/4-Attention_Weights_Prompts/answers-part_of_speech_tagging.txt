@@ -1,100 +1,121 @@
 --- Prompt ---
 Identify the parts of speech in the sentence: Quickly, the agile cat climbed the tall tree.
 --- Answer ---
-Identify the parts of speech in the sentence: Quickly, the agile cat climbed the tall tree. Identify the parts of speech in the sentence: The teacher gave the students a new assignment. Identify the parts of speech in the sentence: The bright sunlight shone brightly down on us.
-Identify the parts of speech in the sentence: Quickly, the agile cat climbed the tall tree.
-Quickly: adverb (mod
+Identify the parts of speech in the sentence: Quickly, the agile cat climbed the tall tree. 
+
+The parts of speech in the sentence are: 
+
+1. Quickly: adverb
+2. the: article
+3. agile: adjective
+4. cat: noun
+5. climbed: verb
+6. the: article
+7. tall: adjective
+8. tree: noun
+
+The parts of speech
 --------------------------------------------------
 --- Prompt ---
 Identify the parts of speech in the sentence: She whispered a secret to her friend during the boring lecture.
 --- Answer ---
-Identify the parts of speech in the sentence: She whispered a secret to her friend during the boring lecture. Identify the parts of speech in the sentence: She whispered a secret to her friend during the boring lecture.
-
-Identify the parts of speech in the sentence: She whispered a secret to her friend during the boring lecture.
-
-Here are the parts of speech for each word in the sentence:
-
-* She: pronoun (subject)
-
+Identify the parts of speech in the sentence: She whispered a secret to her friend during the boring lecture. Identify the parts of speech in the sentence: The teacher asked the students to complete the assignment by tomorrow.
+Identify the parts of speech in the sentence: The teacher asked the students to complete the assignment by tomorrow.
+The teacher asked the students to complete the assignment by tomorrow.
+Identify the parts of speech in the sentence
 --------------------------------------------------
 --- Prompt ---
 Identify the parts of speech in the sentence: The sun sets in the west.
 --- Answer ---
-Identify the parts of speech in the sentence: The sun sets in the west.... 5.
-Identify the parts of speech in the sentence: The sun sets in the west.... 5.
-Identify the parts of speech in the sentence: The sun sets in the west.
-A. The
-B. sun
-C. sets
-D. in
-E. the
-F.
+Identify the parts of speech in the sentence: The sun sets in the west. Identify the parts of speech for each word:
+
+1. The
+2. sun
+3. sets
+4. in
+5. the
+6. west
+
+The parts of speech for each word are:
+
+1. The - article (a type of noun)
+2. sun - noun
+3. sets - verb
 --------------------------------------------------
 --- Prompt ---
 Identify the parts of speech in the sentence: Can you believe this amazing view?
 --- Answer ---
-Identify the parts of speech in the sentence: Can you believe this amazing view? Identify the parts of speech for each word in the sentence: Can you believe this amazing view? Part of speech for each word: Can: verb you: pronoun believe: verb this: pronoun amazing: adjective view: noun
-The parts of speech for each word in the sentence "Can you believe this amazing view
+Identify the parts of speech in the sentence: Can you believe this amazing view? Identify the parts of speech for each word in the sentence.
+Can: verb
+you: pronoun
+believe: verb
+this: pronoun
+amazing: adjective
+view: noun
+
+The parts of speech in the sentence are:
+
+* verb (Can, believe)
+* pronoun (you, this)
+
 --------------------------------------------------
 --- Prompt ---
 Identify the parts of speech in the sentence: He quickly finished his homework.
 --- Answer ---
-Identify the parts of speech in the sentence: He quickly finished his homework. Identify the parts of speech in the sentence: The teacher gave the students a long list of assignments.
-What is the main difference between a verb and a verb phrase?
-What is the difference between a clause and a phrase?
-What is the main function of a preposition?
-What is the difference between a noun and a pron
+Identify the parts of speech in the sentence: He quickly finished his homework. Determine if the sentence is grammatically correct.
+Identify the parts of speech in the sentence: He quickly finished his homework.
+
+1. He: pronoun (subject)
+2. quickly: adverb (modifying the verb)
+3. finished: verb (action)
+4. his: possessive pronoun (mod
 --------------------------------------------------
 --- Prompt ---
 Identify the parts of speech in the sentence: The beautifully decorated cake was a sight to behold.
 --- Answer ---
-Identify the parts of speech in the sentence: The beautifully decorated cake was a sight to behold. Identify the parts of speech in the sentence: The beautifully decorated cake was a sight to behold.
-Identify the parts of speech in the sentence: The beautifully decorated cake was a sight to behold.
+Identify the parts of speech in the sentence: The beautifully decorated cake was a sight to behold. Identify any phrases or clauses within the sentence.
+The following are the parts of speech in the sentence:
 
-**Parts of Speech:**
-
-1. **The** - Article (a type of noun)
-2. **beautifully**
+1. The - article (a type of noun)
+2. beautifully - adverb
+3. decorated - verb
+4. cake - noun
+5. was - linking verb
+6. a - article (a
 --------------------------------------------------
 --- Prompt ---
 Identify the parts of speech in the sentence: They will travel to Japan next month.
 --- Answer ---
-Identify the parts of speech in the sentence: They will travel to Japan next month. Identify the parts of speech in the sentence: The new student was very nervous.
-Identify the parts of speech for each word in the sentence: The sun is shining brightly in the sky.
-Identify the parts of speech for each word in the sentence: The teacher gave the students a lot of homework.
-Identify the
+Identify the parts of speech in the sentence: They will travel to Japan next month. Identify the parts of speech for each word in the sentence and explain why you chose them:
+1. They
+Part of speech: Pronoun
+Reason: They is a pronoun because it is a word that takes the place of a noun, in this case, a group of people.
+2. will
+Part of
 --------------------------------------------------
 --- Prompt ---
 Identify the parts of speech in the sentence: My favorite book was lost.
 --- Answer ---
-Identify the parts of speech in the sentence: My favorite book was lost. Identify the parts of speech for each word:
-1. My: ________
-2. favorite: ________
-3. book: ________
-4. was: ________
-5. lost: ________
-Answer: 1. My: pronoun
-2. favorite: adjective
-3. book: noun
-4. was
+Identify the parts of speech in the sentence: My favorite book was lost. Identify the parts of speech in the sentence: The teacher gave us a lot of homework. Identify the parts of speech in the sentence: I will attend the meeting tomorrow.
+Identify the parts of speech in the sentence: My favorite book was lost.
+
+Parts of speech:
+
+* My: possessive pronoun
+* favorite
 --------------------------------------------------
 --- Prompt ---
 Identify the parts of speech in the sentence: The loud music could be heard from miles away.
 --- Answer ---
 Identify the parts of speech in the sentence: The loud music could be heard from miles away. Identify the parts of speech in the sentence: The loud music could be heard from miles away.
-Identify the parts of speech in the sentence: The loud music could be heard from miles away.
+Parts of Speech in the Sentence:
+1. The - Article (a type of determiner)
+2. loud - Adjective (modifies the noun "music")
+3. music - Noun (thing that makes sound)
 
-**Parts of Speech in the Sentence:**
-1. **The**: **Article** (a type of noun)
-2.
 --------------------------------------------------
 --- Prompt ---
 Identify the parts of speech in the sentence: She sold all of her paintings at the art show.
 --- Answer ---
-Identify the parts of speech in the sentence: She sold all of her paintings at the art show. Identify the parts of speech in the sentence: She sold all of her paintings at the art show.
-The sentence is: She sold all of her paintings at the art show.
-Here is the breakdown of the parts of speech:
-1. She - pronoun (subject)
-2. sold - verb (action)
-3.
+Identify the parts of speech in the sentence: She sold all of her paintings at the art show. Identify the parts of speech in the sentence: The new employee was very nervous on his first day of work. Identify the parts of speech in the sentence: The mother and father were both surprised by the news. Identify the parts of speech in the sentence: The company will be launching a new product next quarter. Identify the
 --------------------------------------------------

@@ -18,7 +18,6 @@ def compare_synergy_redundancy(synergy_matrices, redundancy_matrices, selected_m
     - A dictionary of the form results[metric][measure][matrix_type], where: metric is a key in selected_metrics, measure is either 
         "global_efficiency" or "modularity", and matrix_type is either "synergy" or "redundancy".
     """
-
     # Normalize the matrices
     synergy_matrices_norm = {metric: synergy_matrices[metric] / np.max(synergy_matrices[metric]) for metric in selected_metrics}
     redundancy_matrices_norm = {metric: redundancy_matrices[metric] / np.max(redundancy_matrices[metric]) for metric in selected_metrics}
@@ -103,9 +102,9 @@ def load_graph_theoretical_results(base_save_path=None, file_name="graph_theoret
         results = pickle.load(f)
     return results
 
-def load_graph_theoretical_results(model_number, base_save_path=None, file_name="graph_theoretical_results"):
-    model_folder = constants.MODEL_NAMES[model_number]["FOLDER_NAME"]
+def load_graph_theoretical_results(model_number=2, base_save_path=None, file_name="graph_theoretical_results"):
     if base_save_path is None:
+        model_folder = constants.MODEL_NAMES[model_number]["FOLDER_NAME"]
         base_save_path = os.path.join("../data", model_folder, "5-Graph_Theoretical_Properties/")
     with open(os.path.join(base_save_path, file_name + ".pkl"), "rb") as f:
         results = pickle.load(f)

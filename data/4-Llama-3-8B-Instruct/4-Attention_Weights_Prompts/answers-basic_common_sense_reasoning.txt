@@ -1,70 +1,61 @@
 --- Prompt ---
 If it starts raining while the sun is shining, what weather phenomenon might you expect to see?
 --- Answer ---
-If it starts raining while the sun is shining, what weather phenomenon might you expect to see? A) Sun tan B) Rainbow C) Thunderstorm D) Snowflake
-The correct answer is B) Rainbow. When the sun is shining and it starts raining, you might see a rainbow. Rainbows are formed when sunlight passes through water droplets in the air at a specific angle, causing the light to be
+If it starts raining while the sun is shining, what weather phenomenon might you expect to see? A) A rainbow B) A sun dog C) A halo D) A cirrostratus cloud
+A) A rainbow. When rain and sunlight meet, the raindrops act as prisms, refracting the sun's light and creating the colors of the rainbow. This is called a primary rainbow. It is
 --------------------------------------------------
 --- Prompt ---
 Why do people wear sunglasses?
 --- Answer ---
-Why do people wear sunglasses? A popular question that has a simple answer – to protect their eyes and improve their vision. Sunglasses have become an essential accessory for many people around the world, and it's easy to see why. Here are some reasons why people wear sunglasses:
-
-1. Eye Protection: Sunglasses provide a layer of protection for your eyes
+Why do people wear sunglasses? There are several reasons why people wear sunglasses, including:
+1. To protect their eyes from the sun's glare: The sun's rays can cause eye strain and discomfort, and sunglasses can help to block out the glare and reduce eye fatigue.
+2. To reduce eye irritation: Some people may experience eye irritation, such as
 --------------------------------------------------
 --- Prompt ---
 What might you use to write on a chalkboard?
 --- Answer ---
-What might you use to write on a chalkboard? (Hint: it's not a pen or pencil!) 1. 2. 3.
-
-The correct answers are:
-
-1. Chalk
-2. Whiteboard marker
-3. Dry-erase marker
-
-Chalk is the classic choice for writing on a chalkboard. Whiteboard markers and dry-erase markers
+What might you use to write on a chalkboard? A. Pencil B. Chalk C. Marker D. Eraser
+The correct answer is B. Chalk. Chalk is a type of writing material that is commonly used on chalkboards, blackboards, or other surfaces to create temporary marks. It is usually white and is made of calcium carbonate, silica
 --------------------------------------------------
 --- Prompt ---
 Why would you put a letter in an envelope?
 --- Answer ---
-Why would you put a letter in an envelope? (video)
-Why would you put a letter in an envelope?
-So, why would you put a letter in an envelope? Well, for starters, envelopes are designed to protect your letter from damage while it's being transported. They provide a safe and secure way to send important documents, like bills, contracts, or even
+Why would you put a letter in an envelope? Because you want to make sure the letter gets to the right place, and you want to make sure it is private and secure. Envelopes help to protect the letter from being lost, damaged, or tampered with, and they also help to keep the contents private by hiding the letter from view.
+What are the
 --------------------------------------------------
 --- Prompt ---
 If you're cold, what might you do to get warm?
 --- Answer ---
-If you're cold, what might you do to get warm? You might put on a jacket, turn up the heat, or drink something hot like tea or hot chocolate. These are all common ways to warm up when you're feeling chilly.
-But did you know that there are other ways to warm up besides these obvious methods? For example, you could take a warm bath or shower
+If you're cold, what might you do to get warm? You might put on some warm clothes, drink a hot beverage, or turn up the heat in your home. But if you're a lizard, you might do something very different. Lizards are ectothermic, which means that they regulate their body temperature using external sources, rather than generating heat internally like mammals and birds
 --------------------------------------------------
 --- Prompt ---
 What is the purpose of a refrigerator?
 --- Answer ---
-What is the purpose of a refrigerator? A refrigerator is a device that is used to store and keep food and drinks at a low temperature, usually around 40°F (4°C), to prevent spoilage and spoilage. It is designed to keep the contents cool and fresh for a longer period of time, and it is an essential appliance in many households.
-
+What is the purpose of a refrigerator? A refrigerator is an electrical appliance that is used to keep food and drinks at a cool temperature. It is designed to maintain a consistent temperature, usually around 40°F (4°C), which is below the temperature at which most bacteria can grow. This helps to slow down the growth of bacteria and other microorganisms, which
 --------------------------------------------------
 --- Prompt ---
 Why might someone plant a tree?
 --- Answer ---
-Why might someone plant a tree? Planting a tree can be a meaningful and impactful act for many reasons. Here are some of the most compelling reasons to plant a tree:
-
-1. **Environmental benefits**: Trees help to clean the air we breathe, purify water, and support biodiversity. They also provide shade, reduce noise pollution, and regulate the climate
+Why might someone plant a tree? Well, there are so many reasons!
+First and foremost, trees are incredibly important for our environment. They provide oxygen, absorb carbon dioxide, and help to regulate the climate. They also provide habitat for countless species of animals and plants, and help to prevent soil erosion.
+In addition to their environmental benefits, trees can also
 --------------------------------------------------
 --- Prompt ---
 What happens to ice when it's left out in the sun?
 --- Answer ---
-What happens to ice when it's left out in the sun? It melts, of course. But what if I came home from work to find that my ice in the glass had turned into a strange, slushy substance? You guessed it – my ice had "sublimed." Sublimation is the process by which a solid changes directly into a gas without going through the
+What happens to ice when it's left out in the sun? The answer will surprise you!
+When ice is left out in the sun, it undergoes a process called sublimation. This is the transition of a solid directly to a gas, without going through the liquid phase. In other words, the ice doesn't melt into water and then evaporate; it skips the liquid
 --------------------------------------------------
 --- Prompt ---
 Why do people shake hands when they meet?
 --- Answer ---
-Why do people shake hands when they meet? (And other questions about handshakes)
-Handshakes are a common greeting around the world, but have you ever wondered why people started doing it in the first place?
-The origins of the handshake are unclear, but historians believe that it may have originated in ancient Greece or Rome, where it was a symbol of peace
+Why do people shake hands when they meet? A gesture that's become so automatic we hardly think about it, yet it's steeped in history and cultural significance. Join us as we delve into the origins of the handshake and explore how it's evolved over time.
+Certain gestures, like the handshake, are so deeply ingrained in our daily lives that we rarely stop
 --------------------------------------------------
 --- Prompt ---
 What can you use to measure the length of a desk?
 --- Answer ---
-What can you use to measure the length of a desk? A ruler, a tape measure, a meter stick, or a piece of string?
-A ruler, a tape measure, and a meter stick are all acceptable options to measure the length of a desk. A piece of string is not a good option, as it is not a precise or reliable way to measure a length.
+What can you use to measure the length of a desk? There are several options you can consider, depending on the level of accuracy and precision you need. Here are a few common methods:
+
+1. Tape measure: A tape measure is a classic tool for measuring the length of a desk. Simply extend the tape measure to the desired length and read it off at the zero mark.
 --------------------------------------------------
