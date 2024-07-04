@@ -13,7 +13,7 @@ MODEL_NAMES = {
     7: {"HF_NAME": "meta-llama/Llama-2-7b-chat-hf", "FOLDER_NAME": "6-Llama-2-7b-chat-hf"},
     8: {"HF_NAME": "meta-llama/Meta-Llama-3-70B-Instruct", "FOLDER_NAME": "7-Llama-3-70B-Instruct"},
 }
-MODEL_NUMBER = 2
+MODEL_NUMBER = 3
 MODEL_NAME = MODEL_NAMES[MODEL_NUMBER]["HF_NAME"]
 FOLDER_MODEL_NAME = MODEL_NAMES[MODEL_NUMBER]["FOLDER_NAME"]
 
