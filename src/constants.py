@@ -35,6 +35,26 @@ METRICS_TRANSFORMER = ['attention_weights'] if not MODIFIED_OUTPUT_ATTENTIONS el
 AGGREGRATION_METHODS = ['norm', 'mean', 'entropy', 'max']
 ATTENTION_MEASURE = METRICS_TRANSFORMER[1 if MODIFIED_OUTPUT_ATTENTIONS else 0]
 
+ATOMS_AVERAGE_VERTICALLY = ['rty', 'sty', 'xty', 'ytr', 'yts', 'yty']
+INFORMATION_DYNAMICS = {
+    "storage": ["rtr", "xtx", "yty", "sts"],
+    "copy": ["xtr", "ytr"],
+    "transfer": ["xty", "ytx"],
+    "erasure": ["rtx", "rty"],
+    "downward_causation": ["stx", "sty", "str"],
+    "upward_causation": ["xts", "yts", "rts"],
+    "information_storage": ["rtr", "rtx", "xtr", "xtx"],
+    "transfer_entropy_x_t_->_y_t+1": ["str", "sty", "xtr", "xty"],
+    "causal_density": [(2,"str"), "sty", "xtr", "xty", "stx", "ytx", "ytr"],
+    "integrated_information": ["sts", "xts", "yts", "stx", "sty", "xty", "ytx", "rts", "str", (-1, "rtr")], 
+    "mutual_information": [
+        "rtr", "rtx", "rty", "rts", 
+        "str", "stx", "sty", "sts", 
+        "xtr", "xtx", "xty", "xts", 
+        "ytr", "ytx", "yty", "yts", 
+    ]
+}
+
 
 # Directories 
 PLOTS_DIR = "../plots/" + FOLDER_MODEL_NAME + "/"

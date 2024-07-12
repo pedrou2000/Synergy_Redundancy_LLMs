@@ -358,3 +358,91 @@ def plot_average_head_activation_per_task(stats_dicts):
         plt.tight_layout()
         plt.show()
 
+
+
+def compute_gradient_ranks(synergy_per_head, redundancy_per_head):
+    gradient_diff = synergy_per_head - redundancy_per_head
+    
+    # Sort gradient_diff and get indices of sorted array
+    sorted_indices = np.argsort(gradient_diff)
+    
+    # Create an empty array of the same length as gradient_diff to store ranks
+    ranks = np.empty_like(sorted_indices)
+    
+    # Assign ranks; since sorted_indices are 0-based, we add 1 to make them start from 1
+    ranks[sorted_indices] = np.arange(1, len(gradient_diff) + 1)
+    
+    # Create a dictionary where the key is the head number (1-indexed) and value is the rank
+    head_ranks = {head_number: rank for head_number, rank in enumerate(ranks, start=1)}
+    gradient_ranks_array = np.array([head_ranks[key] for key in sorted(head_ranks.keys())])
+    return gradient_ranks_array
+
+def compute_and_plot_gradient_activations_correlation(results_all_phid, summary_stats_prompts, save=True, base_plot_path=None):
+
+    for metric in constants.METRICS_TRANSFORMER:
+        for normalized in ['Normalized', 'Unnormalized']:
+            if base_plot_path is None:
+                base_plot_path = constants.PLOT_SYNERGY_REDUNDANCY_TASK_CORRELATIONS
+            base_save_path = base_plot_path + metric + '/' + '5-Correlations_with_Average_Activation/' + normalized + '/'
+
+            synergy_per_head = results_all_phid[metric]['sts'][normalized]['head_averages']
+            redundancy_per_head = results_all_phid[metric]['rtr'][normalized]['head_averages']
+            gradient_ranks_array = compute_gradient_ranks(synergy_per_head, redundancy_per_head)
+
+
+            # Compute average activation vector accross all cognitive tasks
+            activation_vector = {}
+            average_activation_vector = np.zeros(constants.NUM_LAYERS * constants.NUM_HEADS_PER_LAYER)
+            for cognitive_task in constants.PROMPT_CATEGORIES:
+                activation_vector[cognitive_task] = summary_stats_prompts[metric][cognitive_task][:, :, 0]
+                activation_vector[cognitive_task] = activation_vector[cognitive_task].flatten()
+                average_activation_vector += activation_vector[cognitive_task]
+            average_activation_vector /= len(constants.PROMPT_CATEGORIES)
+
+            correlation_synergy, correlation_redundancy, correlation_gradient_rank = {}, {}, {}
+            for cognitive_task in constants.PROMPT_CATEGORIES:
+                
+                activation_vector[cognitive_task] = activation_vector[cognitive_task] - average_activation_vector
+
+                # Compute correlation between average activation and synergy and redundancy 
+                correlation_synergy[cognitive_task] = np.corrcoef(activation_vector[cognitive_task], synergy_per_head)[0, 1]
+                correlation_redundancy[cognitive_task] = np.corrcoef(activation_vector[cognitive_task], redundancy_per_head)[0, 1]
+                correlation_gradient_rank[cognitive_task] = np.corrcoef(activation_vector[cognitive_task], gradient_ranks_array)[0, 1]
+
+                plt.figure(figsize=(10, 6))
+                plt.scatter(activation_vector[cognitive_task], gradient_ranks_array, c='b', alpha=0.5)
+                plt.xlabel('Average Activation')
+                plt.ylabel('Gradient Rank')
+                plt.title('Gradient Rank vs Average Activation')
+
+                plt.plot([], [], ' ', label='Gradient Rank Correlation: %.2f' % correlation_gradient_rank[cognitive_task])
+                plt.plot([], [], ' ', label='Synergy Correlation: %.2f' % correlation_synergy[cognitive_task])
+                plt.plot([], [], ' ', label='Redundancy Correlation: %.2f' % correlation_redundancy[cognitive_task])
+                plt.legend(loc='upper right')
+
+                plt.grid()
+
+                if save:
+                    os.makedirs(base_save_path, exist_ok=True)
+                    plt.savefig(base_save_path + cognitive_task + '.png')
+                else:
+                    plt.show()
+                plt.close()
+
+            # Plot of the synergy, redundancy and gradient rank correlation with average activation accrross all cognitive tasks   
+            plt.figure(figsize=(12, 8))
+            x = np.arange(len(constants.PROMPT_CATEGORIES))
+            bar_width = 0.2
+            plt.bar(x, list(correlation_synergy.values()), bar_width, label='Synergy')
+            plt.bar(x + bar_width, list(correlation_redundancy.values()), bar_width, label='Redundancy')
+            plt.bar(x + 2 * bar_width, list(correlation_gradient_rank.values()), bar_width, label='Gradient Rank')
+            plt.xticks(x + bar_width, constants.PROMPT_CATEGORIES, rotation=10)
+            plt.ylabel('Correlation')
+            plt.title('Correlation with Average Activation')
+            plt.legend(loc='upper right')
+            if save:
+                os.makedirs(base_save_path, exist_ok=True)
+                plt.savefig(base_save_path + 'correlations.png')
+            else:
+                plt.show()
+            plt.close()

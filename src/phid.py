@@ -267,6 +267,142 @@ def plot_all_PhiID(global_matrices, base_plot_path=None, save=True):
             plt.show()
         plt.close()
 
+def plot_single_matrix(matrix, title, save_path=None, save=True):
+    fig, ax = plt.subplots(figsize=(10, 10))  # Adjust the figsize as needed
+    cax = ax.matshow(matrix, cmap='viridis')
+    fig.colorbar(cax, ax=ax)
+    ax.set_title(title)
+    ax.set_xlabel('Attention Head')
+    ax.set_ylabel('Attention Head')
+    ax.xaxis.set_ticks_position('bottom')
+    ax.xaxis.set_label_position('bottom')
+    ax.yaxis.set_ticks_position('left')
+    ax.yaxis.set_label_position('left')
+    plt.tight_layout()
+    
+    if save:
+        os.makedirs(os.path.dirname(save_path), exist_ok=True)
+        plt.savefig(save_path + 'matrix.png')
+        plt.close()
+    else:
+        plt.show()
+
+def compute_average(matrix, key):
+    axis = 0 if key in constants.ATOMS_AVERAGE_VERTICALLY else 1
+    return np.mean(matrix, axis=axis)
+
+def plot_head_averages_heatmap(head_averages, key, save_path=None, save=True, heatmap=True):
+    n_layers = constants.NUM_LAYERS
+    n_heads_per_layer = constants.NUM_HEADS_PER_LAYER
+    if heatmap:
+        head_averages_matrix = head_averages.reshape((n_layers, n_heads_per_layer))
+        fig, ax = plt.subplots(figsize=(12, 5))
+        heatmap = sns.heatmap(head_averages_matrix.T, annot=True, fmt=".2f", cmap="viridis", cbar=True, linewidths=0.5, linecolor='gray', cbar_kws={"shrink": 0.8})
+        cbar = heatmap.collections[0].colorbar
+        cbar.set_label(key, size=16)  # Adjust the size as needed
+    else:
+        fig, ax = plt.subplots(figsize=(16, 6))
+        heads = np.arange(len(head_averages))
+        ax.plot(heads, head_averages, marker='o', linestyle='-', color='darkblue')
+        ax.set_xlabel('Attention Head')
+        ax.set_ylabel('Average Value')
+        ax.set_title(f'Average {key} per Head')
+    if save:
+        os.makedirs(os.path.dirname(save_path), exist_ok=True)
+        file_path = save_path + 'head_averages'
+        file_path += '_heatmap.png' if heatmap else '_line.png'
+        plt.savefig(file_path, bbox_inches='tight')
+    else:
+        plt.show()
+    plt.close()
+
+
+def plot_all_PhiID_separately(global_matrices, base_plot_path=None, save=True):
+    results = {}
+    if not base_plot_path:
+        base_plot_path = constants.PLOTS_SYNERGY_REDUNDANCY_DIR 
+    for metric, matrices in global_matrices.items():
+        base_save_path = os.path.join(base_plot_path, metric)
+        base_save_path = os.path.join(base_save_path, '8-All_PhiID_Separate/')
+        results[metric] = {}
+
+        # Compute the mutual info as the sum of all the atoms 
+        mutual_info = np.zeros((constants.NUM_TOTAL_HEADS, constants.NUM_TOTAL_HEADS))
+        for key, matrix in matrices.items():
+            mutual_info += matrix
+        # Prevent division by 0
+        mutual_info += 10e-9
+        
+        # Compute the normalized matrices 
+        normalized_matrices = {key: matrix / mutual_info for key, matrix in matrices.items()}
+        
+        # Plot all the Unnormalized PhiID Atoms separately
+        for key, matrix in matrices.items():
+            save_path = base_save_path + key + '/' + 'Unnormalized/'
+            plot_single_matrix(matrix, title=key, save_path=save_path)
+            head_averages = compute_average(matrix, key)
+            plot_head_averages_heatmap(head_averages, key, save_path=save_path, heatmap=True)
+            plot_head_averages_heatmap(head_averages, key, save_path=save_path, heatmap=False)
+            results[metric][key] = {}
+            results[metric][key]['Unnormalized'] = {}
+            results[metric][key]['Unnormalized']['matrix'] = matrix
+            results[metric][key]['Unnormalized']['head_averages'] = head_averages
+        
+        # Plot all the Unnormalized PhiID Atoms separately
+        for key, matrix in normalized_matrices.items():
+            save_path = base_save_path + key + '/' + 'Normalized/'
+            plot_single_matrix(matrix, title=key, save_path=save_path)
+            head_averages = compute_average(matrix, key)
+            plot_head_averages_heatmap(head_averages, key, save_path=save_path, heatmap=True)
+            plot_head_averages_heatmap(head_averages, key, save_path=save_path, heatmap=False)
+            results[metric][key]['Normalized'] = {}
+            results[metric][key]['Normalized']['matrix'] = matrix
+            results[metric][key]['Normalized']['head_averages'] = head_averages
+        
+        # Compute and Plot the different Unnormalized Information Dynamics Quantitites
+        for key, atoms in constants.INFORMATION_DYNAMICS.items():
+            save_path = base_save_path + key + '/' + 'Unnormalized/'
+            matrix = np.zeros((constants.NUM_TOTAL_HEADS, constants.NUM_TOTAL_HEADS))
+            for atom in atoms:
+                if type(atom) == tuple:
+                    multiplier, atom = atom
+                    matrix += multiplier * matrices[atom]
+                elif type(atom) == str:
+                    matrix += matrices[atom]
+                else:
+                    print("Invalid atom type in constants.INFORMATION_DYNAMICS: ", atom)
+            plot_single_matrix(matrix, title=key, save_path=save_path)
+            head_averages = compute_average(matrix, key)
+            plot_head_averages_heatmap(head_averages, key, save_path=save_path, heatmap=True)
+            plot_head_averages_heatmap(head_averages, key, save_path=save_path, heatmap=False)
+            results[metric][key] = {}
+            results[metric][key]['Unnormalized'] = {}
+            results[metric][key]['Unnormalized']['matrix'] = matrix
+            results[metric][key]['Unnormalized']['head_averages'] = head_averages
+        
+        # Compute and Plot the different Normalized Information Dynamics Quantitites
+        for key, atoms in constants.INFORMATION_DYNAMICS.items():
+            save_path = base_save_path + key + '/' + 'Normalized/'
+            matrix = np.zeros((constants.NUM_TOTAL_HEADS, constants.NUM_TOTAL_HEADS))
+            for atom in atoms:
+                if type(atom) == tuple:
+                    multiplier, atom = atom
+                    matrix += multiplier * normalized_matrices[atom]
+                elif type(atom) == str:
+                    matrix += normalized_matrices[atom]
+                else:
+                    print("Invalid atom type in constants.INFORMATION_DYNAMICS: ", atom)
+            plot_single_matrix(matrix, title=key, save_path=save_path)
+            head_averages = compute_average(matrix, key)
+            plot_head_averages_heatmap(head_averages, key, save_path=save_path, heatmap=True)
+            plot_head_averages_heatmap(head_averages, key, save_path=save_path, heatmap=False)
+            results[metric][key]['Normalized'] = {}
+            results[metric][key]['Normalized']['matrix'] = matrix
+            results[metric][key]['Normalized']['head_averages'] = head_averages
+    
+    return results
+
+
 
 
 ####################### Other Visualizations #######################
