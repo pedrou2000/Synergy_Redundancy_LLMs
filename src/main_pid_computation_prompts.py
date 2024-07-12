@@ -57,12 +57,12 @@ redundancy_matrices = {task: {} for task in categories}
 def compute_and_save(task, n_prompt, prompt, time_series, save_path):
     print(f"\n--- Computing PhiID for task {task} ---")
     print(f"\nPrompt: {n_prompt}")
-    result = compute_PhiID(time_series[task][n_prompt], save=True, kind="gaussian", base_save_path=save_path)
-    all_matrices, synergy_matrices, redundancy_matrices = result
-    # all_matrices, synergy_matrices, redundancy_matrices = load_matrices(base_save_path=save_path)
-    # result = (all_matrices, synergy_matrices, redundancy_matrices)
-    graph_theoretical_results = compare_synergy_redundancy(synergy_matrices, redundancy_matrices)
-    save_graph_theoretical_results(graph_theoretical_results, file_name=str(n_prompt), base_save_path = GRAPH_METRICS_DIR + task + '/')
+    # result = compute_PhiID(time_series[task][n_prompt], save=True, kind="gaussian", base_save_path=save_path)
+    # all_matrices, synergy_matrices, redundancy_matrices = result
+    all_matrices, synergy_matrices, redundancy_matrices = load_matrices(base_save_path=save_path)
+    result = (all_matrices, synergy_matrices, redundancy_matrices)
+    # graph_theoretical_results = compare_synergy_redundancy(synergy_matrices, redundancy_matrices)
+    # save_graph_theoretical_results(graph_theoretical_results, file_name=str(n_prompt), base_save_path = GRAPH_METRICS_DIR + task + '/')
     return (task, n_prompt, result)
 
 # Create a dictionary to store all matrices

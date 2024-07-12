@@ -377,25 +377,43 @@ def compute_gradient_ranks(synergy_per_head, redundancy_per_head):
     gradient_ranks_array = np.array([head_ranks[key] for key in sorted(head_ranks.keys())])
     return gradient_ranks_array
 
-def compute_and_plot_gradient_activations_correlation(results_all_phid, summary_stats_prompts, save=True, base_plot_path=None):
+def compute_and_plot_gradient_activations_correlation(results_all_phid, summary_stats_prompts, per_layer=False, save=True, base_plot_path=None):
 
     for metric in constants.METRICS_TRANSFORMER:
         for normalized in ['Normalized', 'Unnormalized']:
             if base_plot_path is None:
                 base_plot_path = constants.PLOT_SYNERGY_REDUNDANCY_TASK_CORRELATIONS
-            base_save_path = base_plot_path + metric + '/' + '5-Correlations_with_Average_Activation/' + normalized + '/'
+            base_save_path = base_plot_path + metric + '/' + '5-Correlations_with_Average_Activation/' + normalized + '/' + ('per_layer/' if per_layer else 'per_head/')
 
             synergy_per_head = results_all_phid[metric]['sts'][normalized]['head_averages']
             redundancy_per_head = results_all_phid[metric]['rtr'][normalized]['head_averages']
             gradient_ranks_array = compute_gradient_ranks(synergy_per_head, redundancy_per_head)
 
+            if per_layer:
+                # Reshape synergy and redundancy to be [layer, head, 1]
+                synergy_per_head = synergy_per_head.reshape(constants.NUM_LAYERS, constants.NUM_HEADS_PER_LAYER)
+                redundancy_per_head = redundancy_per_head.reshape(constants.NUM_LAYERS, constants.NUM_HEADS_PER_LAYER)
+                gradient_ranks_array = gradient_ranks_array.reshape(constants.NUM_LAYERS, constants.NUM_HEADS_PER_LAYER)
+
+                # Compute synergy and redundancy per layer
+                synergy_per_head = synergy_per_head.mean(axis=1)
+                redundancy_per_head = redundancy_per_head.mean(axis=1)
+                gradient_ranks_array = gradient_ranks_array.mean(axis=1)
+
 
             # Compute average activation vector accross all cognitive tasks
             activation_vector = {}
-            average_activation_vector = np.zeros(constants.NUM_LAYERS * constants.NUM_HEADS_PER_LAYER)
+            if not per_layer:
+                average_activation_vector = np.zeros(constants.NUM_LAYERS * constants.NUM_HEADS_PER_LAYER)
+            else:
+                average_activation_vector = np.zeros(constants.NUM_LAYERS)
             for cognitive_task in constants.PROMPT_CATEGORIES:
                 activation_vector[cognitive_task] = summary_stats_prompts[metric][cognitive_task][:, :, 0]
-                activation_vector[cognitive_task] = activation_vector[cognitive_task].flatten()
+                if not per_layer:
+                    activation_vector[cognitive_task] = activation_vector[cognitive_task].flatten()
+                else: 
+                    activation_vector[cognitive_task] = activation_vector[cognitive_task].mean(axis=1)
+
                 average_activation_vector += activation_vector[cognitive_task]
             average_activation_vector /= len(constants.PROMPT_CATEGORIES)
 
