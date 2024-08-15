@@ -287,9 +287,26 @@ def plot_single_matrix(matrix, title, save_path=None, save=True):
     else:
         plt.show()
 
-def compute_average(matrix, key):
+def compute_average(matrix, key, top_percentile=1):
     axis = 0 if key in constants.ATOMS_AVERAGE_VERTICALLY else 1
-    return np.mean(matrix, axis=axis)
+    result = []
+
+    if top_percentile < 1:
+        # Process each row or column individually
+        if axis == 0:  # Average vertically, so iterate over columns
+            for col in matrix.T:
+                threshold = np.percentile(col, 100 - (top_percentile * 100))
+                top_values = col[col >= threshold]
+                result.append(np.mean(top_values))
+        else:  # Average horizontally, so iterate over rows
+            for row in matrix:
+                threshold = np.percentile(row, 100 - (top_percentile * 100))
+                top_values = row[row >= threshold]
+                result.append(np.mean(top_values))
+        return np.array(result)
+    else:
+        # Compute the mean of the entire matrix along the specified axis
+        return np.mean(matrix, axis=axis)
 
 def plot_head_averages_heatmap(head_averages, key, save_path=None, save=True, heatmap=True):
     n_layers = constants.NUM_LAYERS
@@ -317,7 +334,34 @@ def plot_head_averages_heatmap(head_averages, key, save_path=None, save=True, he
     plt.close()
 
 
-def plot_all_PhiID_separately(global_matrices, base_plot_path=None, save=True):
+def compute_pairwise_correlations(matrices):
+    keys = list(matrices.keys())
+    num_keys = len(keys)
+    correlation_matrix = np.zeros((num_keys, num_keys))
+
+    for i in range(num_keys):
+        for j in range(i, num_keys):
+            matrix1 = matrices[keys[i]].flatten()
+            matrix2 = matrices[keys[j]].flatten()
+            correlation = np.corrcoef(matrix1, matrix2)[0, 1]
+            correlation_matrix[i, j] = correlation
+            correlation_matrix[j, i] = correlation
+
+    return keys, correlation_matrix
+
+def plot_matrix_correlation(correlation_matrix, keys, title, save_path):
+    plt.figure(figsize=(10, 8))
+    plt.imshow(correlation_matrix, cmap='coolwarm', vmin=-1, vmax=1)
+    plt.colorbar(label='Correlation coefficient')
+    plt.xticks(ticks=np.arange(len(keys)), labels=keys, rotation=20)
+    plt.yticks(ticks=np.arange(len(keys)), labels=keys)
+    plt.title(title)
+    plt.tight_layout()
+    plt.savefig(save_path)
+    plt.close()
+
+
+def plot_all_PhiID_separately(global_matrices, base_plot_path=None, save=True, percentiles=[1, 0.1, 0.01]):
     results = {}
     if not base_plot_path:
         base_plot_path = constants.PLOTS_SYNERGY_REDUNDANCY_DIR 
@@ -335,70 +379,63 @@ def plot_all_PhiID_separately(global_matrices, base_plot_path=None, save=True):
         
         # Compute the normalized matrices 
         normalized_matrices = {key: matrix / mutual_info for key, matrix in matrices.items()}
-        
-        # Plot all the Unnormalized PhiID Atoms separately
-        for key, matrix in matrices.items():
-            save_path = base_save_path + key + '/' + 'Unnormalized/'
-            plot_single_matrix(matrix, title=key, save_path=save_path)
-            head_averages = compute_average(matrix, key)
-            plot_head_averages_heatmap(head_averages, key, save_path=save_path, heatmap=True)
-            plot_head_averages_heatmap(head_averages, key, save_path=save_path, heatmap=False)
-            results[metric][key] = {}
-            results[metric][key]['Unnormalized'] = {}
-            results[metric][key]['Unnormalized']['matrix'] = matrix
-            results[metric][key]['Unnormalized']['head_averages'] = head_averages
-        
-        # Plot all the Unnormalized PhiID Atoms separately
-        for key, matrix in normalized_matrices.items():
-            save_path = base_save_path + key + '/' + 'Normalized/'
-            plot_single_matrix(matrix, title=key, save_path=save_path)
-            head_averages = compute_average(matrix, key)
-            plot_head_averages_heatmap(head_averages, key, save_path=save_path, heatmap=True)
-            plot_head_averages_heatmap(head_averages, key, save_path=save_path, heatmap=False)
-            results[metric][key]['Normalized'] = {}
-            results[metric][key]['Normalized']['matrix'] = matrix
-            results[metric][key]['Normalized']['head_averages'] = head_averages
-        
-        # Compute and Plot the different Unnormalized Information Dynamics Quantitites
-        for key, atoms in constants.INFORMATION_DYNAMICS.items():
-            save_path = base_save_path + key + '/' + 'Unnormalized/'
-            matrix = np.zeros((constants.NUM_TOTAL_HEADS, constants.NUM_TOTAL_HEADS))
-            for atom in atoms:
-                if type(atom) == tuple:
-                    multiplier, atom = atom
-                    matrix += multiplier * matrices[atom]
-                elif type(atom) == str:
-                    matrix += matrices[atom]
-                else:
-                    print("Invalid atom type in constants.INFORMATION_DYNAMICS: ", atom)
-            plot_single_matrix(matrix, title=key, save_path=save_path)
-            head_averages = compute_average(matrix, key)
-            plot_head_averages_heatmap(head_averages, key, save_path=save_path, heatmap=True)
-            plot_head_averages_heatmap(head_averages, key, save_path=save_path, heatmap=False)
-            results[metric][key] = {}
-            results[metric][key]['Unnormalized'] = {}
-            results[metric][key]['Unnormalized']['matrix'] = matrix
-            results[metric][key]['Unnormalized']['head_averages'] = head_averages
-        
-        # Compute and Plot the different Normalized Information Dynamics Quantitites
-        for key, atoms in constants.INFORMATION_DYNAMICS.items():
-            save_path = base_save_path + key + '/' + 'Normalized/'
-            matrix = np.zeros((constants.NUM_TOTAL_HEADS, constants.NUM_TOTAL_HEADS))
-            for atom in atoms:
-                if type(atom) == tuple:
-                    multiplier, atom = atom
-                    matrix += multiplier * normalized_matrices[atom]
-                elif type(atom) == str:
-                    matrix += normalized_matrices[atom]
-                else:
-                    print("Invalid atom type in constants.INFORMATION_DYNAMICS: ", atom)
-            plot_single_matrix(matrix, title=key, save_path=save_path)
-            head_averages = compute_average(matrix, key)
-            plot_head_averages_heatmap(head_averages, key, save_path=save_path, heatmap=True)
-            plot_head_averages_heatmap(head_averages, key, save_path=save_path, heatmap=False)
-            results[metric][key]['Normalized'] = {}
-            results[metric][key]['Normalized']['matrix'] = matrix
-            results[metric][key]['Normalized']['head_averages'] = head_averages
+
+        all_matrices = {"Unnormalized": matrices, "Normalized": normalized_matrices}
+
+        for normalized in ["Unnormalized", "Normalized"]:
+            
+            # Compute the different Information Dynamics Quantitites
+            for key, atoms in constants.INFORMATION_DYNAMICS.items():
+                matrix = np.zeros((constants.NUM_TOTAL_HEADS, constants.NUM_TOTAL_HEADS))
+                for atom in atoms:
+                    if type(atom) == tuple:
+                        multiplier, atom = atom
+                        matrix += multiplier * all_matrices[normalized][atom]
+                    elif type(atom) == str:
+                        matrix += all_matrices[normalized][atom]
+                    else:
+                        print("Invalid atom type in constants.INFORMATION_DYNAMICS: ", atom)
+                all_matrices[normalized][key] = matrix
+
+            # Plot all the Unnormalized PhiID Atoms separately
+            for key, matrix in all_matrices[normalized].items():
+                save_path = base_save_path + key + '/' + normalized + '/'
+                plot_single_matrix(matrix, title=key, save_path=save_path, save=save)
+                head_averages = {}
+                for percentile in percentiles:
+                    final_save_path = save_path + f'{percentile}/'
+                    head_averages[percentile] = compute_average(matrix, key, top_percentile=percentile)
+                    plot_head_averages_heatmap(head_averages[percentile], key, save_path=final_save_path, heatmap=True)
+                    plot_head_averages_heatmap(head_averages[percentile], key, save_path=final_save_path, heatmap=False)
+                results[metric][key] = {} if key not in results[metric] else results[metric][key]
+                results[metric][key][normalized] = {} if normalized not in results[metric][key] else results[metric][key][normalized]
+                results[metric][key][normalized]['matrix'] = matrix
+                results[metric][key][normalized]['head_averages'] = head_averages
+
+            # Compute correlations between all matrices
+            matrices = {}
+            for key in all_matrices[normalized].keys():
+                print(key)
+                matrices[key] = results[metric][key][normalized]['matrix']
+            keys, correlation_matrix = compute_pairwise_correlations(matrices)
+            correlation_title = f"{metric} - {normalized} Correlations"
+            correlation_save_path = os.path.join(base_save_path, f"{normalized}_correlations.png")
+            plot_matrix_correlation(correlation_matrix, keys, correlation_title, correlation_save_path)
+            results[metric][f"{normalized}_correlations"] = correlation_matrix
+
+            # Compute correlations between the head averages activations
+            for percentile in percentiles:
+                head_averages = {}
+                for key in all_matrices[normalized].keys():
+                    print(key)
+                    head_averages[key] = results[metric][key][normalized]['head_averages'][percentile]
+                keys, correlation_matrix = compute_pairwise_correlations(head_averages)
+                correlation_title = f"Head Averages Correlations for Percentile {percentile}"
+                correlation_save_path = os.path.join(base_save_path, f"{normalized}_head_averages_correlations_percentile_{percentile}.png")
+                plot_matrix_correlation(correlation_matrix, keys, correlation_title, correlation_save_path)
+                results[metric][f"{normalized}_head_averages_correlations"] = {} if f"{normalized}_head_averages_correlations" not in results[metric] else results[metric][f"{normalized}_head_averages_correlations"]
+                results[metric][f"{normalized}_head_averages_correlations"][percentile] = correlation_matrix
+
     
     return results
 
