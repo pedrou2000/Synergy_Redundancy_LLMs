@@ -71,6 +71,7 @@ def generate_text_with_attention(model, tokenizer, num_tokens_to_generate: int, 
 
     return generated_text, attention_params
 
+
 def save_raw_attention(generated_text, attention_params, base_save_path=None):
     if not base_save_path:
         # Assuming 'constants.MATRICES_DIR' is defined and is a valid path

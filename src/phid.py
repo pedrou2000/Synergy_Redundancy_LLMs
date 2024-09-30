@@ -8,6 +8,7 @@ from datetime import datetime
 import pickle
 import seaborn as sns
 import torch
+import pandas as pd
 
 # Function to check and modify the vector if variance is zero
 def check_and_modify_variance(vector, index, epsilon=1e-2):
@@ -438,6 +439,53 @@ def plot_all_PhiID_separately(global_matrices, base_plot_path=None, save=True, p
 
     
     return results
+
+
+def plot_box_plot_information_dynamics(results_all_phid, atom_or_dynamics = "atoms", save=False, base_plot_path=None):
+    if atom_or_dynamics == "atoms":
+        information_dynamics = ['rtr', 'rtx', 'rty', 'rts', 'xtr', 'xtx', 'xty', 'xts', 'ytr', 'ytx', 'yty', 'yts', 'str', 'stx', 'sty', 'sts']
+    elif atom_or_dynamics == "dynamics":
+        information_dynamics = ["storage", "transfer", "downward_causation", "upward_causation", "erasure", "copy"]
+    
+    if len(list(results_all_phid.keys())) == 1:
+        key = list(results_all_phid.keys())[0]
+    else:
+        key = constants.ATTENTION_MEASURE
+
+    information_dynamics_dict = {information_dynamic: results_all_phid[key][information_dynamic]["Unnormalized"]["head_averages"][1] for information_dynamic in information_dynamics}
+
+    # Convert the dictionary to a DataFrame for easier plotting
+    df = pd.DataFrame(information_dynamics_dict)
+
+    # Melt the DataFrame to have a long format
+    df_melted = df.melt(var_name='Information Dynamic', value_name='Values')
+
+    # Create the box plot
+    plt.figure(figsize=(10, 6))
+    sns.boxplot(x='Information Dynamic', y='Values', data=df_melted)
+
+    # Add titles and labels
+    if atom_or_dynamics == "atoms":
+        plt.title('Box Plot of Information Atoms')
+        plt.xlabel('Information Atom')
+    elif atom_or_dynamics == "dynamics":
+        plt.title('Box Plot of Information Dynamics')
+        plt.xlabel('Information Dynamic')
+    plt.ylabel('Values')
+
+    if save:
+        if base_plot_path is None:
+            base_plot_path = constants.PLOTS_SYNERGY_REDUNDANCY_DIR + 'random_walk_time_series' + '/'
+        base_plot_path = os.path.join(base_plot_path, key)
+        os.makedirs(base_plot_path, exist_ok=True)
+
+        if atom_or_dynamics == "atoms":
+            plt.savefig(os.path.join(base_plot_path, '9-box_plot_information_atoms.png'))
+        elif atom_or_dynamics == "dynamics":
+            plt.savefig(os.path.join(base_plot_path, '10-box_plot_information_dynamics.png'))
+    else:
+        plt.show()
+    plt.close()
 
 
 
