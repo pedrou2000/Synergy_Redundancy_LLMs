@@ -306,11 +306,23 @@ class GemmaAttention(nn.Module):
         # intermediate_values['attn_weights_softmax'] = attn_weights
         attn_output = torch.matmul(attn_weights, value_states)
 
-        # Ablate specific attention heads by zeroing out their attention weights and/or outputs
-        if self.ablated_attention_heads is not None:
-            for head_idx in self.ablated_attention_heads:
-                attn_output[:, head_idx, :, :] = 0  # Zero out the attention output for specific heads
-                attn_weights[:, head_idx, :, :] = 0  # Optionally, zero out the attention weights too
+        # # Ablate specific attention heads by zeroing out their attention weights and/or outputs
+        # if self.ablated_attention_heads is not None:
+        #     for head_idx in self.ablated_attention_heads:
+        #         attn_output[:, head_idx, :, :] = 0  # Zero out the attention output for specific heads
+        #         attn_weights[:, head_idx, :, :] = 0  # Optionally, zero out the attention weights too
+
+        # Create a binary mask for attention heads (1 means keep, 0 means ablate)
+        mask = torch.ones(self.num_heads, device=attn_output.device)  # Initialize with 1s
+        mask[self.ablated_attention_heads] = 0  # Set ablated heads to 0
+
+        # Reshape the mask to be broadcastable
+        mask = mask.view(1, -1, 1, 1)  # Shape [1, num_heads, 1, 1]
+
+        # Apply the mask to the attention output and weights
+        attn_output = attn_output * mask
+        attn_weights = attn_weights * mask  # If you want to zero out the weights as well
+
 
 
         intermediate_values['attention_outputs'] = attn_output

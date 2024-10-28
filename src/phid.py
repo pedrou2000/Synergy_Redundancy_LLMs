@@ -542,9 +542,9 @@ def plot_averages_per_head(averages, base_plot_path=None, save=False, use_heatma
             ax.set_ylabel("Head")
 
             ax.set_xticks(np.arange(num_layers) + 0.5)  # Change: Added set_xticks
-            ax.set_xticklabels([f"{i+1}" for i in range(num_layers)])
+            ax.set_xticklabels([f"{i}" for i in range(num_layers)])
             ax.set_yticks(np.arange(num_heads_per_layer) + 0.5)  # Change: Added set_yticks
-            ax.set_yticklabels([f"{i+1}" for i in range(num_heads_per_layer)], rotation=0)
+            ax.set_yticklabels([f"{i}" for i in range(num_heads_per_layer)], rotation=0)
             plt.tight_layout()
 
             synergy_plot_path = f"{base_plot_path}{metric}/3-Synergy_per_Head.png"
@@ -566,9 +566,9 @@ def plot_averages_per_head(averages, base_plot_path=None, save=False, use_heatma
             ax.set_xlabel("Layer")
             ax.set_ylabel("Head")
             ax.set_xticks(np.arange(num_layers) + 0.5)  # Change: Added set_xticks
-            ax.set_xticklabels([f"{i+1}" for i in range(num_layers)], rotation=0)
+            ax.set_xticklabels([f"{i}" for i in range(num_layers)], rotation=0)
             ax.set_yticks(np.arange(num_heads_per_layer) + 0.5)  # Change: Added set_yticks
-            ax.set_yticklabels([f"{i+1}" for i in range(num_heads_per_layer)], rotation=0)
+            ax.set_yticklabels([f"{i}" for i in range(num_heads_per_layer)], rotation=0)
             plt.tight_layout()
 
             redundancy_plot_path = f"{base_plot_path}{metric}/4-Redundancy_per_Head.png"
@@ -730,9 +730,9 @@ def plot_gradient_rank(gradient_ranks, base_plot_path=None, save=False, use_heat
             sns.heatmap(ranks_matrix.T, annot=True, fmt="d", cmap="viridis", cbar=True, linewidths=0.5,
                         linecolor='gray', cbar_kws={"shrink": 0.8, "label": 'Synergy - Redundancy Rank'})
             ax.set_xticks(np.arange(num_layers) + 0.5)  # Change: Added set_yticks
-            ax.set_xticklabels([f"{i+1}" for i in range(num_layers)], rotation=45, ha="right")
+            ax.set_xticklabels([f"{i}" for i in range(num_layers)], rotation=45, ha="right")
             ax.set_yticks(np.arange(num_heads_per_layer) + 0.5)  # Change: Added set_yticks
-            ax.set_yticklabels([f"{i+1}" for i in range(num_heads_per_layer)], rotation=0)
+            ax.set_yticklabels([f"{i}" for i in range(num_heads_per_layer)], rotation=0)
             ax.set_title(f'Synergy - Redundancy Rank Heatmap for {metric}')
             ax.set_xlabel("Layer")
             ax.set_ylabel("Head")

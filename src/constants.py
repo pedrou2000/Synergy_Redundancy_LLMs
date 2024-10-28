@@ -28,6 +28,7 @@ GENERATE_ATTENTION_WEIGHTS = False
 LOAD_MODEL = GENERATE_ATTENTION_WEIGHTS or COMPUTE_PID or GENERATE_RAW_ATTENTION_AND_TIME_SERIES
 SAVE_PLOTS = True
 
+ABLATIONS_RANKING_METHOD = 'syn_minus_red_temp_1' # 'syn_minus_red', 'synergy', 'redundancy'
 METRICS_TRANSFORMER = ['attention_weights'] if not MODIFIED_OUTPUT_ATTENTIONS else ['projected_Q', 'attention_weights', 'attention_outputs']
 AGGREGRATION_METHODS = ['norm', 'mean', 'entropy', 'max']
 ATTENTION_MEASURE = METRICS_TRANSFORMER[1 if MODIFIED_OUTPUT_ATTENTIONS else 0]
