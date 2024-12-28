@@ -4,6 +4,6 @@ src/hf_token.py
 **/3-Synergy_Redundancy_Matrices/
 **/data/
 **/plots/
-!/plots/0-Model_Comparison/
-!/plots/8-Llama-3.1-8B/
+plots/*
+!plots/8-Llama-3.1-8B/
 # **/backup/
