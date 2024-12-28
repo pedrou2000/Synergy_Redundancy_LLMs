@@ -3,5 +3,5 @@ src/hf_token.py
 **/1-Raw_Attention/
 **/3-Synergy_Redundancy_Matrices/
 **/data/
-**/plots/
+# **/plots/
 # **/backup/
