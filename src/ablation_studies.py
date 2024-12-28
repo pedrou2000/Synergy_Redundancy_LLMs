@@ -193,6 +193,13 @@ def generate_text_with_logits_batch(model, tokenizer, num_tokens_to_generate: in
     """
 
     # Tokenize the batch of prompts
+    # Check and set the padding token
+    if tokenizer.pad_token is None:
+        if tokenizer.eos_token:
+            tokenizer.pad_token = tokenizer.eos_token
+        else:
+            tokenizer.add_special_tokens({'pad_token': '[PAD]'})
+
     inputs = tokenizer(prompts, return_tensors='pt', padding=True)
     input_ids = inputs['input_ids'].to(device)  # shape [batch_size, seq_len]
     attention_mask = inputs['attention_mask'].to(device)  # shape [batch_size, seq_len]
@@ -201,12 +208,17 @@ def generate_text_with_logits_batch(model, tokenizer, num_tokens_to_generate: in
 
     # Initialize generated_ids with input_ids
     generated_ids = input_ids.clone()
+    generated_ids = generated_ids.to(device)
+
 
     # Initialize lists to collect logits and newly generated token ids
     logits_list = []
     generated_new_ids = []
 
     for t in range(num_tokens_to_generate):
+        # Show cuda memory usage
+        print(f"Timestep: {t}, Memory allocated: {torch.cuda.memory_allocated() / 1e9:.2f} GB")
+
         gc.collect()  # Explicitly invoke garbage collection
         with torch.no_grad():
             outputs = model(input_ids=generated_ids, attention_mask=attention_mask)
@@ -245,7 +257,6 @@ def generate_text_with_logits_batch(model, tokenizer, num_tokens_to_generate: in
     return generated_texts, logits_list, generated_new_ids
 
 
-
 def generate_with_teacher_forcing_ablated_batch(
     model, tokenizer, prompts, non_ablated_token_ids, non_ablated_logits, device: str,
     temperature=0.0, ablated_attention_heads=None, verbose=False
@@ -255,7 +266,19 @@ def generate_with_teacher_forcing_ablated_batch(
     non_ablated_logits = non_ablated_logits.to(device)
 
     # Tokenize the prompts and get prompt lengths
-    tokenized_inputs = tokenizer(prompts, return_tensors='pt', padding=True).to(device)
+    if tokenizer.pad_token is None:
+        if tokenizer.eos_token:
+            tokenizer.pad_token = tokenizer.eos_token
+        else:
+            tokenizer.add_special_tokens({'pad_token': '[PAD]'})
+    # Tokenize the prompts with explicit padding and truncation
+    tokenized_inputs = tokenizer(
+        prompts,
+        return_tensors='pt',
+        padding=True,  # Ensure padding to the max length in the batch
+        truncation=True,  # Truncate sequences exceeding the model's max length
+        max_length=model.config.max_position_embeddings  # Use model's max length
+    ).to(device)
     input_ids = tokenized_inputs['input_ids']  # [batch_size, prompt_length]
     attention_mask = tokenized_inputs['attention_mask']  # [batch_size, prompt_length]
     batch_size = input_ids.size(0)
@@ -282,10 +305,19 @@ def generate_with_teacher_forcing_ablated_batch(
 
     for t in range(max_generation_length):
         gc.collect()  # Explicit garbage collection
+        if t%10 == 0:
+            print(f"Timestep: {t}, Memory allocated: {torch.cuda.memory_allocated() / 1e9:.2f} GB")
+
 
         with torch.no_grad():
             outputs = model(ablated_ids, ablated_attention_heads=ablated_attention_heads, attention_mask=attention_mask)
             ablated_next_token_logits = outputs.logits[:, -1, :]  # [batch_size, vocab_size]
+
+            # Move everything to CPU for memory efficiency
+            # ablated_next_token_logits = ablated_next_token_logits.cpu()
+            # Delete outputs to free up memory
+            del outputs
+
 
         # Record the ablated model's logits
         ablated_logits_list.append(ablated_next_token_logits.detach().cpu())
@@ -315,6 +347,10 @@ def generate_with_teacher_forcing_ablated_batch(
         next_token_id = non_ablated_token_ids[:, t].unsqueeze(-1).to(device)
         ablated_ids = torch.cat((ablated_ids, next_token_id), dim=1)
 
+        # Append a '1' to attention_mask to reflect the new, valid token
+        new_mask_token = torch.ones((attention_mask.size(0), 1), dtype=attention_mask.dtype, device=attention_mask.device)
+        attention_mask = torch.cat((attention_mask, new_mask_token), dim=1)
+
     # Stack the logits list to form a tensor of shape [batch_size, num_tokens_to_generate, vocab_size]
     ablated_logits_tensor = torch.stack(ablated_logits_list, dim=1)
 
@@ -323,5 +359,5 @@ def generate_with_teacher_forcing_ablated_batch(
 
 
       
-    return ablated_logits_tensor, divergence_tensor, generated_texts
+    return ablated_logits_tensor.cpu(), divergence_tensor.cpu(), generated_texts
 

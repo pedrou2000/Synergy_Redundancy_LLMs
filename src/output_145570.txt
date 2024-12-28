@@ -1,0 +1,2 @@
+Loading checkpoint shards:   0%|          | 0/4 [00:00<?, ?it/s]Loading checkpoint shards:  25%|██▌       | 1/4 [01:10<03:30, 70.32s/it]Loading checkpoint shards:  50%|█████     | 2/4 [02:25<02:25, 72.97s/it]Loading checkpoint shards:  75%|███████▌  | 3/4 [03:42<01:15, 75.12s/it]Loading checkpoint shards: 100%|██████████| 4/4 [04:40<00:00, 68.04s/it]Loading checkpoint shards: 100%|██████████| 4/4 [04:40<00:00, 70.00s/it]
+slurmstepd: error: *** JOB 145570 ON gpuvm05 CANCELLED AT 2024-12-09T19:21:30 DUE TO TIME LIMIT ***

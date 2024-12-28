@@ -1,0 +1,54 @@
+from huggingface_hub import login
+from transformers import AutoTokenizer, AutoConfig 
+import seaborn as sns
+import matplotlib.pyplot as plt
+import utils
+import random, os, json, torch
+
+device = torch.device("cuda")
+login(token = "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")
+attn_implementation="eager" # GEMMA_ATTENTION_CLASSES = {"eager": GemmaAttention, "flash_attention_2": GemmaFlashAttention2, "sdpa": GemmaSdpaAttention,}
+
+print('Hello World!!!')
+
+
+from time_series_generation import *
+from phid import *
+from graph_theoretical_analysis import *
+from cognitive_tasks_analysis import *
+from cognitive_tasks_vs_syn_red_analysis import *
+from lda import *
+from random_walk_time_series import *
+from hf_token import TOKEN
+
+from huggingface_hub import login
+from transformers import AutoTokenizer, AutoConfig 
+import seaborn as sns
+import matplotlib.pyplot as plt
+
+if constants.LOAD_MODEL:
+    device = torch.device("cuda")
+    login(token = TOKEN)
+    attn_implementation="eager" # GEMMA_ATTENTION_CLASSES = {"eager": GemmaAttention, "flash_attention_2": GemmaFlashAttention2, "sdpa": GemmaSdpaAttention,}
+
+
+    # Load the configuration and modify it
+    model_config = AutoConfig.from_pretrained(constants.MODEL_NAME, cache_dir=constants.CACHE_DIR_BITBUCKET)
+    model_config._attn_implementation = attn_implementation  # Custom attention parameter
+
+    # Load the tokenizer and model with the modified configuration
+    tokenizer = AutoTokenizer.from_pretrained(constants.MODEL_NAME, cache_dir=constants.CACHE_DIR_BITBUCKET)
+    model = AutoModelForCausalLM.from_pretrained(
+        constants.MODEL_NAME,
+        cache_dir=constants.CACHE_DIR_BITBUCKET,
+        device_map='auto',
+        attn_implementation=attn_implementation, # Make sure to use the adequate attention layer in order to 
+        config=model_config,  # Use the modified config
+    )
+
+    model.eval()
+    print("Loaded Model Name: ", model.config.name_or_path)
+    print("Model: ", model)
+    print("Attention Layers Implementation: ", model.config._attn_implementation)
+    print(f"Number of layers: {constants.NUM_LAYERS}")
+    print(f"Number of attention heads per layer: {constants.NUM_HEADS_PER_LAYER}")

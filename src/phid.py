@@ -130,8 +130,8 @@ def save_matrices(all_matrices, synergy_matrices, redundancy_matrices, base_save
 
 def load_matrices(matrices_number=0, base_save_path=None):
     # Sort the time_series files by name and load the time_series_number-th file
-    time_series_files = sorted(os.listdir(constants.MATRICES_DIR))
     if not base_save_path:
+        time_series_files = sorted(os.listdir(constants.MATRICES_DIR))
         base_save_path = constants.MATRICES_DIR + time_series_files[matrices_number]
     with open(base_save_path, 'rb') as file:
         all_matrices, synergy_matrices, redundancy_matrices = pickle.load(file)

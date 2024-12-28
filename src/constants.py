@@ -4,15 +4,18 @@ CACHE_DIR_BITBUCKET = "/vol/bitbucket/pu22/Transformers/" # Bitbucket cache dire
 CACHE_DIR_LOCAL = "/homes/pu22/.cache/huggingface/hub" # Local cache directory
 
 MODEL_NAMES = {
-    1: {"HF_NAME": "google/gemma-2b-it", "FOLDER_NAME": "1-Gemma-2b-it"},
-    2: {"HF_NAME": "google/gemma-1.1-2b-it", "FOLDER_NAME": "2-Gemma-1.1-2b-it"},
-    3: {"HF_NAME": "google/gemma-1.1-7b-it", "FOLDER_NAME": "3-Gemma-1.1-7b-it"},
-    4: {"HF_NAME": "meta-llama/Meta-Llama-3-8B-Instruct", "FOLDER_NAME": "4-Llama-3-8B-Instruct"},
-    5: {"HF_NAME": "google/gemma-2-9b-it", "FOLDER_NAME": "5-Gemma-2-9B-Instruct"},
+    'G1-2B': {"HF_NAME": "google/gemma-2b-it", "FOLDER_NAME": "1-Gemma-2b-it"},
+    'G1.1-2B': {"HF_NAME": "google/gemma-1.1-2b-it", "FOLDER_NAME": "2-Gemma-1.1-2b-it"},
+    'G1.1-7B': {"HF_NAME": "google/gemma-1.1-7b-it", "FOLDER_NAME": "3-Gemma-1.1-7b-it"},
+    'L3-8B': {"HF_NAME": "meta-llama/Meta-Llama-3-8B-Instruct", "FOLDER_NAME": "4-Llama-3-8B-Instruct"},
+    'G2-2B': {"HF_NAME": "google/gemma-2-2b-it", "FOLDER_NAME": "5-Gemma-2-2B"},
+    'G2-9B': {"HF_NAME": "google/gemma-2-9b-it", "FOLDER_NAME": "6-Gemma-2-9B"},
+    'L3.2-3B': {"HF_NAME": "meta-llama/Llama-3.2-3B-Instruct", "FOLDER_NAME": "7-Llama-3.2-3B"},
+    'L3.1-8B': {"HF_NAME": "meta-llama/Llama-3.1-8B-Instruct", "FOLDER_NAME": "8-Llama-3.1-8B"},
 }
-MODEL_NUMBER = 2
-MODEL_NAME = MODEL_NAMES[MODEL_NUMBER]["HF_NAME"]
-FOLDER_MODEL_NAME = MODEL_NAMES[MODEL_NUMBER]["FOLDER_NAME"]
+MODEL_CODE = 'L3.1-8B'
+MODEL_NAME = MODEL_NAMES[MODEL_CODE]["HF_NAME"]
+FOLDER_MODEL_NAME = MODEL_NAMES[MODEL_CODE]["FOLDER_NAME"]
 
 config = AutoConfig.from_pretrained(MODEL_NAME)
 NUM_LAYERS = config.num_hidden_layers if hasattr(config, 'num_hidden_layers') else config.n_layer
@@ -28,10 +31,12 @@ GENERATE_ATTENTION_WEIGHTS = False
 LOAD_MODEL = GENERATE_ATTENTION_WEIGHTS or COMPUTE_PID or GENERATE_RAW_ATTENTION_AND_TIME_SERIES
 SAVE_PLOTS = True
 
-ABLATIONS_RANKING_METHOD = 'syn_minus_red_temp_1' # 'syn_minus_red', 'synergy', 'redundancy'
-METRICS_TRANSFORMER = ['attention_weights'] if not MODIFIED_OUTPUT_ATTENTIONS else ['projected_Q', 'attention_weights', 'attention_outputs']
+ABLATIONS_RANKING_METHOD = 'syn_minus_red' # 'syn_minus_red', 'synergy', 'redundancy', 'deepest_layers'
+METRICS_TRANSFORMER = ['attention_weights'] if not MODIFIED_OUTPUT_ATTENTIONS else ['queries', 'attention_weights', 'attention_outputs']
+if len(METRICS_TRANSFORMER) > 1 and MODEL_CODE in ['G1-2B', 'G1.1-2B', 'G1.1-7B', 'L3-8B']:
+    METRICS_TRANSFORMER[0] = 'projected_Q'
 AGGREGRATION_METHODS = ['norm', 'mean', 'entropy', 'max']
-ATTENTION_MEASURE = METRICS_TRANSFORMER[1 if MODIFIED_OUTPUT_ATTENTIONS else 0]
+ATTENTION_MEASURE = METRICS_TRANSFORMER[2 if MODIFIED_OUTPUT_ATTENTIONS else 0]
 
 ATOMS_AVERAGE_VERTICALLY = ['rty', 'sty', 'xty', 'ytr', 'yts', 'yty']
 INFORMATION_DYNAMICS = {
@@ -69,7 +74,7 @@ PLOTS_TIME_SERIES_DIR = PLOTS_DIR + "1-Time_Series/"
 PLOTS_SYNERGY_REDUNDANCY_DIR = PLOTS_DIR + "2-Synergy_Redundancy/"
 PLOTS_HEAD_ACTIVATIONS_COGNITIVE_TASKS = PLOTS_DIR + "3-Head_Activations_Cognitive_Tasks/"
 PLOT_SYNERGY_REDUNDANCY_TASK_CORRELATIONS = PLOTS_DIR + "4-Synergy-Redundancy_vs_Cognitive_Task_Correlations/"
-PLOT_ABLATIONS = PLOTS_DIR + "5-Ablations/"
+PLOT_ABLATIONS = PLOTS_DIR + "5-Ablations/" + ATTENTION_MEASURE + "/"
 
 MODEL_COMPARISON_DIR = "../plots/" + "0-Model_Comparison/"
 MODEL_COMPARISON_GRAPH_THEORETICAL_DIR = MODEL_COMPARISON_DIR + "1-Graph_Theoretical_Analysis/"

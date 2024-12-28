@@ -15,18 +15,18 @@ import os
 
 # Constants 
 MODEL_NAMES = {
-    1: {"HF_NAME": "google/gemma-2b-it", "FOLDER_NAME": "1-Gemma-2b-it"},
-    2: {"HF_NAME": "google/gemma-1.1-2b-it", "FOLDER_NAME": "2-Gemma-1.1-2b-it"},
-    3: {"HF_NAME": "google/gemma-1.1-7b-it", "FOLDER_NAME": "3-Gemma-1.1-7b-it"},
-    4: {"HF_NAME": "meta-llama/Meta-Llama-3-8B-Instruct", "FOLDER_NAME": "4-Llama-3-8B-Instruct"},
-    5: {"HF_NAME": "google/gemma-2-9b-it", "FOLDER_NAME": "5-Gemma-2-9B-Instruct"},
-    6: {"HF_NAME": "meta-llama/Llama-2-13b-chat-hf", "FOLDER_NAME": "5-Llama-2-13b-chat-hf"},
-    7: {"HF_NAME": "meta-llama/Llama-2-7b-chat-hf", "FOLDER_NAME": "6-Llama-2-7b-chat-hf"},
-    8: {"HF_NAME": "meta-llama/Meta-Llama-3-70B-Instruct", "FOLDER_NAME": "7-Llama-3-70B-Instruct"},
+    'G1-2B': {"HF_NAME": "google/gemma-2b-it", "FOLDER_NAME": "1-Gemma-2b-it"},
+    'G1.1-2B': {"HF_NAME": "google/gemma-1.1-2b-it", "FOLDER_NAME": "2-Gemma-1.1-2b-it"},
+    'G1.1-7B': {"HF_NAME": "google/gemma-1.1-7b-it", "FOLDER_NAME": "3-Gemma-1.1-7b-it"},
+    'L3-8B': {"HF_NAME": "meta-llama/Meta-Llama-3-8B-Instruct", "FOLDER_NAME": "4-Llama-3-8B-Instruct"},
+    'G2-2B': {"HF_NAME": "google/gemma-2-2b-it", "FOLDER_NAME": "5-Gemma-2-2B"},
+    'G2-9B': {"HF_NAME": "google/gemma-2-9b-it", "FOLDER_NAME": "6-Gemma-2-9B"},
+    'L3.2-3B': {"HF_NAME": "meta-llama/Llama-3.2-3B-Instruct", "FOLDER_NAME": "7-Llama-3.2-3B"},
+    'L3.1-8B': {"HF_NAME": "meta-llama/Llama-3.1-8B-Instruct", "FOLDER_NAME": "8-Llama-3.1-8B"},
 }
-MODEL_NUMBER = 4
-MODEL_NAME = MODEL_NAMES[MODEL_NUMBER]["HF_NAME"]
-FOLDER_MODEL_NAME = MODEL_NAMES[MODEL_NUMBER]["FOLDER_NAME"]
+MODEL_CODE = 'L3.1-8B'
+MODEL_NAME = MODEL_NAMES[MODEL_CODE]["HF_NAME"]
+FOLDER_MODEL_NAME = MODEL_NAMES[MODEL_CODE]["FOLDER_NAME"]
 
 PLOTS_DIR = "../plots/" + FOLDER_MODEL_NAME + "/"
 SAVED_DATA_DIR = "../data/" + FOLDER_MODEL_NAME + "/"
@@ -43,7 +43,7 @@ generated_text = {cognitive_task: {} for cognitive_task in constants.PROMPT_CATE
 attention_params = {cognitive_task: {} for cognitive_task in constants.PROMPT_CATEGORIES}
 time_series = {cognitive_task: {} for cognitive_task in constants.PROMPT_CATEGORIES}
 
-categories = constants.PROMPT_CATEGORIES
+categories = constants.PROMPT_CATEGORIES[4:][::-1]
 for cognitive_task in categories:
     for n_prompt, prompt in enumerate(constants.PROMPTS[cognitive_task]):
         time_series[cognitive_task][n_prompt] = load_time_series(base_load_path=TIME_SERIES_DIR+cognitive_task+"/"+str(n_prompt) + ".pt")
@@ -57,12 +57,12 @@ redundancy_matrices = {task: {} for task in categories}
 def compute_and_save(task, n_prompt, prompt, time_series, save_path):
     print(f"\n--- Computing PhiID for task {task} ---")
     print(f"\nPrompt: {n_prompt}")
-    # result = compute_PhiID(time_series[task][n_prompt], save=True, kind="gaussian", base_save_path=save_path)
-    # all_matrices, synergy_matrices, redundancy_matrices = result
+    result = compute_PhiID(time_series[task][n_prompt], save=True, kind="gaussian", base_save_path=save_path)
+    all_matrices, synergy_matrices, redundancy_matrices = result
     all_matrices, synergy_matrices, redundancy_matrices = load_matrices(base_save_path=save_path)
     result = (all_matrices, synergy_matrices, redundancy_matrices)
-    # graph_theoretical_results = compare_synergy_redundancy(synergy_matrices, redundancy_matrices)
-    # save_graph_theoretical_results(graph_theoretical_results, file_name=str(n_prompt), base_save_path = GRAPH_METRICS_DIR + task + '/')
+    graph_theoretical_results = compare_synergy_redundancy(synergy_matrices, redundancy_matrices)
+    save_graph_theoretical_results(graph_theoretical_results, file_name=str(n_prompt), base_save_path = GRAPH_METRICS_DIR + task + '/')
     return (task, n_prompt, result)
 
 # Create a dictionary to store all matrices

@@ -1,0 +1,185 @@
+[33mcommit 54732d6cd44b2d2e97fa9407aea05ed52bb6747c[m[33m ([m[1;36mHEAD[m[33m -> [m[1;32mmain[m[33m)[m
+Author: pu22 <pu22@ic.ac.uk>
+Date:   Sat Dec 28 09:35:04 2024 +0000
+
+    updated ablations
+
+[33mcommit c8bd869b2d0993f6b2f3abbd8add307a73c58903[m
+Author: pu22 <pu22@ic.ac.uk>
+Date:   Sat Dec 28 09:34:43 2024 +0000
+
+    a
+
+[33mcommit 903a148890e7450846b0d492fd3cd12aafeba9b9[m[33m ([m[1;31morigin/main[m[33m, [m[1;31morigin/HEAD[m[33m)[m
+Author: pu22 <pu22@ic.ac.uk>
+Date:   Mon Oct 28 08:13:23 2024 +0000
+
+    updated gemmas
+
+[33mcommit 5686ea929a41662ddb5c5e2500c809350134fe31[m
+Author: pu22 <pu22@ic.ac.uk>
+Date:   Mon Sep 30 12:18:50 2024 +0100
+
+    ablations
+
+[33mcommit 48ac220359522bce4fcd6a319afccd8a7af7b2f0[m
+Author: pu22 <pu22@ic.ac.uk>
+Date:   Thu Aug 15 10:41:39 2024 +0100
+
+    plots
+
+[33mcommit 3e1b7b2e46c5f909ceb902a36c4c8d5d5fab359f[m
+Author: pu22 <pu22@ic.ac.uk>
+Date:   Sun Jul 14 14:06:26 2024 +0100
+
+    updated llama 3 8b
+
+[33mcommit fc79066e48244af98810d4f5eb3d214d1ba8d11e[m
+Author: pu22 <pu22@ic.ac.uk>
+Date:   Fri Jul 12 13:57:11 2024 +0100
+
+    plots llama 3
+
+[33mcommit 4639fb8f5289ec5201fa04065a0860ea0019b359[m
+Author: pu22 <pu22@ic.ac.uk>
+Date:   Fri Jul 12 10:09:24 2024 +0100
+
+    llama 3 new results
+
+[33mcommit b5d470445ba96cd7f41235e5b7471b319557ba95[m
+Author: pu22 <pu22@ic.ac.uk>
+Date:   Fri Jul 12 07:58:00 2024 +0100
+
+    normalized phid atoms
+
+[33mcommit 94abe3f69ceced94fa95e2687d03d6800f88968c[m
+Author: pu22 <pu22@ic.ac.uk>
+Date:   Wed Jul 10 10:44:12 2024 +0100
+
+    llama 3 results
+
+[33mcommit d6d4eb4101e613028d8179223683f6f83fd08b70[m
+Author: pu22 <pu22@ic.ac.uk>
+Date:   Fri Jul 5 08:38:04 2024 +0100
+
+    gemma 7b
+
+[33mcommit 4cd7202154a774c5e1bbcb641df4b1f0f69c715c[m
+Author: pu22 <pu22@ic.ac.uk>
+Date:   Thu Jul 4 08:23:00 2024 +0100
+
+    averge accross all prompts
+
+[33mcommit 893ba4b1985fc4beb7d13e72c2cfdbb0091c16c3[m
+Author: pu22 <pu22@ic.ac.uk>
+Date:   Sun Jun 30 17:05:32 2024 +0100
+
+    plots all prompts
+
+[33mcommit d0469861664849207d7c8a4b53c7f785dc4fc938[m
+Author: pu22 <pu22@ic.ac.uk>
+Date:   Sun Jun 30 16:41:28 2024 +0100
+
+    a
+
+[33mcommit 7817aab37657b6a70165a9a19e8c72295c3ee5d2[m
+Author: pu22 <pu22@ic.ac.uk>
+Date:   Sun Jun 30 16:41:24 2024 +0100
+
+    a
+
+[33mcommit e298f0a2dc4a8c8eb25785752393db18f1a59d5f[m
+Author: pu22 <pu22@ic.ac.uk>
+Date:   Sun Jun 30 16:41:13 2024 +0100
+
+    a
+
+[33mcommit 8940f89ca6b8fd5d7eb19ddef4a78d384c3896fe[m
+Author: pu22 <pu22@ic.ac.uk>
+Date:   Sun Jun 30 16:41:08 2024 +0100
+
+    for every prompt
+
+[33mcommit f5f01c70cff2b46ab55fc45782081e0ac2de6979[m
+Author: pu22 <pu22@ic.ac.uk>
+Date:   Sun Jun 30 15:45:29 2024 +0100
+
+    a
+
+[33mcommit ebfe6c976df4392403aaffafd8472d3457c4c661[m
+Author: pu22 <pu22@ic.ac.uk>
+Date:   Sun Jun 30 15:45:13 2024 +0100
+
+    run all prompts when computing average matrices
+
+[33mcommit e1e4625242dd653860ca41b5a2970740a876471f[m
+Author: pu22 <pu22@ic.ac.uk>
+Date:   Fri Jun 21 12:21:51 2024 +0100
+
+    name changes
+
+[33mcommit cba652ef4a43a6295f87060d69e1875303bc6294[m
+Author: pu22 <pu22@ic.ac.uk>
+Date:   Sun Jun 9 09:11:22 2024 +0100
+
+    plots llama 2 13b
+
+[33mcommit df6ee601cc035669190d6e6f8fc063b42f60fb95[m
+Author: pu22 <pu22@ic.ac.uk>
+Date:   Sat Jun 8 18:07:15 2024 +0100
+
+    plots
+
+[33mcommit e5422e8f8ad44be7d28c18a7fb92c45ea4aba2be[m
+Author: pu22 <pu22@ic.ac.uk>
+Date:   Sat Jun 8 18:04:23 2024 +0100
+
+    gitignore
+
+[33mcommit fa4d64ec149636479b721f9d7a627f85b6938645[m
+Author: pu22 <pu22@ic.ac.uk>
+Date:   Fri Jun 7 18:51:56 2024 +0100
+
+    llama 2 7b
+
+[33mcommit 03f5b926e045195bdb898d67fd1ea6884e4730ba[m
+Author: pu22 <pu22@ic.ac.uk>
+Date:   Fri Jun 7 17:39:15 2024 +0100
+
+    llama 2 13b
+
+[33mcommit 280e31163c9a2dda4c78d4553b0b01b138ef0cce[m
+Author: pu22 <pu22@ic.ac.uk>
+Date:   Fri Jun 7 15:16:55 2024 +0100
+
+    runs llama 3 and gema2 7b
+
+[33mcommit 519b74b7915ebe7bdf2111907cc29dc4b92fe2b1[m
+Author: pu22 <pu22@ic.ac.uk>
+Date:   Fri Jun 7 13:17:49 2024 +0100
+
+    no raw attention uploads
+
+[33mcommit 02fcb923d0770758879101e5736e09caa978b2c8[m
+Author: pu22 <pu22@ic.ac.uk>
+Date:   Fri Jun 7 13:16:20 2024 +0100
+
+    data
+
+[33mcommit 6a6d328685efa8d2ddc20b9d49e95a68c2659789[m
+Author: pu22 <pu22@ic.ac.uk>
+Date:   Fri Jun 7 13:16:03 2024 +0100
+
+    data
+
+[33mcommit aaa89c5f9fc25e396cc7c6b0a891a6001440e8ef[m
+Author: pu22 <pu22@ic.ac.uk>
+Date:   Fri Jun 7 13:11:32 2024 +0100
+
+    refactored
+
+[33mcommit ea608f7b1290bc00931952be254bf3b5fa79be2a[m
+Author: pu22 <pu22@ic.ac.uk>
+Date:   Fri Jun 7 13:10:35 2024 +0100
+
+    refactred
