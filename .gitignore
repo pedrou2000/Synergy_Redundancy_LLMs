@@ -6,4 +6,5 @@ src/hf_token.py
 **/plots/
 plots/*
 !plots/8-Llama-3.1-8B/
+!**/plots/8-Llama-3.1-8B/
 # **/backup/
