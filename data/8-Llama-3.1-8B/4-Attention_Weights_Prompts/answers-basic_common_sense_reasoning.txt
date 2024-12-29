@@ -1,0 +1,75 @@
+--- Prompt ---
+If it starts raining while the sun is shining, what weather phenomenon might you expect to see?
+--- Answer ---
+If it starts raining while the sun is shining, what weather phenomenon might you expect to see? A. rainbow
+B. fog
+C. sunburst
+D. moonbow
+Answer: A
+Reasoning Skill: Identifying Cause-And-Effect Relationships
+This question requires the test-taker to think about the relationship between two weather conditions: rain and sunlight. The correct answer, "rainbow,"
+--------------------------------------------------
+--- Prompt ---
+Why do people wear sunglasses?
+--- Answer ---
+Why do people wear sunglasses? People wear sunglasses for a variety of reasons, including protection of their eyes from the sun’s harmful ultraviolet (UV) radiation, glare reduction, and enhancement of visual comfort. Sunglasses can also serve as a fashion accessory and provide a stylish way to protect one’s eyes.
+There are many types of sunglasses, including prescription
+--------------------------------------------------
+--- Prompt ---
+What might you use to write on a chalkboard?
+--- Answer ---
+What might you use to write on a chalkboard?  
+A) Pencil
+B) Chalk
+C) D) Eraser
+The best answer is B.  
+Explanation: Chalk is a write-on and wipe-off substance that is commonly used to write on a chalkboard. You would not use a pencil because the lead is too hard to mark the chalk
+--------------------------------------------------
+--- Prompt ---
+Why would you put a letter in an envelope?
+--- Answer ---
+Why would you put a letter in an envelope? That's basically asking why do we have envelopes.
+Envelope is a container in order to enclose and deposit a letter, document, or message, with the aim of sending it to the recipient. Letters, documents and messages are items with a specific purpose and need a container to keep them safe during transportation.
+So, to
+--------------------------------------------------
+--- Prompt ---
+If you're cold, what might you do to get warm?
+--- Answer ---
+If you're cold, what might you do to get warm? You might put on a sweater, hat and gloves. Or you might turn up the thermostat and get into a hot shower. But what if you're not just cold in your body, but also in your heart? What might you do to get warm in that sense? Here are a few suggestions.
+If you're feeling
+--------------------------------------------------
+--- Prompt ---
+What is the purpose of a refrigerator?
+--- Answer ---
+What is the purpose of a refrigerator? A refrigerator is a kitchen appliance that helps to keep food and drinks at a low temperature, thereby preserving their freshness and preventing spoilage. The primary purpose of a refrigerator is to keep food cold, which helps to slow down the growth of bacteria and other microorganisms that can cause food to spoil. This allows for the safe
+--------------------------------------------------
+--- Prompt ---
+Why might someone plant a tree?
+--- Answer ---
+Why might someone plant a tree?  Here are some possible reasons:
+They want to beautify their surroundings.
+They want to provide shade for their yard.
+They want to help the environment by absorbing carbon dioxide.
+They want to create a habitat for wildlife.
+They want to reduce noise pollution.
+They want to increase the value of their property.
+They want to
+--------------------------------------------------
+--- Prompt ---
+What happens to ice when it's left out in the sun?
+--- Answer ---
+What happens to ice when it's left out in the sun? What could be the consequences of this process?
+When ice is left out in the sun, it begins to melt. This process is called sublimation, and it occurs when the ice changes directly from a solid to a gas. As the sun's heat energy is absorbed by the ice, the molecules begin to move faster
+--------------------------------------------------
+--- Prompt ---
+Why do people shake hands when they meet?
+--- Answer ---
+Why do people shake hands when they meet? It's a widely practiced custom in many cultures, but its origins are disputed. Some argue it's a sign of respect, while others claim it's a way to demonstrate dominance. A version of handshaking has been practiced in ancient Greece and Rome, where people clasped hands as a greeting or in a show of
+--------------------------------------------------
+--- Prompt ---
+What can you use to measure the length of a desk?
+--- Answer ---
+What can you use to measure the length of a desk? A standard ruler is the most common tool used to measure lengths. However, a longer ruler or a piece of string can also be used to measure the length of a desk.
+What is the best tool for measuring a desk length?
+The best tool for measuring a desk length is a standard ruler. A standard ruler is precise
+--------------------------------------------------

@@ -1,0 +1,103 @@
+--- Prompt ---
+If you have 15 apples and you give away 5, how many do you have left?
+--- Answer ---
+If you have 15 apples and you give away 5, how many do you have left? 
+Let's use the process of elimination.
+First, we know that you have 15 apples.
+If 5 apples were given away, then the number of apples left is the number of apples you had minus 5. 
+15 apples - 5 apples = 10 apples
+So, we have 10 apples
+--------------------------------------------------
+--- Prompt ---
+A rectangle's length is twice its width. If the rectangle's perimeter is 36 meters, what are its length and width?
+--- Answer ---
+A rectangle's length is twice its width. If the rectangle's perimeter is 36 meters, what are its length and width??
+## Step 1: Define the relationship between the length and width of the rectangle.
+Let's denote the width of the rectangle as W and the length as L. We know that the length is twice the width, so L = 2W.
+
+## Step 2: Write the formula for the perimeter of a
+--------------------------------------------------
+--- Prompt ---
+You read 45 pages of a book each day. How many pages will you have read after 7 days?
+--- Answer ---
+You read 45 pages of a book each day. How many pages will you have read after 7 days??
+## Step 1: Calculate the total number of pages read in a week
+To find out how many pages will have been read after 7 days, we first need to calculate the total number of pages read in a week. Since we read 45 pages each day, we multiply 45 by 7.
+
+
+--------------------------------------------------
+--- Prompt ---
+If a train travels 60 miles in 1 hour, how far will it travel in 3 hours?
+--- Answer ---
+If a train travels 60 miles in 1 hour, how far will it travel in 3 hours? 
+
+## Step 1: Determine the rate at which the train travels
+The train's speed can be calculated by dividing the distance it travels by the time it takes. In this case, the train travels 60 miles in 1 hour, so its speed is 60 miles per hour.
+
+## Step 2:
+--------------------------------------------------
+--- Prompt ---
+There are 8 slices in a pizza. If you eat 2 slices, what fraction of the pizza is left?
+--- Answer ---
+There are 8 slices in a pizza. If you eat 2 slices, what fraction of the pizza is left? 
+## Step 1: Calculate the total number of slices in the pizza.
+There are 8 slices in the pizza.
+
+## Step 2: Calculate the number of slices left after eating 2 slices.
+The number of slices left is 8 - 2 = 6.
+
+## Step 3: Convert the
+--------------------------------------------------
+--- Prompt ---
+If one pencil costs 50 cents, how much do 12 pencils cost?
+--- Answer ---
+If one pencil costs 50 cents, how much do 12 pencils cost? 
+A) $1.50
+B)  $1.20
+C)  $1.00
+D)  $1.80
+
+Explanation: The question asks for the cost of 12 pencils. Since the question tells you that one pencil costs 50 cents, you can find the cost of
+--------------------------------------------------
+--- Prompt ---
+You have a 2-liter bottle of soda. If you pour out 500 milliliters, how much soda is left?
+--- Answer ---
+You have a 2-liter bottle of soda. If you pour out 500 milliliters, how much soda is left? 
+Here is the conversion:
+1 liter = 1000 milliliters
+
+We will use the given conversion to convert 2 liters to milliliters. 
+2 liters = 2 x 1000 milliliters 
+2 liters = 2000 milliliters 
+
+The question is asking how much soda is
+--------------------------------------------------
+--- Prompt ---
+A marathon is 42 kilometers long. If you have run 10 kilometers, how much further do you have to run?
+--- Answer ---
+A marathon is 42 kilometers long. If you have run 10 kilometers, how much further do you have to run? 
+This situation can be represented by an equation. 
+If we let \( x \) be the distance you have to run, then we want to find \( x \) in the equation \( x + 10 = 42 \). To find \( x \), we subtract 10 from both sides of the equation
+--------------------------------------------------
+--- Prompt ---
+If you divide 24 by 3, then multiply by 2, what is the result?
+--- Answer ---
+If you divide 24 by 3, then multiply by 2, what is the result? 24/3 = 8. 8 x 2 = 16. The answer is 16. 
+## Step 1: First, we need to calculate the result of dividing 24 by 3.
+24 divided by 3 equals 8.
+
+## Step 2: Then, we need to
+--------------------------------------------------
+--- Prompt ---
+A car travels 150 miles on 10 gallons of gas. How many miles per gallon does the car get?
+--- Answer ---
+A car travels 150 miles on 10 gallons of gas. How many miles per gallon does the car get? 
+## Step 1: Determine the total distance the car travels
+The car travels 150 miles.
+
+## Step 2: Determine the amount of gas used by the car
+The car uses 10 gallons of gas.
+
+## Step 3: Calculate the car's miles per gallon
+To find out how many miles
+--------------------------------------------------

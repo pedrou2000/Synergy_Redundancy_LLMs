@@ -1,0 +1,67 @@
+--- Prompt ---
+Correct the error: He go to school every day.
+--- Answer ---
+Correct the error: He go to school every day. → Corrected sentence: He goes to school every day.
+Identify the error in the sentence: She be a doctor. → Error: Inconsistent verb tense.
+Correct the error: They are going to the movies. → Corrected sentence: They go to the movies.
+Identify the error in the sentence: I
+--------------------------------------------------
+--- Prompt ---
+Correct the error: She have two cats and a dogs.
+--- Answer ---
+Correct the error: She have two cats and a dogs. (She has two cats and a dog.)
+The error in the sentence is the use of the verb "have" in the singular form with the subjects "cats" and "dogs." The subject "cats" is a plural noun, and the subject "dog" is a singular noun. The correct verb form to use
+--------------------------------------------------
+--- Prompt ---
+Correct the error: I eats breakfast at 8:00 in the morning.
+--- Answer ---
+Correct the error: I eats breakfast at 8:00 in the morning. (a) I eat breakfast at 8:00 in the morning. (b) I was eating breakfast at 8:00 in the morning. (c) I am eating breakfast at 8:00 in the morning. (d) I ate breakfast at 8:00 in the morning.
+Answer is
+--------------------------------------------------
+--- Prompt ---
+Correct the error: Every students in the classroom has their own laptop.
+--- Answer ---
+Correct the error: Every students in the classroom has their own laptop. I have a lot of time to spend with each students because they have their own laptop to use. 
+Answer: Every student in the classroom has their own laptop. I have a lot of time to spend with each student because they have their own laptop to use.
+Reasoning Skill: This question requires the skill of correcting
+--------------------------------------------------
+--- Prompt ---
+Correct the error: She don't like going to the park on weekends.
+--- Answer ---
+Correct the error: She don't like going to the park on weekends. → She doesn’t like going to the park on weekends.
+The error in the sentence is the use of the word "don't" which is a contraction of "do not", and the word "don't" should be replaced by a contraction of "does not", which is "doesn’t".
+The corrected sentence should
+--------------------------------------------------
+--- Prompt ---
+Correct the error: We was happy to see the rainbow after the storm.
+--- Answer ---
+Correct the error: We was happy to see the rainbow after the storm. -> We were happy to see the rainbow after the storm.
+We was is incorrect because we is a subject pronoun, so it should be replaced by were which is the correct verb form of the plural subject We. The corrected sentence We were happy to see the rainbow after the storm. is in simple past tense, expressing
+--------------------------------------------------
+--- Prompt ---
+Correct the error: There is many reasons to celebrate today.
+--- Answer ---
+Correct the error: There is many reasons to celebrate today. It is given for the students to go to school. It is an official holiday from school. My mom says that it's a day of thanksgiving for the harvest. It's also the anniversary of the day that the Pilgrims arrived in America. It's a day of celebration for Native Americans.
+Correct the error
+--------------------------------------------------
+--- Prompt ---
+Correct the error: Him and I went to the market yesterday.
+--- Answer ---
+Correct the error: Him and I went to the market yesterday. ( Sentence 2 )
+Him and I went to the market yesterday = Him and me went to the market yesterday
+Explanation: 'Him' is an object pronoun whereas 'I' is a subject pronoun. In the sentence, "Him and I went to the market yesterday", 'Him and
+--------------------------------------------------
+--- Prompt ---
+Correct the error: The books is on the table.
+--- Answer ---
+Correct the error: The books is on the table. → The book is on the table.
+Answer: The book is on the table.
+Grammar explanation: The subject of the sentence is singular ( book), so the verb must also be singular (is).
+The error in the original sentence is due to the use of the plural verb "is" instead of the singular verb "
+--------------------------------------------------
+--- Prompt ---
+Correct the error: They walks to school together every morning.
+--- Answer ---
+Correct the error: They walks to school together every morning. → They walk to school together every morning.
+In this correct sentence, “walk” is the correct spelling and the subject-verb agreement is maintained. The singular verb “walk” agrees with the singular subject “they”. The word “walks” used in the original sentence is a plural verb and does not agree with
+--------------------------------------------------

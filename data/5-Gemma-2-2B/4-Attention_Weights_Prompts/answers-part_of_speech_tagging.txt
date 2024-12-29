@@ -1,0 +1,146 @@
+--- Prompt ---
+Identify the parts of speech in the sentence: Quickly, the agile cat climbed the tall tree.
+--- Answer ---
+Identify the parts of speech in the sentence: Quickly, the agile cat climbed the tall tree.
+
+**Parts of speech:**
+
+* **Quickly:** Adverb
+* **the:** Definite Article
+* **agile:** Adjective
+* **cat:** Noun
+* **climbed:** Verb (past tense)
+* **the:** Definite Article
+* **tall:** Adjective
+* **tree
+--------------------------------------------------
+--- Prompt ---
+Identify the parts of speech in the sentence: She whispered a secret to her friend during the boring lecture.
+--- Answer ---
+Identify the parts of speech in the sentence: She whispered a secret to her friend during the boring lecture.
+
+**Word:** She
+**Word:** whispered
+**Word:** a
+**Word:** secret
+**Word:** to
+**Word:** her
+**Word:** friend
+**Word:** during
+**Word:** the
+**Word:** boring
+**Word:** lecture.
+
+A. She - Noun, whispered
+--------------------------------------------------
+--- Prompt ---
+Identify the parts of speech in the sentence: The sun sets in the west.
+--- Answer ---
+Identify the parts of speech in the sentence: The sun sets in the west.
+
+Here's the breakdown:
+
+* **The:** Definite article (determines the noun "sun")
+* **sun:** Noun (the celestial object)
+* **sets:** Verb (action in the sentence)
+* **in:** Preposition (indicates location)
+* **the:** Definite
+--------------------------------------------------
+--- Prompt ---
+Identify the parts of speech in the sentence: Can you believe this amazing view?
+--- Answer ---
+Identify the parts of speech in the sentence: Can you believe this amazing view?
+
+Here's a breakdown:
+
+* **Can** - Verb (helping verb)
+* **you** - Pronoun (Personal)
+* **believe** - Verb (main verb)
+* **this** - Pronoun (Demonstrative)
+* **amazing** - Adjective
+* **
+--------------------------------------------------
+--- Prompt ---
+Identify the parts of speech in the sentence: He quickly finished his homework.
+--- Answer ---
+Identify the parts of speech in the sentence: He quickly finished his homework.
+
+Here's the breakdown:
+
+* **He:** Pronoun (personal)
+* **quickly:** Adverb (modifies "finished")
+* **finished:** Verb (past participle)
+* **his:** Possessive pronoun
+* **homework:** Noun (subject of the verb "finished") 
+--------------------------------------------------
+--- Prompt ---
+Identify the parts of speech in the sentence: The beautifully decorated cake was a sight to behold.
+--- Answer ---
+Identify the parts of speech in the sentence: The beautifully decorated cake was a sight to behold.
+
+Here are the words and their parts of speech:
+
+* **The** - definite article 
+* **beautifully** - adjective 
+* **decorated** - verb
+* **cake** - noun
+* **was** - auxiliary verb
+* **a** - article 
+* **sight**
+--------------------------------------------------
+--- Prompt ---
+Identify the parts of speech in the sentence: They will travel to Japan next month.
+--- Answer ---
+Identify the parts of speech in the sentence: They will travel to Japan next month.
+
+Here's a breakdown:
+
+* **They:**  Pronoun - Personal pronoun referring to a group of people
+* **will:**  Verb - Auxiliary verb, future tense
+* **travel:**  Verb - Action verb
+* **to:**  Preposition - Indicates direction or purpose
+* **Japan
+--------------------------------------------------
+--- Prompt ---
+Identify the parts of speech in the sentence: My favorite book was lost.
+--- Answer ---
+Identify the parts of speech in the sentence: My favorite book was lost.
+
+**Parts of Speech:**
+
+* **My** - Definite article (determiner)
+* **favorite** - Adjective
+* **book** - Noun
+* **was** - Verb
+* **lost** - Verb 
+
+
+Let me know if you have any other sentences you'd like to
+--------------------------------------------------
+--- Prompt ---
+Identify the parts of speech in the sentence: The loud music could be heard from miles away.
+--- Answer ---
+Identify the parts of speech in the sentence: The loud music could be heard from miles away.
+
+Here's how to identify parts of speech:
+
+* **Noun:** A person, place, thing, or idea.
+* **Pronoun:** Replaces a noun.
+* **Verb:** Shows action or state of being.
+* **Adjective:** Describes a noun.
+* **Adverb
+--------------------------------------------------
+--- Prompt ---
+Identify the parts of speech in the sentence: She sold all of her paintings at the art show.
+--- Answer ---
+Identify the parts of speech in the sentence: She sold all of her paintings at the art show.
+
+* **She** - Pronoun
+* **sold** - Verb
+* **all** - Determiner 
+* **of** - Preposition
+* **her** - Pronoun
+* **paintings** - Noun
+* **at** - Preposition
+* **the** - Definite
+--------------------------------------------------

@@ -1,0 +1,81 @@
+--- Prompt ---
+Correct the error: He go to school every day.
+--- Answer ---
+Correct the error: He go to school every day. ( correction ) He goes to school every day.
+i. Add an apostrophe to the verb "go" to make it plural, "goes".
+ii. Change the verb "he go" to "he goes" to make it grammatically correct.
+iii. Add the verb "to" to the subject "
+--------------------------------------------------
+--- Prompt ---
+Correct the error: She have two cats and a dogs.
+--- Answer ---
+Correct the error: She have two cats and a dogs. (The error is in the verb tenses)
+Corrected error: She has two cats and a dog.
+Explanation:
+She have -> She has (verb tense correction)
+two cats and a dogs -> two cats and a dog ( article correction, remove the "s" for the singular noun "dog")
+--------------------------------------------------
+--- Prompt ---
+Correct the error: I eats breakfast at 8:00 in the morning.
+--- Answer ---
+Correct the error: I eats breakfast at 8:00 in the morning. I goes to school at 9:00 in the morning.
+
+Corrected sentence: I eat breakfast at 8:00 in the morning. I go to school at 9:00 in the morning.
+
+Explanation: The error is in the verb agreement. "I eats" should be "I eat" because the
+--------------------------------------------------
+--- Prompt ---
+Correct the error: Every students in the classroom has their own laptop.
+--- Answer ---
+Correct the error: Every students in the classroom has their own laptop. (Note: the error is in "students" instead of "each")
+Corrected sentence: Every student in the classroom has their own laptop.
+
+Corrected error: John has many friends. (Note: The error is in "friend" instead of "friends")
+Corrected sentence: John has many friends.
+
+Corrected
+--------------------------------------------------
+--- Prompt ---
+Correct the error: She don't like going to the park on weekends.
+--- Answer ---
+Correct the error: She don't like going to the park on weekends. (Underline the error)
+The underlined word is the error. The error is in the verb form. The verb "don't" is used instead of "doesn't".
+Corrected sentence: She doesn't like going to the park on weekends.
+--------------------------------------------------
+--- Prompt ---
+Correct the error: We was happy to see the rainbow after the storm.
+--- Answer ---
+Correct the error: We was happy to see the rainbow after the storm. (The error: "We" is a plural pronoun; "we" is used for one person or two or three people, but "I" or "I'm" is used for one person.)
+**Answer:** We were happy to see the rainbow after the storm.
+**Answer:** We were happy to see
+--------------------------------------------------
+--- Prompt ---
+Correct the error: There is many reasons to celebrate today.
+--- Answer ---
+Correct the error: There is many reasons to celebrate today. (spelling error)
+Corrected sentence:
+There are many reasons to celebrate today. 
+
+Explanation: The error was a plural noun error. The word "many" is a plural adjective, which is used to describe a plural noun, whereas in this sentence, we are talking about one reason. Therefore, the correct word
+--------------------------------------------------
+--- Prompt ---
+Correct the error: Him and I went to the market yesterday.
+--- Answer ---
+Correct the error: Him and I went to the market yesterday. should become
+Him and I went to the market yesterday.
+This sentence is correct, since "I" is subject of the sentence, and "him" is an object. In English, the pronoun "I" is a subject pronoun and "him" is an object pronoun. As such, the
+--------------------------------------------------
+--- Prompt ---
+Correct the error: The books is on the table.
+--- Answer ---
+Correct the error: The books is on the table. (The subject of the sentence is a book, and the subject is a singular noun, so we should use the singular form of the verb.)
+The book is on the table. (The subject of the sentence is a book, and the subject is a singular noun, so we should use the singular form of the verb
+--------------------------------------------------
+--- Prompt ---
+Correct the error: They walks to school together every morning.
+--- Answer ---
+Correct the error: They walks to school together every morning. (Underlined text missing)
+Correct the error: They walk to school together every morning. (Comma missing)
+ Corrected phrase: They walk to school together every morning. ( Added comma to make the sentence grammatically correct)
+Corrected error: They walks to school together every morning. (Verb tense error, should
+--------------------------------------------------
