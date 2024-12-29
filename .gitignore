@@ -5,7 +5,7 @@ src/hf_token.py
 **/data/
 **/8-All_PhiID_Separate/
 # **/plots/
-plots/0-Model_Comparison/
+# plots/0-Model_Comparison/
 # plots/2-Gemma-1.1-2b-it/
 # plots/3-Gemma-1.1-7b-it/
 # plots/4-Llama-3-8B-Instruct/
