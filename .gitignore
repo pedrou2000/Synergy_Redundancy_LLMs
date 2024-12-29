@@ -3,10 +3,7 @@ src/hf_token.py
 **/1-Raw_Attention/
 **/3-Synergy_Redundancy_Matrices/
 **/data/
-<<<<<<< HEAD
 **/8-All_PhiID_Separate/
-=======
->>>>>>> 2a0f5f4a85347760e7e7fe61c8ec6f643816bb09
 # **/plots/
 plots/0-Model_Comparison/
 plots/2-Gemma-1.1-2b-it/
@@ -15,8 +12,5 @@ plots/4-Llama-3-8B-Instruct/
 plots/5-Gemma-2-2B/
 plots/6-Gemma-2-9B/
 plots/7-Llama-3.2-3B/
-<<<<<<< HEAD
 **/backup/
-=======
 # **/backup/
->>>>>>> 2a0f5f4a85347760e7e7fe61c8ec6f643816bb09
