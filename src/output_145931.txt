@@ -1,0 +1,4 @@
+Status: Starting main ablations...
+GPU memory allocated at the beginning of main ablations: 0
+Loading checkpoint shards:   0%|          | 0/4 [00:00<?, ?it/s]Loading checkpoint shards:  25%|██▌       | 1/4 [00:25<01:16, 25.34s/it]Loading checkpoint shards:  50%|█████     | 2/4 [00:50<00:50, 25.22s/it]Loading checkpoint shards:  75%|███████▌  | 3/4 [01:14<00:24, 24.86s/it]Loading checkpoint shards: 100%|██████████| 4/4 [01:19<00:00, 17.03s/it]Loading checkpoint shards: 100%|██████████| 4/4 [01:19<00:00, 19.98s/it]
+slurmstepd: error: *** JOB 145931 ON gpuvm05 CANCELLED AT 2024-12-28T17:28:05 ***

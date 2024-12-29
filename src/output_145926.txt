@@ -1,0 +1,4 @@
+GPU 0:
+  Used Memory: 1 MB
+  Total Memory: 46068 MB
+  Available Memory: 46067 MB

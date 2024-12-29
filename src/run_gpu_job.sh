@@ -5,8 +5,8 @@
 #SBATCH --mail-user=pu22@ic.ac.uk  # Where to send mail
 #SBATCH --ntasks=1                   # Run on a single CPU
 #SBATCH --cpus-per-task=4            # Number of CPU cores per task
-#SBATCH --mem=16gb                   # Job memory request
-#SBATCH --time=02:00:00              # Time limit hrs:min:sec
+#SBATCH --mem=32gb                   # Job memory request
+#SBATCH --time=96:00:00              # Time limit hrs:min:sec
 #SBATCH --gres=gpu:teslaa40:1                 # Request 1 GPU
 #SBATCH --partition=gpgpu            # Partition with big GPUs (e.g., Tesla A40)
 
@@ -20,5 +20,6 @@ cd /vol/bitbucket/pu22/Synergy_Redundancy_LLMs/src/
 
 # Run your Python script
 # python3 gpu_test.py
+# python3 gpu_info.py
 python3 main_ablations.py
 

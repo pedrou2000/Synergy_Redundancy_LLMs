@@ -16,10 +16,15 @@ import utils
 import random, os, json
 import matplotlib.pyplot as plt
 
+
+
 device = torch.device("cuda")
 login(token = TOKEN)
 attn_implementation="eager" # GEMMA_ATTENTION_CLASSES = {"eager": GemmaAttention, "flash_attention_2": GemmaFlashAttention2, "sdpa": GemmaSdpaAttention,}
 
+
+print(f'Status: Starting main ablations...')
+print(f'GPU memory allocated at the beginning of main ablations: {torch.cuda.memory_allocated(device)}')
 
 # Load the configuration and modify it
 model_config = AutoConfig.from_pretrained(constants.MODEL_NAME, cache_dir=constants.CACHE_DIR_BITBUCKET)
@@ -34,6 +39,8 @@ model = AutoModelForCausalLM.from_pretrained(
     attn_implementation=attn_implementation, # Make sure to use the adequate attention layer in order to 
     config=model_config,  # Use the modified config
 )
+print(f'GPU memory allocated after loading the model: {torch.cuda.memory_allocated(device)}')
+print(f'GPU memory remaining after loading the model: {torch.cuda.memory_reserved(device)}')
 
 model.eval()
 print("Attention Measure: ", constants.ATTENTION_MEASURE)
@@ -86,7 +93,7 @@ import random, os, pickle
 import matplotlib.pyplot as plt
 import torch  # Ensure torch is imported
 
-num_tokens_to_generate = 50
+num_tokens_to_generate = 100
 ablation_ranking_method = constants.ABLATIONS_RANKING_METHOD
 num_random_ablations = 5  # Number of iterations to repeat the random ablation process
 num_total_ablation_steps = 30 # Total number of ablation data points to collect
