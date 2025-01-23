@@ -284,3 +284,58 @@ def plot_attention_metrics_norms_over_time(time_series, metrics, num_heads_plot=
             plt.show()
         plt.close()
 
+def plot_attention_metrics_norms_over_time_final_plots(time_series, metrics, num_heads_plot=8, base_plot_path=None, smoothing_window=1, save=False, layer_range=None):
+    if not base_plot_path:
+        base_plot_path = constants.PLOTS_TIME_SERIES_DIR 
+
+    if layer_range is None:
+        layer_start = 0
+        layer_end = len(time_series[next(iter(metrics))])  # Use the total number of layers if range is not provided
+    else:
+        layer_start, layer_end = layer_range
+        layer_start = max(layer_start - 1, 0)  # Convert to zero-indexed
+        layer_end = min(layer_end, len(time_series[next(iter(metrics))]))  # Ensure layer_end does not exceed number of layers
+    i = 1
+    for metric in metrics:
+        num_layers = layer_end - layer_start
+        num_tokens_to_generate = len(time_series[metric][0][0])  # Assuming uniform length across heads
+
+        fig, axs = plt.subplots(nrows=num_layers, ncols=1, figsize=(11, 2 * num_layers), sharex=True)
+
+        if num_layers == 1:
+            axs = [axs]  # Ensure axs is iterable when only one plot
+
+        tick_positions = np.arange(0, num_tokens_to_generate + 1, num_tokens_to_generate // 10)
+
+        # Collect labels and handles for legend from the first subplot
+        handles, labels = [], []
+        for layer_idx in range(layer_start, layer_end):
+            ax = axs[layer_idx - layer_start]
+            for head_idx in range(min(num_heads_plot, len(time_series[metric][layer_idx]))):
+                norms = [norm for norm in time_series[metric][layer_idx][head_idx]]
+                if smoothing_window > 1:
+                    norms = smooth_series(np.array(norms), window_size=smoothing_window)
+                line, = ax.plot(norms, label=f'Head {head_idx+1}')
+                if layer_idx == layer_start:  # Collect legend info only from the first layer
+                    handles.append(line)
+                    labels.append(f'Head {head_idx + 1}')
+
+            ax.set_title(f'Layer {layer_idx+1}', pad=10)
+            ax.set_xlabel('Timestep')
+
+        # Add a single shared Y-axis label
+        fig.text(0.065, 0.5, 'L2 Norm of Attention Outputs', va='center', rotation='vertical', fontsize='large')
+
+        # Adjust layout for tight spacing
+        plt.tight_layout(rect=[0.06, 0.03, 1, 0.97])
+
+        if save:
+            layer_suffix = f'_Layers_{layer_start+1}_to_{layer_end}' if layer_range else ''
+            plot_path = f"{base_plot_path}{i}-{metric}{layer_suffix}_Norms_over_Time.png"
+            os.makedirs(os.path.dirname(plot_path), exist_ok=True)
+            plt.savefig(plot_path, bbox_inches='tight')
+            i += 1
+        else:
+            plt.show()
+        plt.close()
+

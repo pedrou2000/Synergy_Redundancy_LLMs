@@ -203,7 +203,7 @@ def plot_synergy_redundancy_PhiID(synergy_matrices, redundancy_matrices, base_pl
 
         cax1 = axs[0, 0].matshow(synergy_matrix, cmap='viridis')
         fig.colorbar(cax1, ax=axs[0, 0])
-        axs[0, 0].set_title('Synergy Matrix')
+        axs[0, 0].set_title('Synergy')
         axs[0, 0].set_xlabel('Attention Head')
         axs[0, 0].set_ylabel('Attention Head')
         axs[0, 0].xaxis.set_ticks_position('bottom')
@@ -211,7 +211,7 @@ def plot_synergy_redundancy_PhiID(synergy_matrices, redundancy_matrices, base_pl
 
         cax2 = axs[0, 1].matshow(redundancy_matrix, cmap='viridis')
         fig.colorbar(cax2, ax=axs[0, 1])
-        axs[0, 1].set_title('Redundancy Matrix')
+        axs[0, 1].set_title('Redundancy')
         axs[0, 1].set_xlabel('Attention Head')
         axs[0, 1].set_ylabel('Attention Head')
         axs[0, 1].xaxis.set_ticks_position('bottom')
@@ -219,7 +219,7 @@ def plot_synergy_redundancy_PhiID(synergy_matrices, redundancy_matrices, base_pl
         
         cax3 = axs[1, 0].matshow(layer_wise_synergy, cmap='viridis')
         fig.colorbar(cax3, ax=axs[1, 0])
-        axs[1, 0].set_title('Layer-wise Synergy Matrix')
+        axs[1, 0].set_title('Layer-wise Synergy')
         axs[1, 0].set_xlabel('Layer')
         axs[1, 0].set_ylabel('Layer')
         axs[1, 0].xaxis.set_ticks_position('bottom')
@@ -227,7 +227,7 @@ def plot_synergy_redundancy_PhiID(synergy_matrices, redundancy_matrices, base_pl
 
         cax4 = axs[1, 1].matshow(layer_wise_redundancy, cmap='viridis')
         fig.colorbar(cax4, ax=axs[1, 1])
-        axs[1, 1].set_title('Layer-wise Redundancy Matrix')
+        axs[1, 1].set_title('Layer-wise Redundancy')
         axs[1, 1].set_xlabel('Layer')
         axs[1, 1].set_ylabel('Layer')
         axs[1, 1].xaxis.set_ticks_position('bottom')
@@ -240,6 +240,179 @@ def plot_synergy_redundancy_PhiID(synergy_matrices, redundancy_matrices, base_pl
         else:
             plt.show()
         plt.close()
+
+def plot_matrix(matrix, title, xlabel, ylabel, save_path=None, save=True):
+    """Utility function to plot a single matrix."""
+    fig, ax = plt.subplots(figsize=(6, 5))
+    cax = ax.matshow(matrix, cmap='viridis')
+    fig.colorbar(cax, ax=ax)
+    ax.set_title(title)
+    ax.set_xlabel(xlabel)
+    ax.set_ylabel(ylabel)
+    ax.xaxis.set_ticks_position('bottom')
+    ax.xaxis.set_label_position('bottom')
+    if save and save_path:
+        os.makedirs(os.path.dirname(save_path), exist_ok=True)
+        plt.savefig(save_path)
+    else:
+        plt.show()
+    plt.close()
+
+def plot_synergy_redundancy_combined_vertical(synergy_matrix, redundancy_matrix, layer_wise_synergy, layer_wise_redundancy, save_path_headwise=None, save_path_layerwise=None, save=True):
+    """Utility function to create two vertical plots: one for head-wise matrices and one for layer-wise matrices."""
+
+    # Head-wise plot (Synergy and Redundancy stacked vertically, sharing color bar)
+    fig, axs = plt.subplots(2, 1, figsize=(4, 6), constrained_layout=True)
+    combined_min = min(synergy_matrix.min(), redundancy_matrix.min())
+    combined_max = max(synergy_matrix.max(), redundancy_matrix.max())
+
+    cax1 = axs[0].matshow(synergy_matrix, cmap='viridis', vmin=combined_min, vmax=combined_max)
+    axs[0].set_title('Synergy')
+    axs[0].set_xlabel('Attention Head')
+    axs[0].set_ylabel('Attention Head')
+
+    cax2 = axs[1].matshow(redundancy_matrix, cmap='viridis', vmin=combined_min, vmax=combined_max)
+    axs[1].set_title('Redundancy')
+    axs[1].set_xlabel('Attention Head')
+    axs[1].set_ylabel('Attention Head')
+
+    fig.colorbar(cax2, ax=axs, orientation='vertical', fraction=0.1, pad=0.02)
+
+    if save and save_path_headwise:
+        os.makedirs(os.path.dirname(save_path_headwise), exist_ok=True)
+        plt.savefig(save_path_headwise)
+    else:
+        plt.show()
+    plt.close()
+
+    # Layer-wise plot (Synergy and Redundancy stacked vertically, sharing color bar)
+    fig, axs = plt.subplots(2, 1, figsize=(4, 6), constrained_layout=True)
+    combined_min = min(layer_wise_synergy.min(), layer_wise_redundancy.min())
+    combined_max = max(layer_wise_synergy.max(), layer_wise_redundancy.max())
+
+    cax3 = axs[0].matshow(layer_wise_synergy, cmap='viridis', vmin=combined_min, vmax=combined_max)
+    axs[0].set_title('Layer-wise Synergy')
+    axs[0].set_xlabel('Layer')
+    axs[0].set_ylabel('Layer')
+
+    cax4 = axs[1].matshow(layer_wise_redundancy, cmap='viridis', vmin=combined_min, vmax=combined_max)
+    axs[1].set_title('Layer-wise Redundancy')
+    axs[1].set_xlabel('Layer')
+    axs[1].set_ylabel('Layer')
+
+    fig.colorbar(cax4, ax=axs, orientation='vertical', fraction=0.1, pad=0.02)
+
+    if save and save_path_layerwise:
+        os.makedirs(os.path.dirname(save_path_layerwise), exist_ok=True)
+        plt.savefig(save_path_layerwise)
+    else:
+        plt.show()
+    plt.close()
+
+def plot_synergy_redundancy_PhiID(synergy_matrices, redundancy_matrices, base_plot_path=None, save=True, save_separately=False, save_combined_vertical=False):
+    # plt.rcParams.update({'font.size': 15})
+
+    if not base_plot_path:
+        base_plot_path = constants.PLOTS_SYNERGY_REDUNDANCY_DIR 
+    
+    for metric, synergy_matrix in synergy_matrices.items():
+        redundancy_matrix = redundancy_matrices[metric]
+        layer_wise_synergy = layer_wise_matrix(synergy_matrix)
+        layer_wise_redundancy = layer_wise_matrix(redundancy_matrix)
+
+        if save_separately:
+            plot_matrix(
+                synergy_matrix,
+                title='Synergy',
+                xlabel='Attention Head',
+                ylabel='Attention Head',
+                save_path=f"{base_plot_path}{metric}/1-Synergy_Matrix.png" if save else None,
+                save=save
+            )
+
+            plot_matrix(
+                redundancy_matrix,
+                title='Redundancy',
+                xlabel='Attention Head',
+                ylabel='Attention Head',
+                save_path=f"{base_plot_path}{metric}/2-Redundancy_Matrix.png" if save else None,
+                save=save
+            )
+
+            plot_matrix(
+                layer_wise_synergy,
+                title='Layer-wise Synergy',
+                xlabel='Layer',
+                ylabel='Layer',
+                save_path=f"{base_plot_path}{metric}/3-Layer_wise_Synergy_Matrix.png" if save else None,
+                save=save
+            )
+
+            plot_matrix(
+                layer_wise_redundancy,
+                title='Layer-wise Redundancy',
+                xlabel='Layer',
+                ylabel='Layer',
+                save_path=f"{base_plot_path}{metric}/4-Layer_wise_Redundancy_Matrix.png" if save else None,
+                save=save
+            )
+        elif save_combined_vertical:
+            headwise_path = f"{base_plot_path}{metric}/1-Headwise_Matrices.png"
+            layerwise_path = f"{base_plot_path}{metric}/2-Layerwise_Matrices.png"
+            plot_synergy_redundancy_combined_vertical(
+                synergy_matrix, redundancy_matrix,
+                save_path_headwise=headwise_path if save else None,
+                save_path_layerwise=layerwise_path if save else None,
+                layer_wise_synergy=layer_wise_synergy, 
+                layer_wise_redundancy=layer_wise_redundancy,
+                save=save
+            )
+        else:
+            plot_path = f"{base_plot_path}{metric}/1-Synergy-Redundancy_Matrices.png"
+            fig, axs = plt.subplots(2, 2, figsize=(12, 10))
+
+            cax1 = axs[0, 0].matshow(synergy_matrix, cmap='viridis')
+            fig.colorbar(cax1, ax=axs[0, 0])
+            axs[0, 0].set_title('Synergy')
+            axs[0, 0].set_xlabel('Attention Head')
+            axs[0, 0].set_ylabel('Attention Head')
+            axs[0, 0].xaxis.set_ticks_position('bottom')
+            axs[0, 0].xaxis.set_label_position('bottom')
+
+            cax2 = axs[0, 1].matshow(redundancy_matrix, cmap='viridis')
+            fig.colorbar(cax2, ax=axs[0, 1])
+            axs[0, 1].set_title('Redundancy')
+            axs[0, 1].set_xlabel('Attention Head')
+            axs[0, 1].set_ylabel('Attention Head')
+            axs[0, 1].xaxis.set_ticks_position('bottom')
+            axs[0, 1].xaxis.set_label_position('bottom')
+
+            cax3 = axs[1, 0].matshow(layer_wise_synergy, cmap='viridis')
+            fig.colorbar(cax3, ax=axs[1, 0])
+            axs[1, 0].set_title('Layer-wise Synergy')
+            axs[1, 0].set_xlabel('Layer')
+            axs[1, 0].set_ylabel('Layer')
+            axs[1, 0].xaxis.set_ticks_position('bottom')
+            axs[1, 0].xaxis.set_label_position('bottom')
+
+            cax4 = axs[1, 1].matshow(layer_wise_redundancy, cmap='viridis')
+            fig.colorbar(cax4, ax=axs[1, 1])
+            axs[1, 1].set_title('Layer-wise Redundancy')
+            axs[1, 1].set_xlabel('Layer')
+            axs[1, 1].set_ylabel('Layer')
+            axs[1, 1].xaxis.set_ticks_position('bottom')
+            axs[1, 1].xaxis.set_label_position('bottom')
+
+            if save:
+                plt.tight_layout()
+                os.makedirs(os.path.dirname(plot_path), exist_ok=True)
+                plt.savefig(plot_path)
+            else:
+                plt.show()
+            plt.close()
+
+
+
 
 
 def plot_all_PhiID(global_matrices, base_plot_path=None, save=True):
@@ -710,7 +883,7 @@ def compute_gradient_rank(averages, method='synergy-redundancy'):
         gradient_ranks[metric] = head_ranks
     return gradient_ranks
 
-def plot_gradient_rank(gradient_ranks, base_plot_path=None, save=False, use_heatmap=False, num_heads_per_layer=constants.NUM_HEADS_PER_LAYER):
+def plot_gradient_rank(gradient_ranks, base_plot_path=None, save=False, figsize=(12, 5), use_heatmap=False, show_numbers=True, num_heads_per_layer=constants.NUM_HEADS_PER_LAYER, title=True):
     if not base_plot_path:
         # Set a default path if not provided
         base_plot_path = constants.PLOTS_SYNERGY_REDUNDANCY_DIR 
@@ -726,14 +899,15 @@ def plot_gradient_rank(gradient_ranks, base_plot_path=None, save=False, use_heat
             num_layers = len(ranks) // num_heads_per_layer
             ranks_matrix = np.array(ranks).reshape((num_layers, num_heads_per_layer))
 
-            fig, ax = plt.subplots(figsize=(12, 5))
-            sns.heatmap(ranks_matrix.T, annot=True, fmt="d", cmap="viridis", cbar=True, linewidths=0.5,
+            fig, ax = plt.subplots(figsize=figsize)
+            sns.heatmap(ranks_matrix.T, annot=show_numbers, fmt="d" if show_numbers else None, cmap="viridis", cbar=True, linewidths=0.5,
                         linecolor='gray', cbar_kws={"shrink": 0.8, "label": 'Synergy - Redundancy Rank'})
-            ax.set_xticks(np.arange(num_layers) + 0.5)  # Change: Added set_yticks
+            ax.set_xticks(np.arange(num_layers) + 0.5)
             ax.set_xticklabels([f"{i}" for i in range(num_layers)], rotation=45, ha="right")
-            ax.set_yticks(np.arange(num_heads_per_layer) + 0.5)  # Change: Added set_yticks
+            ax.set_yticks(np.arange(num_heads_per_layer) + 0.5)
             ax.set_yticklabels([f"{i}" for i in range(num_heads_per_layer)], rotation=0)
-            ax.set_title(f'Synergy - Redundancy Rank Heatmap for {metric}')
+            if title:
+                ax.set_title(f'Synergy - Redundancy Rank Heatmap')
             ax.set_xlabel("Layer")
             ax.set_ylabel("Head")
             plt.tight_layout()
@@ -743,17 +917,20 @@ def plot_gradient_rank(gradient_ranks, base_plot_path=None, save=False, use_heat
 
             ax.set_xlabel('Attention Head')
             ax.set_ylabel('Synergy - Redundancy Rank')
-            ax.set_title(f'Synergy-Redundancy Rank for {metric}')
+            if title:
+                ax.set_title(f'Synergy-Redundancy Rank')
             ax.grid(True, which='both', linestyle='--', linewidth=0.5)
 
         plot_path = f"{base_plot_path}{metric}/5-Synergy-Redundancy_Rank_per_Head.png"
 
         if save:
+            plt.tight_layout()
             os.makedirs(os.path.dirname(plot_path), exist_ok=True)
-            plt.savefig(plot_path)
+            plt.savefig(plot_path, bbox_inches='tight')
         else:
             plt.show()
         plt.close()
+
 
 def plot_averages_per_layer(averages, base_plot_path=None, save=False, num_heads_per_layer=constants.NUM_HEADS_PER_LAYER):
     if not base_plot_path:

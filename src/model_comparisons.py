@@ -30,7 +30,9 @@ def normalize_values(values):
     min_val, max_val = np.min(values), np.max(values)
     return (values - min_val) / (max_val - min_val), min_val, max_val
 
-def plot_gradient_rank_overlay(models_gradient_ranks, figsize=None, save=False, base_plot_path=constants.MODEL_COMPARISON_GRADIENT_RANK_DIR + "1-gradient_ranks.jpg", plot_intralayer_std=False):
+def plot_gradient_rank_overlay(models_gradient_ranks, figsize=None, save=False, 
+                               base_plot_path=constants.MODEL_COMPARISON_GRADIENT_RANK_DIR + "1-gradient_ranks.jpg", 
+                               plot_intralayer_std=False, title=True):
     """
     Create an overlay plot of normalized synergy-minus-redundancy ranks for multiple models,
     including confidence bands (standard deviation shading).
@@ -75,15 +77,16 @@ def plot_gradient_rank_overlay(models_gradient_ranks, figsize=None, save=False, 
 
     # Plot customization
     plt.xlabel("Normalized Layer Index")
-    plt.ylabel("Normalized Synergy - Redundancy Rank")
-    plt.title("Synergistic Information Processing Core Across LLMs")
+    plt.ylabel("Normalized Syn-Red Rank")
+    if title:
+        plt.title("Synergistic Information Processing Core Across LLMs")
     plt.legend()
     plt.grid(True, which='both', linestyle='--', linewidth=0.5)
 
     # Save or show the plot
     if save:
         os.makedirs(os.path.dirname(base_plot_path), exist_ok=True)
-        plt.savefig(base_plot_path)
+        plt.savefig(base_plot_path, bbox_inches='tight')
     else:
         plt.show()
     plt.close()
