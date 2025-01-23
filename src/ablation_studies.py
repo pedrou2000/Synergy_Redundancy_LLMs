@@ -2,7 +2,9 @@ import torch
 import gc
 import torch.nn.functional as F
 from time_series_generation import sample_with_temperature
-
+import numpy as np
+import matplotlib.pyplot as plt
+import os
 
 def generate_text_with_logits(model, tokenizer, num_tokens_to_generate: int, device: str, prompt=None, temperature=0.0):
     """
@@ -361,3 +363,167 @@ def generate_with_teacher_forcing_ablated_batch(
       
     return ablated_logits_tensor.cpu(), divergence_tensor.cpu(), generated_texts
 
+import pickle as pkl
+import constants
+
+def load_ablations_results():
+    file_path = constants.ABLATIONS_DIR + 'syn_minus_red/divergence_results.pkl'
+    ablations_data = pkl.load(open(file_path, 'rb'))
+    return ablations_data
+
+
+def plot_kl_divergence(ablation_results, cognitive_task, prompt_number, save=False, save_dir=None, proportion_heads_shown=1, figsize=(14, 6)):
+    """
+    Plots KL divergence curves with confidence intervals for random ablations
+    and the corresponding synergy-based ablation for a given cognitive task and prompt.
+
+    Parameters:
+    - ablation_results (dict): Dictionary containing ablation data.
+    - cognitive_task (str): The cognitive task category to analyze (e.g., 'simple_maths').
+    - prompt_number (int): The index of the prompt within the selected cognitive task.
+    - save (bool): If True, saves the plot to the specified directory instead of displaying it.
+    - save_dir (str): Directory path to save the plot (required if save=True).
+    - num_total_heads (int, optional): If specified, only plot ablations for attention heads with index <= num_total_heads.
+
+    Returns:
+    - None: Displays or saves the plot.
+    """
+    # Load data for the specified cognitive task and prompt
+    try:
+        results = ablation_results['divergences'][cognitive_task][prompt_number]
+        random_curves = np.array(results['random'])  # Random ablation curves
+        synergy_curve = np.array(results['gradient'])  # Synergy-based ablation curve
+    except KeyError:
+        print(f"Error: Invalid cognitive task '{cognitive_task}' or prompt number '{prompt_number}'.")
+        return
+    except IndexError:
+        print(f"Error: Prompt number '{prompt_number}' is out of range for task '{cognitive_task}'.")
+        return
+
+    # Ablated heads (x-axis)
+    x = ablation_results['list_heads_ablated']
+
+    # Filter data based on num_total_heads if specified
+    num_total_heads = constants.NUM_TOTAL_HEADS * proportion_heads_shown
+    mask = np.array(x) <= num_total_heads
+    x = np.array(x)[mask]
+    random_curves = random_curves[:, mask]
+    synergy_curve = synergy_curve[mask]
+
+    # Compute mean and confidence intervals for random ablations
+    random_mean = np.mean(random_curves, axis=0)
+    random_std = np.std(random_curves, axis=0)
+    random_ci_upper = random_mean + 1.96 * (random_std / np.sqrt(random_curves.shape[0]))
+    random_ci_lower = random_mean - 1.96 * (random_std / np.sqrt(random_curves.shape[0]))
+
+    # Create the figure
+    plt.figure(figsize=figsize)
+
+    # Plot random ablations
+    plt.plot(x, random_mean, label="Random Ablations (Mean)", color="orange")
+    plt.fill_between(x, random_ci_lower, random_ci_upper, color="orange", alpha=0.3, label="95% CI (Random)")
+
+    # Plot synergy-based ablation
+    plt.plot(x, synergy_curve, label="Synergy-Based Ablation", color="blue")
+
+    # Formatting
+    plt.xlabel("Number of Ablated Heads")
+    plt.ylabel("KL Divergence")
+    plt.title(f"KL Divergence vs Number of Ablated Heads\nTask: {cognitive_task}, Prompt: {prompt_number}")
+    plt.legend()
+    plt.grid(True)
+
+    if save:
+        if save_dir is None:
+            save_dir = constants.PLOT_ABLATIONS + 'syn_minus_red' + '/' +  '1-Divergence_Plots/' + cognitive_task + '/' 
+        os.makedirs(save_dir, exist_ok=True)
+        plt.savefig(save_dir + str(prompt_number) + '.png')
+    else:
+        plt.show()
+    plt.close()
+
+def plot_aggregated_kl_divergence(ablation_results, save=False, save_dir=None, proportion_heads_shown=1, prompt_category=None, 
+                                  figsize=(14, 6), num_total_heads=constants.NUM_TOTAL_HEADS):
+    """
+    Plots aggregated KL divergence curves with confidence intervals for random ablations
+    and the corresponding synergy-based ablation across all cognitive tasks and prompts.
+
+    Parameters:
+    - ablation_results (dict): Dictionary containing ablation data.
+    - save (bool): If True, saves the plot to the specified directory instead of displaying it.
+    - save_dir (str): Directory path to save the plot (required if save=True).
+    - proportion_heads_shown (float): Proportion of total attention heads to include in the plot (0 < x <= 1).
+    - prompt_category (Optional(str)): Cognitive task category along to which aggregate. If None, aggregated accross all categories.
+
+    Returns:
+    - None: Displays or saves the plot.
+    """
+    if prompt_category is not None:
+        prompt_categories = [prompt_category]
+    else:
+        prompt_categories = constants.PROMPT_CATEGORIES
+
+    # Initialize lists to aggregate all random and synergy results across prompts
+    all_random_curves = []
+    all_synergy_curves = []
+
+    # Aggregate data over all specified prompt categories and prompts
+    for category in prompt_categories:
+        if category in ablation_results['divergences']:
+            for prompt in ablation_results['divergences'][category].values():
+                all_random_curves.extend(prompt['random'])  # Add all random ablation curves
+                all_synergy_curves.append(prompt['gradient'])  # Add synergy ablation curves
+
+    # Convert to numpy arrays for easier computation
+    all_random_curves = np.array(all_random_curves)  # Shape (total_random_samples, num_points_on_curve)
+    all_synergy_curves = np.array(all_synergy_curves)  # Shape (total_prompts, num_points_on_curve)
+
+    # Ablated heads (x-axis)
+    x = ablation_results['list_heads_ablated']
+
+    # Filter data based on proportion_heads_shown
+    num_total_heads = proportion_heads_shown * num_total_heads
+    mask = np.array(x) <= num_total_heads
+    x = np.array(x)[mask]
+    all_random_curves = all_random_curves[:, mask]
+    all_synergy_curves = all_synergy_curves[:, mask]
+
+    # Compute mean and confidence intervals for aggregated random ablations
+    random_mean_agg = np.mean(all_random_curves, axis=0)
+    random_std_agg = np.std(all_random_curves, axis=0)
+    random_ci_upper_agg = random_mean_agg + 1.96 * (random_std_agg / np.sqrt(all_random_curves.shape[0]))
+    random_ci_lower_agg = random_mean_agg - 1.96 * (random_std_agg / np.sqrt(all_random_curves.shape[0]))
+
+    # Compute mean for aggregated synergy-based ablations (since there's one per prompt)
+    synergy_mean_agg = np.mean(all_synergy_curves, axis=0)
+    synergy_std_agg = np.std(all_synergy_curves, axis=0)
+    synergy_ci_upper_agg = synergy_mean_agg + 1.96 * (synergy_std_agg / np.sqrt(all_synergy_curves.shape[0]))
+    synergy_ci_lower_agg = synergy_mean_agg - 1.96 * (synergy_std_agg / np.sqrt(all_synergy_curves.shape[0]))
+
+    # Create the aggregated figure
+    plt.figure(figsize=figsize)
+
+    # Plot aggregated random ablations
+    plt.plot(x, random_mean_agg, label="Random Ablations", color="orange")
+    plt.fill_between(x, random_ci_lower_agg, random_ci_upper_agg, color="orange", alpha=0.3)#, label="95% CI (Random)")
+
+    # Plot aggregated synergy-based ablations
+    plt.plot(x, synergy_mean_agg, label="Synergy-minus-Redundancy Based Ablations", color="blue")
+    plt.fill_between(x, synergy_ci_lower_agg, synergy_ci_upper_agg, color="blue", alpha=0.3)#, label="95% CI (Synergy)")
+
+    # Formatting
+    plt.xlabel("Number of Ablated Heads")
+    plt.ylabel("KL Divergence")
+    plt.title("Aggregated KL Divergence Across All Prompts")
+    plt.legend()
+    plt.grid(True)
+
+    if save:
+        if save_dir is None:
+            save_dir = constants.PLOT_ABLATIONS + 'syn_minus_red/' + '1-Divergence_Plots/Aggregated/'
+        os.makedirs(save_dir, exist_ok=True)
+        title = 'all' if prompt_category is None else prompt_category
+        plt.savefig(save_dir + title + '.png')
+    else:
+        plt.show()
+    plt.close()
