@@ -102,20 +102,20 @@ def load_graph_theoretical_results(base_save_path=None, file_name="graph_theoret
         results = pickle.load(f)
     return results
 
-def load_graph_theoretical_results(model_number=2, base_save_path=None, file_name="graph_theoretical_results"):
+def load_graph_theoretical_results(model_code=2, base_save_path=None, file_name="graph_theoretical_results"):
     if base_save_path is None:
-        model_folder = constants.MODEL_NAMES[model_number]["FOLDER_NAME"]
-        base_save_path = os.path.join("../data", model_folder, "5-Graph_Theoretical_Properties/")
+        model_folder = constants.MODEL_NAMES[model_code]["FOLDER_NAME"]
+        base_save_path = os.path.join("../data", model_folder, "5-Graph_Theoretical_Properties/") + file_name + "/"
     with open(os.path.join(base_save_path, file_name + ".pkl"), "rb") as f:
         results = pickle.load(f)
     return results
 
-def compare_graph_theoretical_results(model_numbers, cognitive_task_category='average_prompts', save=True, base_plot_path=None):
+def compare_graph_theoretical_results(model_codes, cognitive_task_category='average_prompts', save=True, base_plot_path=None, figsize=(8, 4)):
     """
     Compare the results of the graph theoretical analysis for multiple models.
 
     Parameters:
-    - model_numbers: list of int, the model numbers to compare.
+    - model_codes: list of int, the model numbers to compare.
     - cognitive_task_category: str, the cognitive task category to load the results from.
     - save: bool, if True, saves the plot.
     - base_plot_path: str, the base path to save the plots.
@@ -124,55 +124,65 @@ def compare_graph_theoretical_results(model_numbers, cognitive_task_category='av
     - None
     """
 
-    all_results = {model_num: load_graph_theoretical_results(model_num, file_name=cognitive_task_category) for model_num in model_numbers}
+    all_results = {model_code: load_graph_theoretical_results(model_code, file_name=cognitive_task_category) for model_code in model_codes}
 
-    metrics = list(all_results[model_numbers[0]].keys())
-    model_names = [constants.MODEL_NAMES[model_num]["HF_NAME"].split("/")[-1] for model_num in model_numbers]
+    metrics = list(all_results[model_codes[0]].keys())
+    # model_names = [model_code for model_code in model_codes]
+    model_names = [constants.MODEL_NAMES[model_code]["PLOT_NAME"] for model_code in model_codes]
     bar_width = 0.35
-    index = range(len(model_numbers))
+    index = range(len(model_codes))
+
+    # Custom colors for synergy and redundancy bars
+    synergy_color = "#6a5acd"  # Slate blue
+    redundancy_color = "#ff7f50"  # Coral
 
     for metric in metrics:
-        fig, ax = plt.subplots(1, 2, figsize=(15, 6), sharey=True)
-        fig.suptitle(f"Graph Theoretical Analysis Comparison for {metric}")
+        fig, ax = plt.subplots(1, 2, figsize=figsize)
 
         # Global Efficiency Plot
-        synergy_values_ge = [all_results[model_num][metric]["global_efficiency"]["synergy"] for model_num in model_numbers]
-        redundancy_values_ge = [all_results[model_num][metric]["global_efficiency"]["redundancy"] for model_num in model_numbers]
+        synergy_values_ge = [all_results[model_code][metric]["global_efficiency"]["synergy"] for model_code in model_codes]
+        redundancy_values_ge = [all_results[model_code][metric]["global_efficiency"]["redundancy"] for model_code in model_codes]
 
-        bar1 = ax[0].bar(index, synergy_values_ge, bar_width, label='Synergy Matrix')
-        bar2 = ax[0].bar([p + bar_width for p in index], redundancy_values_ge, bar_width, label='Redundancy Matrix')
+        bar1 = ax[0].bar(index, synergy_values_ge, bar_width, color=synergy_color, label='Synergy Matrix')
+        bar2 = ax[0].bar([p + bar_width for p in index], redundancy_values_ge, bar_width, color=redundancy_color, label='Redundancy Matrix')
 
+        legend_fontsize = 9
         ax[0].set_title("Global Efficiency")
         ax[0].set_xlabel("Model")
         ax[0].set_ylabel("Value")
-        ax[0].set_xticks([p + bar_width/2 for p in index])
+        ax[0].set_xticks([p + bar_width / 2 for p in index])
         ax[0].set_xticklabels(model_names)
+        ax[0].legend(loc='upper right', fontsize=legend_fontsize)  # Replace 10 with your desired size
 
         # Modularity Plot
-        synergy_values_mod = [all_results[model_num][metric]["modularity"]["synergy"] for model_num in model_numbers]
-        redundancy_values_mod = [all_results[model_num][metric]["modularity"]["redundancy"] for model_num in model_numbers]
+        synergy_values_mod = [all_results[model_code][metric]["modularity"]["synergy"] for model_code in model_codes]
+        redundancy_values_mod = [all_results[model_code][metric]["modularity"]["redundancy"] for model_code in model_codes]
 
-        bar3 = ax[1].bar(index, synergy_values_mod, bar_width, label='Synergy Matrix')
-        bar4 = ax[1].bar([p + bar_width for p in index], redundancy_values_mod, bar_width, label='Redundancy Matrix')
+        bar3 = ax[1].bar(index, synergy_values_mod, bar_width, color=synergy_color, label='Synergy Matrix')
+        bar4 = ax[1].bar([p + bar_width for p in index], redundancy_values_mod, bar_width, color=redundancy_color, label='Redundancy Matrix')
 
         ax[1].set_title("Modularity")
         ax[1].set_xlabel("Model")
-        ax[1].set_xticks([p + bar_width/2 for p in index])
+        ax[1].set_xticks([p + bar_width / 2 for p in index])
         ax[1].set_xticklabels(model_names)
+        ax[1].legend(loc='upper right', fontsize=legend_fontsize)  # Replace 10 with your desired size
 
-        # Create a single legend for the figure
-        handles, labels = ax[0].get_legend_handles_labels()
-        fig.legend(handles, ['Synergy Matrix', 'Redundancy Matrix'], loc='upper right')
+        # Adjust y-axis scales independently
+        ax[0].set_ylim(0, max(max(synergy_values_ge), max(redundancy_values_ge)) * 1.1)
+        ax[1].set_ylim(0, max(max(synergy_values_mod), max(redundancy_values_mod)) * 1.1)
 
         if save:
             if base_plot_path is None:
                 base_plot_path = constants.MODEL_COMPARISON_GRAPH_THEORETICAL_DIR
             if not os.path.exists(base_plot_path):
                 os.makedirs(base_plot_path)
-            plt.savefig(os.path.join(base_plot_path, metric + "-Comparison.png"))
+            # Save figure with DPI=300
+            plt.tight_layout()
+            plt.savefig(os.path.join(base_plot_path, metric + "-Comparison.png"), dpi=300)
         else:
+            # Show plot with DPI=300
             plt.show()
         plt.close()
-    
+
 if __name__ == "__main__":
     compare_graph_theoretical_results([2, 3, 4], save=True)

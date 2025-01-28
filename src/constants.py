@@ -8,12 +8,12 @@ MODEL_NAMES = {
     'G1.1-2B': {"HF_NAME": "google/gemma-1.1-2b-it", "FOLDER_NAME": "2-Gemma-1.1-2b-it", "PLOT_NAME": "Gemma 1.1 2B"},
     'G1.1-7B': {"HF_NAME": "google/gemma-1.1-7b-it", "FOLDER_NAME": "3-Gemma-1.1-7b-it", "PLOT_NAME": "Gemma 1.1 7B"},
     'L3-8B': {"HF_NAME": "meta-llama/Meta-Llama-3-8B-Instruct", "FOLDER_NAME": "4-Llama-3-8B-Instruct", "PLOT_NAME": "Llama 3 8B"},
-    'G2-2B': {"HF_NAME": "google/gemma-2-2b-it", "FOLDER_NAME": "5-Gemma-2-2B", "PLOT_NAME": "Gemma 2 2B"},
-    'G2-9B': {"HF_NAME": "google/gemma-2-9b-it", "FOLDER_NAME": "6-Gemma-2-9B", "PLOT_NAME": "Gemma 2 9B"},
-    'L3.2-3B': {"HF_NAME": "meta-llama/Llama-3.2-3B-Instruct", "FOLDER_NAME": "7-Llama-3.2-3B", "PLOT_NAME": "Llama 3.2 3B"},
-    'L3.1-8B': {"HF_NAME": "meta-llama/Llama-3.1-8B-Instruct", "FOLDER_NAME": "8-Llama-3.1-8B", "PLOT_NAME": "Llama 3.1 8B"}
+    'G2-2B': {"HF_NAME": "google/gemma-2-2b-it", "FOLDER_NAME": "5-Gemma-2-2B", "PLOT_NAME": "Gemma 2 2B", "COLOR": "#1f77b4"},
+    'G2-9B': {"HF_NAME": "google/gemma-2-9b-it", "FOLDER_NAME": "6-Gemma-2-9B", "PLOT_NAME": "Gemma 2 9B", "COLOR": "#2ca02c"},
+    'L3.2-3B': {"HF_NAME": "meta-llama/Llama-3.2-3B-Instruct", "FOLDER_NAME": "7-Llama-3.2-3B", "PLOT_NAME": "Llama 3.2 3B", "COLOR": "#ff7f0e"},
+    'L3.1-8B': {"HF_NAME": "meta-llama/Llama-3.1-8B-Instruct", "FOLDER_NAME": "8-Llama-3.1-8B", "PLOT_NAME": "Llama 3.1 8B", "COLOR": "#9467bd"},
 }
-MODEL_CODE = 'G2-2B'
+MODEL_CODE = 'L3.1-8B'
 MODEL_NAME = MODEL_NAMES[MODEL_CODE]["HF_NAME"]
 FOLDER_MODEL_NAME = MODEL_NAMES[MODEL_CODE]["FOLDER_NAME"]
 FINAL_MODELS = ['G2-2B', 'G2-9B', 'L3.2-3B', 'L3.1-8B']
@@ -80,6 +80,7 @@ PLOT_ABLATIONS = PLOTS_DIR + "5-Ablations/" + ATTENTION_MEASURE + "/"
 MODEL_COMPARISON_DIR = "../plots/" + "0-Model_Comparison/"
 MODEL_COMPARISON_GRAPH_THEORETICAL_DIR = MODEL_COMPARISON_DIR + "1-Graph_Theoretical_Analysis/"
 MODEL_COMPARISON_GRADIENT_RANK_DIR = MODEL_COMPARISON_DIR + "2-Gradient_Ranks/"
+MODEL_COMPARISON_ABLATIONS_DIR = MODEL_COMPARISON_DIR + "3-Ablations/"
 
 # Prompts
 PROMPTS = {

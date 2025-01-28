@@ -4,6 +4,11 @@ import matplotlib.pyplot as plt
 from time_series_generation import *
 from matplotlib.colors import ListedColormap
 import seaborn as sns
+from sklearn.linear_model import LogisticRegression
+from sklearn.metrics import accuracy_score, confusion_matrix, classification_report
+from matplotlib.colors import ListedColormap
+import matplotlib.colors as mcolors
+from matplotlib.colors import ListedColormap
 
 def reshape_data(all_attention_weights):
     categories = all_attention_weights.keys()
@@ -45,7 +50,6 @@ def plot_lda_results(X_r, y, labels, save=False, base_plot_path=None):
         plt.close()
     else:
         plt.show()
-
 
 def plot_category_heatmap(lda, category_index, num_layers, num_heads, category_name, save=False, plot_path=None):
     """
@@ -133,9 +137,6 @@ def plot_global_head_contributions(lda, num_layers, num_heads, save=False, base_
         else:
             plt.show()
 
-import matplotlib.colors as mcolors
-from matplotlib.colors import ListedColormap
-
 def plot_head_category_map(lda, num_layers, num_heads, categories, save=False, base_plot_path=None):
     """
     Plots a map showing the cognitive category contributing most to each attention head.
@@ -195,65 +196,127 @@ def plot_head_category_map(lda, num_layers, num_heads, categories, save=False, b
     else:
         plt.show()
 
-def perform_lda_analysis(all_attention_weights, n_components=2, save=False, base_plot_path=None):
+def lda_dim_reduce_and_classify(X, y, n_components=2):
     """
-    Performs LDA analysis on given attention weights and plots the results.
-
-    Args:
-    all_attention_weights (dict): Dictionary of attention weights with categories as keys.
-    n_components (int): Number of components for LDA.
-
-    Returns:
-    None. Displays or saves plots of the LDA results.
+    1) Fits LDA for dimensionality reduction to `n_components`
+    2) Fits a separate Logistic Regression classifier on that reduced space.
+    3) Returns (X_reduced, lda, clf)
     """
+    # 1) Dimensionality Reduction
+    lda = LDA(n_components=n_components)
+    X_reduced = lda.fit_transform(X, y)  # shape => (n_samples, n_components)
+    
+    # 2) Logistic Regression on the Reduced Features
+    clf = LogisticRegression()
+    clf.fit(X_reduced, y)
+
+    # Optional: Check training accuracy in the *reduced* space
+    preds = clf.predict(X_reduced)
+    print(f"Accuracy in {n_components}D space: {accuracy_score(y, preds):.3f}")
+    
+    # Print confusion matrix and classification report
+    cm = confusion_matrix(y, preds)
+    print("Confusion Matrix:")
+    print(cm)
+    
+    # If you have custom labels, pass them as 'target_names' for a more readable report
+    print("\nClassification Report:")
+    print(classification_report(y, preds))
+    
+    return X_reduced, lda, clf
+
+def plot_decision_boundaries_2d(X_2d, y, clf, labels=None):
+    """
+    Plots a 2D scatter of X_2d with class labels y,
+    plus the decision boundaries (multi-class) learned by `clf`.
+    Ensures the shaded regions match the scatter-point colors.
+    """
+    # Compute grid ranges
+    x_min, x_max = X_2d[:, 0].min() - 1, X_2d[:, 0].max() + 1
+    y_min, y_max = X_2d[:, 1].min() - 1, X_2d[:, 1].max() + 1
+    xx, yy = np.meshgrid(
+        np.linspace(x_min, x_max, 200),
+        np.linspace(y_min, y_max, 200)
+    )
+    
+    # Predict each grid point
+    grid_preds = clf.predict(np.c_[xx.ravel(), yy.ravel()])
+    Z = grid_preds.reshape(xx.shape)
+
+    # Create discrete colormap matching the number of classes
+    n_classes = len(np.unique(y)) if labels is None else len(labels)
+    base_cmap = plt.cm.tab10
+    discrete_colors = [base_cmap(i) for i in range(n_classes)]
+    discrete_cmap = ListedColormap(discrete_colors)
+
+    # Plot decision boundary
+    plt.figure(figsize=(10, 8))
+    plt.pcolormesh(xx, yy, Z, cmap=discrete_cmap, alpha=0.2, shading='auto')
+
+    # Plot original data
+    if labels is None:
+        labels = [f"Class {i}" for i in range(n_classes)]
+    for class_index, label_name in enumerate(labels):
+        plt.scatter(
+            X_2d[y == class_index, 0],
+            X_2d[y == class_index, 1],
+            color=discrete_cmap(class_index),
+            label=label_name
+        )
+
+    plt.legend()
+    plt.title("LDA -> 2D + Logistic Regression: Decision Boundaries")
+    plt.xlabel("LDA Component 1")
+    plt.ylabel("LDA Component 2")
+    plt.show()
+
+def perform_lda_analysis(all_attention_weights, n_components=2, save=False, base_plot_path=None, metrics=constants.METRICS_TRANSFORMER):
     if base_plot_path is None:
         base_plot_path = constants.PLOTS_HEAD_ACTIVATIONS_COGNITIVE_TASKS
     for metric, attention_weights in all_attention_weights.items():
-        # Remove resting state category if in data
-        if constants.RESTING_STATE_CATEGORY in attention_weights.keys():
-            attention_weights.pop(constants.RESTING_STATE_CATEGORY)
+        if metric in metrics:
+            # Remove resting state category if in data
+            if constants.RESTING_STATE_CATEGORY in attention_weights.keys():
+                attention_weights.pop(constants.RESTING_STATE_CATEGORY)
 
-        # Reshape the data
-        X, y = reshape_data(attention_weights)
+            # Reshape the data
+            X, y = reshape_data(attention_weights)
+            labels = list(attention_weights.keys())
 
-        # Apply LDA
-        X_r, lda = apply_lda(X, y, n_components)
+            # 1) Apply LDA and Dim reduction + separate classification in 2D
+            X_2d, lda, clf = lda_dim_reduce_and_classify(X, y, n_components=n_components)
 
-        # Get the labels from the keys of the dictionary, which represent categories
-        labels = list(attention_weights.keys())
-        # print(f"Labels: {labels}")
+            # 2) Plot decision boundaries in the reduced (2D) space
+            plot_decision_boundaries_2d(X_2d, y, clf, labels=labels)
 
-        # Plot the LDA projection
-        plot_lda_results(X_r, y, labels, save, base_plot_path + metric + '/')
-        num_layers, num_heads_per_layer = attention_weights[labels[0]].shape[:2]
-        plot_global_head_contributions(
-            lda=lda,
-            num_layers=num_layers,
-            num_heads=num_heads_per_layer,
-            save=True,  # Set to True to save the plots
-            base_plot_path=base_plot_path + metric + '/5-Component_Contributions/'
-        )
+            # Plot global head contributions
+            num_layers, num_heads_per_layer = attention_weights[labels[0]].shape[:2]
+            plot_global_head_contributions(
+                lda=lda,
+                num_layers=num_layers,
+                num_heads=num_heads_per_layer,
+                save=True, 
+                base_plot_path=base_plot_path + metric + '/5-Component_Contributions/'
+            )
 
+            # Plot separate heatmaps for each category
+            for category_index, category_name in enumerate(labels):
+                plot_category_heatmap(
+                    lda,
+                    category_index,
+                    num_layers,
+                    num_heads_per_layer,
+                    category_name,
+                    save=save,
+                    plot_path=base_plot_path + metric + '/4-PCA_Head_Contributions/'
+                )
 
-        # Plot separate heatmaps for each category
-        for category_index, category_name in enumerate(labels):
-            plot_category_heatmap(
+            # Plot map of most contributing categories per head
+            plot_head_category_map(
                 lda,
-                category_index,
                 num_layers,
                 num_heads_per_layer,
-                category_name,
+                categories=labels,
                 save=save,
-                plot_path=base_plot_path + metric + '/4-PCA_Head_Contributions/'
+                base_plot_path=base_plot_path + metric + '/6-Cognitive_Category-Head_Map/'
             )
-        
-
-        # Plot map of most contributing categories per head
-        plot_head_category_map(
-            lda,
-            num_layers,
-            num_heads_per_layer,
-            categories=labels,
-            save=save,
-            base_plot_path=base_plot_path + metric + '/6-Cognitive_Category-Head_Map/'
-        )

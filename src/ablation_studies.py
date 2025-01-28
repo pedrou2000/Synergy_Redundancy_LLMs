@@ -5,6 +5,7 @@ from time_series_generation import sample_with_temperature
 import numpy as np
 import matplotlib.pyplot as plt
 import os
+from transformers import AutoConfig 
 
 def generate_text_with_logits(model, tokenizer, num_tokens_to_generate: int, device: str, prompt=None, temperature=0.0):
     """
@@ -417,7 +418,7 @@ def plot_kl_divergence(ablation_results, cognitive_task, prompt_number, save=Fal
     random_ci_lower = random_mean - 1.96 * (random_std / np.sqrt(random_curves.shape[0]))
 
     # Create the figure
-    plt.figure(figsize=figsize)
+    plt.figure(figsize=figsize, dpi=300)
 
     # Plot random ablations
     plt.plot(x, random_mean, label="Random Ablations (Mean)", color="orange")
@@ -436,8 +437,9 @@ def plot_kl_divergence(ablation_results, cognitive_task, prompt_number, save=Fal
     if save:
         if save_dir is None:
             save_dir = constants.PLOT_ABLATIONS + 'syn_minus_red' + '/' +  '1-Divergence_Plots/' + cognitive_task + '/' 
+        plt.tight_layout()
         os.makedirs(save_dir, exist_ok=True)
-        plt.savefig(save_dir + str(prompt_number) + '.png')
+        plt.savefig(save_dir + str(prompt_number) + '.png', dpi=300)
     else:
         plt.show()
     plt.close()
@@ -469,10 +471,9 @@ def plot_aggregated_kl_divergence(ablation_results, save=False, save_dir=None, p
 
     # Aggregate data over all specified prompt categories and prompts
     for category in prompt_categories:
-        if category in ablation_results['divergences']:
-            for prompt in ablation_results['divergences'][category].values():
-                all_random_curves.extend(prompt['random'])  # Add all random ablation curves
-                all_synergy_curves.append(prompt['gradient'])  # Add synergy ablation curves
+        for prompt in ablation_results['divergences'][category].values():
+            all_random_curves.extend(prompt['random'])  # Add all random ablation curves
+            all_synergy_curves.append(prompt['gradient'])  # Add synergy ablation curves
 
     # Convert to numpy arrays for easier computation
     all_random_curves = np.array(all_random_curves)  # Shape (total_random_samples, num_points_on_curve)
@@ -501,7 +502,7 @@ def plot_aggregated_kl_divergence(ablation_results, save=False, save_dir=None, p
     synergy_ci_lower_agg = synergy_mean_agg - 1.96 * (synergy_std_agg / np.sqrt(all_synergy_curves.shape[0]))
 
     # Create the aggregated figure
-    plt.figure(figsize=figsize)
+    plt.figure(figsize=figsize, dpi=300)
 
     # Plot aggregated random ablations
     plt.plot(x, random_mean_agg, label="Random Ablations", color="orange")
@@ -513,7 +514,7 @@ def plot_aggregated_kl_divergence(ablation_results, save=False, save_dir=None, p
 
     # Formatting
     plt.xlabel("Number of Ablated Heads")
-    plt.ylabel("KL Divergence")
+    plt.ylabel("Average Performance Divergence")
     plt.title("Aggregated KL Divergence Across All Prompts")
     plt.legend()
     plt.grid(True)
@@ -521,9 +522,106 @@ def plot_aggregated_kl_divergence(ablation_results, save=False, save_dir=None, p
     if save:
         if save_dir is None:
             save_dir = constants.PLOT_ABLATIONS + 'syn_minus_red/' + '1-Divergence_Plots/Aggregated/'
+        plt.tight_layout()
         os.makedirs(save_dir, exist_ok=True)
         title = 'all' if prompt_category is None else prompt_category
-        plt.savefig(save_dir + title + '.png')
+        plt.savefig(save_dir + title + '.png', dpi=300)
+    else:
+        plt.show()
+    plt.close()
+
+def plot_aggregated_kl_divergence_multi_models(models, save=False, save_dir=None, proportion_heads_shown=1, prompt_category=None, figsize=(14, 6)):
+    """
+    Plots aggregated KL divergence curves for multiple models with confidence intervals for random ablations
+    and the corresponding synergy-based ablation.
+
+    Parameters:
+    - models (list): List of model codes to analyze.
+    - save (bool): If True, saves the plot to the specified directory instead of displaying it.
+    - save_dir (str): Directory path to save the plot (required if save=True).
+    - proportion_heads_shown (float): Proportion of total attention heads to include in the plot (0 < x <= 1).
+    - prompt_category (Optional(str)): Cognitive task category along to which aggregate. If None, aggregated across all categories.
+
+    Returns:
+    - None: Displays or saves the plot.
+    """
+    plt.figure(figsize=figsize, dpi=300)
+
+    for model_code in models:
+        # Update constants for the current model
+        constants.MODEL_CODE = model_code
+        constants.FOLDER_MODEL_NAME = constants.MODEL_NAMES[constants.MODEL_CODE]["FOLDER_NAME"]
+        constants.SAVED_DATA_DIR = "../data/" + constants.FOLDER_MODEL_NAME + "/"
+        constants.ABLATIONS_DIR = constants.SAVED_DATA_DIR + "6-Ablations/"
+        constants.MODEL_NAME = constants.MODEL_NAMES[constants.MODEL_CODE]["HF_NAME"]
+        config = AutoConfig.from_pretrained(constants.MODEL_NAME)
+        constants.NUM_LAYERS = config.num_hidden_layers if hasattr(config, 'num_hidden_layers') else config.n_layer
+        constants.NUM_HEADS_PER_LAYER = config.num_attention_heads if hasattr(config, 'num_attention_heads') else config.n_head
+        constants.NUM_TOTAL_HEADS = constants.NUM_LAYERS * constants.NUM_HEADS_PER_LAYER
+
+        # Load ablation results for the current model
+        ablation_results = load_ablations_results()
+
+        # Initialize lists to aggregate all random and synergy results across prompts
+        all_random_curves = []
+        all_synergy_curves = []
+
+        # Aggregate data over all specified prompt categories and prompts
+        prompt_categories = [prompt_category] if prompt_category else constants.PROMPT_CATEGORIES
+        for category in prompt_categories:
+            for prompt in ablation_results['divergences'][category].values():
+                all_random_curves.extend(prompt['random'])  # Add all random ablation curves
+                all_synergy_curves.append(prompt['gradient'])  # Add synergy ablation curves
+
+        # Convert to numpy arrays for easier computation
+        all_random_curves = np.array(all_random_curves)  # Shape (total_random_samples, num_points_on_curve)
+        all_synergy_curves = np.array(all_synergy_curves)  # Shape (total_prompts, num_points_on_curve)
+
+        # Ablated heads (x-axis)
+        x = ablation_results['list_heads_ablated']
+
+        # Filter data based on proportion_heads_shown
+        num_total_heads = proportion_heads_shown * constants.NUM_TOTAL_HEADS
+        mask = np.array(x) <= num_total_heads
+        x = np.array(x)[mask]
+        all_random_curves = all_random_curves[:, mask]
+        all_synergy_curves = all_synergy_curves[:, mask]
+
+        # Normalize x-axis from 0 to proportion_heads_shown
+        x = x / (num_total_heads / proportion_heads_shown)
+
+        # Compute mean and confidence intervals for aggregated random ablations
+        random_mean_agg = np.mean(all_random_curves, axis=0)
+        random_ci_upper_agg = random_mean_agg + 1.96 * (np.std(all_random_curves, axis=0) / np.sqrt(all_random_curves.shape[0]))
+        random_ci_lower_agg = random_mean_agg - 1.96 * (np.std(all_random_curves, axis=0) / np.sqrt(all_random_curves.shape[0]))
+
+        # Compute mean for aggregated synergy-based ablations
+        synergy_mean_agg = np.mean(all_synergy_curves, axis=0)
+        synergy_ci_upper_agg = synergy_mean_agg + 1.96 * (np.std(all_synergy_curves, axis=0) / np.sqrt(all_synergy_curves.shape[0]))
+        synergy_ci_lower_agg = synergy_mean_agg - 1.96 * (np.std(all_synergy_curves, axis=0) / np.sqrt(all_synergy_curves.shape[0]))
+
+        # Plot for the current model
+        color = constants.MODEL_NAMES[model_code]["COLOR"]
+        plt.plot(x, random_mean_agg, label=f"{constants.MODEL_NAMES[model_code]["PLOT_NAME"]} Random Ablations", linestyle="--", color=color)
+        plt.fill_between(x, random_ci_lower_agg, random_ci_upper_agg, alpha=0.2, color=color)
+        plt.plot(x, synergy_mean_agg, label=f"{constants.MODEL_NAMES[model_code]["PLOT_NAME"]} Synergy-Redundancy Ablations", linestyle="-", color=color)
+        plt.fill_between(x, synergy_ci_lower_agg, synergy_ci_upper_agg, alpha=0.2, color=color)
+
+    # Formatting
+    plt.xlabel("Proportion of Ablated Heads")
+    plt.ylabel("Average Performance Divergence")
+    # plt.title("Aggregated KL Divergence Across All Prompts")
+    plt.legend()
+    plt.grid(True)
+
+    if save:
+        if save_dir is None:
+            save_dir = constants.MODEL_COMPARISON_ABLATIONS_DIR + 'multi_model/'
+        plt.tight_layout()
+        os.makedirs(save_dir, exist_ok=True)
+        # Add model codes to the save directory separated by a hyphen
+        save_dir += ''.join([model + '-' for model in models])[:-1]
+        plt.savefig(save_dir + '.png' , dpi=300)
     else:
         plt.show()
     plt.close()
