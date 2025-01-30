@@ -161,3 +161,43 @@ PROMPTS = {
 PROMPT_CATEGORIES = list(PROMPTS.keys())
 RESTING_STATE_CATEGORY = "resting_state"
 PROMPT_CATEGORIES.append(RESTING_STATE_CATEGORY) if USING_REST_STATE else None
+
+
+def update_model_code(new_model_code):
+    """Update MODEL_CODE and all dependent variables."""
+    global MODEL_CODE, MODEL_NAME, FOLDER_MODEL_NAME, NUM_LAYERS, NUM_HEADS_PER_LAYER, NUM_TOTAL_HEADS
+    global PLOTS_DIR, SAVED_DATA_DIR, RAW_ATTENTION_DIR, TIME_SERIES_DIR, MATRICES_DIR, ATTENTION_WEIGHTS_DIR
+    global GRAPH_METRICS_DIR, ABLATIONS_DIR, PLOTS_TIME_SERIES_DIR, PLOTS_SYNERGY_REDUNDANCY_DIR
+    global PLOTS_HEAD_ACTIVATIONS_COGNITIVE_TASKS, PLOT_SYNERGY_REDUNDANCY_TASK_CORRELATIONS, PLOT_ABLATIONS
+
+    if new_model_code not in MODEL_NAMES:
+        raise ValueError(f"Invalid model code: {new_model_code}. Available options: {list(MODEL_NAMES.keys())}")
+
+    MODEL_CODE = new_model_code
+    MODEL_NAME = MODEL_NAMES[MODEL_CODE]["HF_NAME"]
+    FOLDER_MODEL_NAME = MODEL_NAMES[MODEL_CODE]["FOLDER_NAME"]
+
+    config = AutoConfig.from_pretrained(MODEL_NAME)
+    NUM_LAYERS = config.num_hidden_layers if hasattr(config, 'num_hidden_layers') else config.n_layer
+    NUM_HEADS_PER_LAYER = config.num_attention_heads if hasattr(config, 'num_attention_heads') else config.n_head
+    NUM_TOTAL_HEADS = NUM_LAYERS * NUM_HEADS_PER_LAYER
+
+    # Update directories
+    PLOTS_DIR = "../plots/" + FOLDER_MODEL_NAME + "/"
+    SAVED_DATA_DIR = "../data/" + FOLDER_MODEL_NAME + "/"
+    
+    RAW_ATTENTION_DIR = SAVED_DATA_DIR + "1-Raw_Attention/"
+    TIME_SERIES_DIR = SAVED_DATA_DIR + "2-Time_Series/"
+    MATRICES_DIR = SAVED_DATA_DIR + "3-Synergy_Redundancy_Matrices/"
+    ATTENTION_WEIGHTS_DIR = SAVED_DATA_DIR + "4-Attention_Weights_Prompts/"
+    GRAPH_METRICS_DIR = SAVED_DATA_DIR + "5-Graph_Theoretical_Properties/"
+    ABLATIONS_DIR = SAVED_DATA_DIR + "6-Ablations/"
+
+    PLOTS_TIME_SERIES_DIR = PLOTS_DIR + "1-Time_Series/"
+    PLOTS_SYNERGY_REDUNDANCY_DIR = PLOTS_DIR + "2-Synergy_Redundancy/"
+    PLOTS_HEAD_ACTIVATIONS_COGNITIVE_TASKS = PLOTS_DIR + "3-Head_Activations_Cognitive_Tasks/"
+    PLOT_SYNERGY_REDUNDANCY_TASK_CORRELATIONS = PLOTS_DIR + "4-Synergy-Redundancy_vs_Cognitive_Task_Correlations/"
+    PLOT_ABLATIONS = PLOTS_DIR + "5-Ablations/" + ATTENTION_MEASURE + "/"
+
+    print(f"Updated to model: {MODEL_CODE}")
+

@@ -221,11 +221,19 @@ def lda_dim_reduce_and_classify(X, y, n_components=2):
     
     # If you have custom labels, pass them as 'target_names' for a more readable report
     print("\nClassification Report:")
-    print(classification_report(y, preds))
+    report = classification_report(y, preds, output_dict=True)  # Get dictionary output
+    print(report)    
     
-    return X_reduced, lda, clf
+    # Extract macro-average metrics
+    macro_avg = {
+        'precision': report['macro avg']['precision'],
+        'recall': report['macro avg']['recall'],
+        'f1-score': report['macro avg']['f1-score']
+    }
+    
+    return X_reduced, lda, clf, cm, preds, macro_avg
 
-def plot_decision_boundaries_2d(X_2d, y, clf, labels=None):
+def plot_decision_boundaries_2d(X_2d, y, clf, labels=None, save=False, base_plot_path=None):
     """
     Plots a 2D scatter of X_2d with class labels y,
     plus the decision boundaries (multi-class) learned by `clf`.
@@ -268,7 +276,17 @@ def plot_decision_boundaries_2d(X_2d, y, clf, labels=None):
     plt.title("LDA -> 2D + Logistic Regression: Decision Boundaries")
     plt.xlabel("LDA Component 1")
     plt.ylabel("LDA Component 2")
-    plt.show()
+
+    if save:
+        if not base_plot_path:
+            base_plot_path = constants.PLOTS_LDA 
+        
+        plot_path = f"{base_plot_path}3-LDA.png"
+        os.makedirs(os.path.dirname(plot_path), exist_ok=True)
+        plt.savefig(plot_path, bbox_inches='tight')
+        plt.close()
+    else:
+        plt.show()
 
 def perform_lda_analysis(all_attention_weights, n_components=2, save=False, base_plot_path=None, metrics=constants.METRICS_TRANSFORMER):
     if base_plot_path is None:
@@ -284,11 +302,13 @@ def perform_lda_analysis(all_attention_weights, n_components=2, save=False, base
             labels = list(attention_weights.keys())
 
             # 1) Apply LDA and Dim reduction + separate classification in 2D
-            X_2d, lda, clf = lda_dim_reduce_and_classify(X, y, n_components=n_components)
+            X_2d, lda, clf, cm, preds, macro_avg = lda_dim_reduce_and_classify(X, y, n_components=n_components)
 
             # 2) Plot decision boundaries in the reduced (2D) space
-            plot_decision_boundaries_2d(X_2d, y, clf, labels=labels)
+            plot_decision_boundaries_2d(X_2d, y, clf, labels=labels, save=save, base_plot_path=base_plot_path + metric + '/')
+    return macro_avg
 
+"""
             # Plot global head contributions
             num_layers, num_heads_per_layer = attention_weights[labels[0]].shape[:2]
             plot_global_head_contributions(
@@ -320,3 +340,4 @@ def perform_lda_analysis(all_attention_weights, n_components=2, save=False, base
                 save=save,
                 base_plot_path=base_plot_path + metric + '/6-Cognitive_Category-Head_Map/'
             )
+""" 
