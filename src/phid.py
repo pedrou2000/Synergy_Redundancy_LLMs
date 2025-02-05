@@ -507,7 +507,6 @@ def plot_head_averages_heatmap(head_averages, key, save_path=None, save=True, he
         plt.show()
     plt.close()
 
-
 def compute_pairwise_correlations(matrices):
     keys = list(matrices.keys())
     num_keys = len(keys)
@@ -533,7 +532,6 @@ def plot_matrix_correlation(correlation_matrix, keys, title, save_path):
     plt.tight_layout()
     plt.savefig(save_path)
     plt.close()
-
 
 def plot_all_PhiID_separately(global_matrices, base_plot_path=None, save=True, percentiles=[1, 0.1, 0.01]):
     results = {}
@@ -612,7 +610,6 @@ def plot_all_PhiID_separately(global_matrices, base_plot_path=None, save=True, p
 
     
     return results
-
 
 def plot_box_plot_information_dynamics(results_all_phid, atom_or_dynamics = "atoms", save=False, base_plot_path=None):
     if atom_or_dynamics == "atoms":
