@@ -413,33 +413,61 @@ def plot_synergy_redundancy_PhiID(synergy_matrices, redundancy_matrices, base_pl
 
 
 
-
+import os
+import numpy as np
+import matplotlib.pyplot as plt
+from matplotlib.colors import LinearSegmentedColormap, Normalize
+from matplotlib.cm import ScalarMappable
+import constants  # assuming you have this module
 
 def plot_all_PhiID(global_matrices, base_plot_path=None, save=True):
     if not base_plot_path:
         base_plot_path = constants.PLOTS_SYNERGY_REDUNDANCY_DIR 
+
     for metric, matrices in global_matrices.items():
         num_plots = len(matrices)
-        fig, axs = plt.subplots(4, 4, figsize=(20, 20))  # Adjust the figsize as needed
-        
-        # Flatten axs if necessary (when num_plots is 1, axs is not an array)
-        axs = np.array(axs).reshape(-1)
-        
+        fig, axs = plt.subplots(2, 8, figsize=(40, 10))  # Adjust layout based on num_plots
+        axs = np.array(axs).reshape(-1)  # Flatten array
+
+        # Compute global min/max for consistent color scaling
+        global_min = min(matrix.min() for matrix in matrices.values())
+        global_max = max(matrix.max() for matrix in matrices.values())
+
+        # Custom colormap: Blue (negative) → Light Blue (near zero) → Light Red (small positive) → Red (large positive)
+        custom_cmap = LinearSegmentedColormap.from_list(
+            "BlueRed",
+            ["darkblue", "lightyellow", "red", "darkred"],
+            N=500  # Smooth transition
+        )
+
+        # Plot each matrix with the common color scale
         for idx, (key, matrix) in enumerate(matrices.items()):
-            cax = axs[idx].matshow(matrix, cmap='viridis')
-            fig.colorbar(cax, ax=axs[idx])
-            axs[idx].set_title(f'{key}')
+            im = axs[idx].matshow(matrix, cmap=custom_cmap, vmin=global_min, vmax=global_max)
+            axs[idx].set_title(f'{constants.ATOM_NAMES[key]}', fontsize=14)
             axs[idx].set_xlabel('Attention Head')
             axs[idx].set_ylabel('Attention Head')
+
+        # Hide unused subplots
+        for j in range(idx + 1, len(axs)):
+            axs[j].axis('off')
+
         plt.tight_layout()
-        
+
+        # Common colorbar
+        sm = ScalarMappable(cmap=custom_cmap, norm=Normalize(vmin=global_min, vmax=global_max))
+        sm.set_array([])
+        fig.colorbar(sm, ax=axs.ravel().tolist(), orientation='horizontal', fraction=0.02, pad=0.04, label="Relative Contribution of Information Atoms")
+
         if save:
             plot_path = os.path.join(base_plot_path, f'{metric}/2-All_PhiID_Matrices.png')
             os.makedirs(os.path.dirname(plot_path), exist_ok=True)
-            plt.savefig(plot_path)
+            plt.savefig(plot_path, dpi=300)
         else:
             plt.show()
         plt.close()
+
+
+
 
 def plot_single_matrix(matrix, title, save_path=None, save=True):
     fig, ax = plt.subplots(figsize=(10, 10))  # Adjust the figsize as needed

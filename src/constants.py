@@ -12,8 +12,10 @@ MODEL_NAMES = {
     'G2-9B': {"HF_NAME": "google/gemma-2-9b-it", "FOLDER_NAME": "6-Gemma-2-9B", "PLOT_NAME": "Gemma 2 9B", "COLOR": "#2ca02c"},
     'L3.2-3B': {"HF_NAME": "meta-llama/Llama-3.2-3B-Instruct", "FOLDER_NAME": "7-Llama-3.2-3B", "PLOT_NAME": "Llama 3.2 3B", "COLOR": "#ff7f0e"},
     'L3.1-8B': {"HF_NAME": "meta-llama/Llama-3.1-8B-Instruct", "FOLDER_NAME": "8-Llama-3.1-8B", "PLOT_NAME": "Llama 3.1 8B", "COLOR": "#9467bd"},
+    'L3.1-8B-b': {"HF_NAME": "meta-llama/Llama-3.1-8B", "FOLDER_NAME": "9-Llama-3.1-8B-Base", "PLOT_NAME": "Llama 3.1 8B Base", "COLOR": "#9467ed"},
+    'R1-L3.1-8B': {"HF_NAME": "deepseek-ai/DeepSeek-R1-Distill-Llama-8B", "FOLDER_NAME": "10-R1-Distilled-Llama-3.1-8B", "PLOT_NAME": "R1 Distilled Llama 3.1 8B", "COLOR": "#9467ju"},
 }
-MODEL_CODE = 'L3.1-8B'
+MODEL_CODE = 'L3.1-8B-b'
 MODEL_NAME = MODEL_NAMES[MODEL_CODE]["HF_NAME"]
 FOLDER_MODEL_NAME = MODEL_NAMES[MODEL_CODE]["FOLDER_NAME"]
 FINAL_MODELS = ['G2-2B', 'G2-9B', 'L3.2-3B', 'L3.1-8B']
@@ -57,6 +59,25 @@ INFORMATION_DYNAMICS = {
         "xtr", "xtx", "xty", "xts", 
         "ytr", "ytx", "yty", "yts", 
     ]
+}
+
+ATOM_NAMES = {
+    "rtr": "Red → Red",
+    "rtx": "Red → Un1",
+    "rty": "Red → Un2",
+    "rts": "Red → Syn",
+    "str": "Syn → Red",
+    "stx": "Syn → Un1",
+    "sty": "Syn → Un2",
+    "sts": "Syn → Syn",
+    "xtr": "Un1 → Red",
+    "xtx": "Un1 → Un1",
+    "xty": "Un1 → Un2",
+    "xts": "Un1 → Syn",
+    "ytr": "Un2 → Red",
+    "ytx": "Un2 → Un1",
+    "yty": "Un2 → Un2",
+    "yts": "Un2 → Syn",
 }
 
 
