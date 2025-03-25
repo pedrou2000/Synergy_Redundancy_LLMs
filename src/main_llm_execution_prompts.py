@@ -17,10 +17,13 @@ device = torch.device("cuda")
 login(token = TOKEN)
 attn_implementation="eager" # GEMMA_ATTENTION_CLASSES = {"eager": GemmaAttention, "flash_attention_2": GemmaFlashAttention2, "sdpa": GemmaSdpaAttention,}
 
-tokenizer = AutoTokenizer.from_pretrained(constants.MODEL_NAME, cache_dir=constants.CACHE_DIR_BITBUCKET)
+tokenizer = AutoTokenizer.from_pretrained(
+    constants.MODEL_NAME, 
+    # cache_dir=constants.CACHE_DIR_BITBUCKET
+)
 model = AutoModelForCausalLM.from_pretrained(
     constants.MODEL_NAME, 
-    cache_dir=constants.CACHE_DIR_BITBUCKET, 
+    # cache_dir=constants.CACHE_DIR_BITBUCKET, 
     device_map='auto', 
     attn_implementation=attn_implementation, # Make sure to use the adequate attention layer in order to 
 )

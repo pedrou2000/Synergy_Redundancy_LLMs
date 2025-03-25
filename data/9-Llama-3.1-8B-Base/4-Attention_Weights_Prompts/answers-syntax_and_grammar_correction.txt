@@ -1,0 +1,81 @@
+--- Prompt ---
+Correct the error: He go to school every day.
+--- Answer ---
+Correct the error: He go to school every day. (He goes to school every day.)
+The first answer shows the correct use of the verb in the present progressive tense. The second answer shows incorrect use of the verb._REF_hk_jie_list1_1
+1. He has been to the store. (Present perfect)
+2. He is going
+--------------------------------------------------
+--- Prompt ---
+Correct the error: She have two cats and a dogs.
+--- Answer ---
+Correct the error: She have two cats and a dogs. She has two cats and a dog.
+Haru has a dog and a cat.
+I have two dogs and a cat.
+"Have" is a present tense verb. Its conjugation is regular: I have, you have, he/she/it has, we have, you have, they have.
+"Has"
+--------------------------------------------------
+--- Prompt ---
+Correct the error: I eats breakfast at 8:00 in the morning.
+--- Answer ---
+Correct the error: I eats breakfast at 8:00 in the morning. I eat breakfast at 8:00 in the morning.
+I eats breakfast at 8:00 in the morning.
+I eat breakfast at 8:00 in the morning.argu:1
+on 2019-07-04 15:32:08.SILKIDisplay
+--------------------------------------------------
+--- Prompt ---
+Correct the error: Every students in the classroom has their own laptop.
+--- Answer ---
+Correct the error: Every students in the classroom has their own laptop. The plural form of student is students.
+Every student in the classroom has their own laptop.2A29h29h2DThe plural form of student is students.
+Every student in the classroom has their own laptop. The plural form of student is students._REF2A29h29h2
+--------------------------------------------------
+--- Prompt ---
+Correct the error: She don't like going to the park on weekends.
+--- Answer ---
+Correct the error: She don't like going to the park on weekends. She doesn't like going to the park on weekends.
+Correct the error: Don't feed the animals. Feed the animals.
+Correct the error: I don't like to read. I don't like reading.
+The people are not here. The people aren't here.
+She is not busy. She isn't busy.
+
+--------------------------------------------------
+--- Prompt ---
+Correct the error: We was happy to see the rainbow after the storm.
+--- Answer ---
+Correct the error: We was happy to see the rainbow after the storm. We were happy to see the rainbow after the storm.
+We were happy to see the rainbow after the storm.php $connection=mysqli_connect("localhost","guest","guest","guest","guest"); $result=mysqli_query($connection,"select * from exercises"); while($row=mysqli_fetch_array($result)) { print $
+--------------------------------------------------
+--- Prompt ---
+Correct the error: There is many reasons to celebrate today.
+--- Answer ---
+Correct the error: There is many reasons to celebrate today. But the most important reason is that the 11th of November is the day when we celebrate the Day of Commemoration of the Great October Socialist Revolution.
+Correct the error: There is many reasons to celebrate today. But the most important reason is that the 11th of November is the day when we celebrate the
+--------------------------------------------------
+--- Prompt ---
+Correct the error: Him and I went to the market yesterday.
+--- Answer ---
+Correct the error: Him and I went to the market yesterday. We bought some fruits, vegetables and bread.
+They are not friends, but they are partners in business.
+The book was very badly written, but it was very interesting.
+The more I read, the more I wanted to read.
+I think he is an honest man, but I am not sure.:// I
+--------------------------------------------------
+--- Prompt ---
+Correct the error: The books is on the table.
+--- Answer ---
+Correct the error: The books is on the table. The books are on the table.
+The books is on the table. The books are on the table.
+The error is in the first sentence. The word is should be are in this sentence.
+The books is on the table.
+The books are on the table.
+In this sentence, the word books is plural because it
+--------------------------------------------------
+--- Prompt ---
+Correct the error: They walks to school together every morning.
+--- Answer ---
+Correct the error: They walks to school together every morning. → They walk to school together every morning.
+Correct the error: I can't remember what I gave you. → I can't remember what I gave you.
+Correct the error: He is not good at playing the guitar. → He is not good at playing the guitar.
+Correct the error: My sister and I can
+--------------------------------------------------

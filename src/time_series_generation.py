@@ -48,9 +48,19 @@ def generate_text_with_attention(model, tokenizer, num_tokens_to_generate: int, 
         if t == num_tokens_to_generate - 1:
             # Process and move attention outputs to CPU
             if modified_output_attentions:
-                attentions_on_cpu = [{k: v.detach().to('cpu') for k, v in layer.items()} for layer in outputs.attentions]
+                attentions_on_cpu = []
+                for layer in outputs.attentions:
+                    layer_attention = {}
+                    for key, value in layer.items():
+                        layer_attention[key] = value.detach().to('cpu')
+                    attentions_on_cpu.append(layer_attention)
+                # attentions_on_cpu = [{k: v.detach().to('cpu') for k, v in layer.items()} for layer in outputs.attentions]
             else:
-                attentions_on_cpu = [{"attention_weights": layer.detach().to('cpu')} for layer in outputs.attentions]
+                attentions_on_cpu = []
+                for layer in outputs.attentions:
+                    attentions_on_cpu.append({constants.ATTENTION_MEASURE: layer.detach().to('cpu')})
+
+                # attentions_on_cpu = [{constants.ATTENTION_MEASURE: layer.detach().to('cpu')} for layer in outputs.attentions]
 
             # Dynamically initialize and store all keys from attention outputs
             for idx, layer in enumerate(attentions_on_cpu):

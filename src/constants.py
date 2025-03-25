@@ -1,7 +1,7 @@
 from transformers import AutoConfig 
 
-CACHE_DIR_BITBUCKET = "/vol/bitbucket/pu22/Transformers/" # Bitbucket cache directory
-CACHE_DIR_LOCAL = "/homes/pu22/.cache/huggingface/hub" # Local cache directory
+# CACHE_DIR_BITBUCKET = "/vol/bitbucket/pu22/Transformers/" # Bitbucket cache directory
+# CACHE_DIR_LOCAL = "/homes/pu22/.cache/huggingface/hub" # Local cache directory
 
 MODEL_NAMES = {
     'G1-2B': {"HF_NAME": "google/gemma-2b-it", "FOLDER_NAME": "1-Gemma-2b-it", "PLOT_NAME": "Gemma 1 2B"},

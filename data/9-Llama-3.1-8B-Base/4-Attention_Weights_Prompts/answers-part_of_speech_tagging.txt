@@ -1,0 +1,80 @@
+--- Prompt ---
+Identify the parts of speech in the sentence: Quickly, the agile cat climbed the tall tree.
+--- Answer ---
+Identify the parts of speech in the sentence: Quickly, the agile cat climbed the tall tree. A. adverb B. adjective C. pronoun D. noun
+Identify the parts of speech in the sentence: Quickly, the agile cat climbed the tall tree. A. adverb B. adjective C. pronoun D. noun_REF. A. adverb B. adjective C. pronoun
+--------------------------------------------------
+--- Prompt ---
+Identify the parts of speech in the sentence: She whispered a secret to her friend during the boring lecture.
+--- Answer ---
+Identify the parts of speech in the sentence: She whispered a secret to her friend during the boring lecture. (A) She (B) whispered (C) a (D) secret (E) to (F) her (G) friend (H) during (I) the (J) boring (K) lecture.
+The underlined words are the answers of the given problem.
+(A) She - pronoun
+
+--------------------------------------------------
+--- Prompt ---
+Identify the parts of speech in the sentence: The sun sets in the west.
+--- Answer ---
+Identify the parts of speech in the sentence: The sun sets in the west. The sun is a ____ and sets is a ____.
+Identify the part of speech for the italics terms in each sentence. (1 point) 1. The passenger planes that went down had no survivors. passenger ____ planes ____ down ____ survivors
+Identify the part of speech for each italicized word in
+--------------------------------------------------
+--- Prompt ---
+Identify the parts of speech in the sentence: Can you believe this amazing view?
+--- Answer ---
+Identify the parts of speech in the sentence: Can you believe this amazing view? The words can, believe, amazing, and view are what type of word?
+A. interjection
+B. adjective
+C. noun
+D. verb
+Answer: D
+Explanation: A sentence is a group of words that forms a complete thought. It has both a subject and a verb.
+A sentence can
+--------------------------------------------------
+--- Prompt ---
+Identify the parts of speech in the sentence: He quickly finished his homework.
+--- Answer ---
+Identify the parts of speech in the sentence: He quickly finished his homework. Use the links below to help you.
+Prepositions - He finished his homework quickly.
+He finished his homework quickly.
+Adverb - quickly - It modifies an adjective or verb.
+Preposition - finished - It connects a noun to another word in the sentence.
+Preposition - his - It is a possessive preposition.
+
+--------------------------------------------------
+--- Prompt ---
+Identify the parts of speech in the sentence: The beautifully decorated cake was a sight to behold.
+--- Answer ---
+Identify the parts of speech in the sentence: The beautifully decorated cake was a sight to behold. What are the adjectives in the sentence?
+
+Aug 3, 2016
+
+The adjectives are "beautifully" and "decorated".
+
+Explanation:
+
+The words "beautifully" and "decorated" are used to describe the cake. They describe the cake's quality (how it looks), so they are
+--------------------------------------------------
+--- Prompt ---
+Identify the parts of speech in the sentence: They will travel to Japan next month.
+--- Answer ---
+Identify the parts of speech in the sentence: They will travel to Japan next month. A. They, travel, to, Japan, next, month. B. They, will, travel, to, Japan, next, month. C. They, will, travel, to, Japan, next, month. D. They, will, travel, to, Japan, next, month.
+Identify
+--------------------------------------------------
+--- Prompt ---
+Identify the parts of speech in the sentence: My favorite book was lost.
+--- Answer ---
+Identify the parts of speech in the sentence: My favorite book was lost. a. my favorite book was lost preposition conjunction verb pronoun article adverb adjective subject pronoun conjunction verb adjective adverb preposition conjunction verb article adjective preposition conjunction verb pronoun adverb adjective subject pronoun conjunction verb adjective preposition conjunction verb pronoun adverb adjective subject pronoun conjunction verb adjective preposition conjunction
+--------------------------------------------------
+--- Prompt ---
+Identify the parts of speech in the sentence: The loud music could be heard from miles away.
+--- Answer ---
+Identify the parts of speech in the sentence: The loud music could be heard from miles away. A. adverb, adjective, verb, verb B. adjective, verb, adverb, verb C. verb, adverb, adverb, preposition D. verb, adverb, verb, adverb
+Identify the parts of speech in the sentence: The loud music could be heard from miles away.
+--------------------------------------------------
+--- Prompt ---
+Identify the parts of speech in the sentence: She sold all of her paintings at the art show.
+--- Answer ---
+Identify the parts of speech in the sentence: She sold all of her paintings at the art show. They are: a. She – pronoun b. sold – verb c. all – pronoun d. of – preposition e. her – pronoun f. paintings – noun g. at – preposition h. the – article i. art – noun j. show – noun
+Identify the parts of
+--------------------------------------------------

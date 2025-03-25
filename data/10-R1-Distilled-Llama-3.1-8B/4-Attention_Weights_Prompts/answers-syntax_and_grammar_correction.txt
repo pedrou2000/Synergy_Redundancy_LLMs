@@ -1,0 +1,80 @@
+--- Prompt ---
+Correct the error: He go to school every day.
+--- Answer ---
+Correct the error: He go to school every day. (Negative: He does not go to school every day.)
+
+Okay, so my task here is to correct the sentence "He go to school every day." I know that in English, verbs have different forms depending on the subject's number and tense. Let me think about this step by step.
+
+First, the original sentence
+--------------------------------------------------
+--- Prompt ---
+Correct the error: She have two cats and a dogs.
+--- Answer ---
+Correct the error: She have two cats and a dogs. | The student corrected the error in his homework.
+
+Okay, so I have to correct the sentence: "She have two cats and a dogs." Hmm, I remember that in English, we use "have" for uncountable nouns, but when we have multiple of them, it's different. Let me think.
+
+
+--------------------------------------------------
+--- Prompt ---
+Correct the error: I eats breakfast at 8:00 in the morning.
+--- Answer ---
+Correct the error: I eats breakfast at 8:00 in the morning. My best friend and I eats breakfast at 8:00 in the morning.
+Alright, so I need to correct this sentence where the user has made a mistake. Let me look at the original sentence: "I eats breakfast at 8:00 in the morning. My best friend and I eats breakfast at 8
+--------------------------------------------------
+--- Prompt ---
+Correct the error: Every students in the classroom has their own laptop.
+--- Answer ---
+Correct the error: Every students in the classroom has their own laptop. (Deletion of 'the' and adding 'a' before 'corrected sentence)
+Okay, so I have this sentence: "Every students in the classroom has their own laptop." I need to correct the error. Hmm, what's wrong with this sentence? Let me think step by step.
+
+First, I know
+--------------------------------------------------
+--- Prompt ---
+Correct the error: She don't like going to the park on weekends.
+--- Answer ---
+Correct the error: She don't like going to the park on weekends. The teacher told everyone in the class, "You can play, but you must be quiet." The child, being shy, didn't respond when the teacher called on him. The teacher then said, "If you can't respond when I call you, you won't be able to go to the park anymore." The
+--------------------------------------------------
+--- Prompt ---
+Correct the error: We was happy to see the rainbow after the storm.
+--- Answer ---
+Correct the error: We was happy to see the rainbow after the storm. The child was happy to see the rainbow after the storm.
+
+Hmm, let me try to figure out where the mistake is here. The original sentence is, "We was happy to see the rainbow after the storm." The corrected version is, "The child was happy to see the rainbow after the storm."
+
+So, first
+--------------------------------------------------
+--- Prompt ---
+Correct the error: There is many reasons to celebrate today.
+--- Answer ---
+Correct the error: There is many reasons to celebrate today. (The original sentence has 12 letters, 4 words.)
+
+Okay, let's see. The user wants me to correct an error in their sentence. The original sentence is: "There is many reasons to celebrate today." They also mention that the original has 12 letters and 4 words.
+
+Hmm, first,
+--------------------------------------------------
+--- Prompt ---
+Correct the error: Him and I went to the market yesterday.
+--- Answer ---
+Correct the error: Him and I went to the market yesterday. (The error is in the grammar, sentence structure, or word choice.)
+
+Okay, so I have this sentence: "Him and I went to the market yesterday." The user mentioned that the error is related to grammar, sentence structure, or word choice. I need to figure out what's wrong with it.
+
+First
+--------------------------------------------------
+--- Prompt ---
+Correct the error: The books is on the table.
+--- Answer ---
+Correct the error: The books is on the table. (2nd person singular: were, were, were, were, is)
+
+Okay, let me try to figure out how to correct the sentence "The books is on the table." I know that in English, verbs have different forms based on the subject and tense. The original sentence uses "is," but that might
+--------------------------------------------------
+--- Prompt ---
+Correct the error: They walks to school together every morning.
+--- Answer ---
+Correct the error: They walks to school together every morning. (Subject-Verb Agreement)
+
+The sentence is incorrect because the subject "They" is in the third person plural, but "walks" is in the third person singular. To fix it, we need to change the verb to match the subject. So, it should be "They walk to school together every morning."
+
+
+--------------------------------------------------
