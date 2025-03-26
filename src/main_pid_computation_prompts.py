@@ -47,7 +47,7 @@ generated_text = {cognitive_task: {} for cognitive_task in constants.PROMPT_CATE
 attention_params = {cognitive_task: {} for cognitive_task in constants.PROMPT_CATEGORIES}
 time_series = {cognitive_task: {} for cognitive_task in constants.PROMPT_CATEGORIES}
 
-categories = constants.PROMPT_CATEGORIES[::-1]
+categories = constants.PROMPT_CATEGORIES[:-1][::-1]
 for cognitive_task in categories:
     for n_prompt, prompt in enumerate(constants.PROMPTS[cognitive_task]):
         time_series[cognitive_task][n_prompt] = load_time_series(base_load_path=TIME_SERIES_DIR+cognitive_task+"/"+str(n_prompt) + ".pt")
