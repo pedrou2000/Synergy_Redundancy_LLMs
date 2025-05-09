@@ -1,0 +1,80 @@
+--- Prompt ---
+Correct the error: He go to school every day.
+--- Answer ---
+Correct the error: He go to school every day. He goes to school every day.
+What is the mistake in the sentence: "The cat is on the mat."?
+What is the mistake in the sentence: "The cat is on the mat."
+On a vacation, the boy can only eat the food he likes. What is the mistake in the sentence?
+On a
+--------------------------------------------------
+--- Prompt ---
+Correct the error: She have two cats and a dogs.
+--- Answer ---
+Correct the error: She have two cats and a dogs. She has two cats and a dog.
+Correct the error: A lot of people think that driving is a dangerous job. A lot of people think driving is a dangerous job.
+Correct the error: Our family lives in a small town. Our family lives in a small town.
+Correct the error: My house is a three
+--------------------------------------------------
+--- Prompt ---
+Correct the error: I eats breakfast at 8:00 in the morning.
+--- Answer ---
+Correct the error: I eats breakfast at 8:00 in the morning. I eats breakfast at 8:00 am in the morning.
+Correct the error: I eats breakfast at 8:00 in the morning. I eats breakfast at 8:00 am in the morning.
+The question is: What is the correct form of the sentence?
+I eats breakfast at 8:00 in
+--------------------------------------------------
+--- Prompt ---
+Correct the error: Every students in the classroom has their own laptop.
+--- Answer ---
+Correct the error: Every students in the classroom has their own laptop. It is very expensive for each student.
+A. Correct: Every student in the classroom has their own laptop. It is very expensive for each student.
+B. Correct: Every student in the classroom, has their own laptop. It is very expensive for each student.
+C. Correct: Every student in the classroom has own
+--------------------------------------------------
+--- Prompt ---
+Correct the error: She don't like going to the park on weekends.
+--- Answer ---
+Correct the error: She don't like going to the park on weekends. (She doesn't like going to the park on weekends).
+She don't like going to the park on weekends.
+She doesn't like going to the park on weekends.
+She doesn't like going to the park on the weekends.
+She doesn't like going to the park on weekends.
+She doesn't like going to the
+--------------------------------------------------
+--- Prompt ---
+Correct the error: We was happy to see the rainbow after the storm.
+--- Answer ---
+Correct the error: We was happy to see the rainbow after the storm. (correct the error)
+A. correct the error
+B. correct the error and
+C. correct the error
+D. correct the error and
+Answer: CCh. 11 - If you are going to the park to play tennis, you... Ch. 11 - What is an indirect object
+--------------------------------------------------
+--- Prompt ---
+Correct the error: There is many reasons to celebrate today.
+--- Answer ---
+Correct the error: There is many reasons to celebrate today. Read the e-mail from a reader:
+There is many reasons to celebrate today and we should not forget them. At this time last year, the 2006-2007 academic year, the Board of Trustees of Lebanon Valley College approved a $4 million gift from LVC alumnus George K. Pennypacker
+--------------------------------------------------
+--- Prompt ---
+Correct the error: Him and I went to the market yesterday.
+--- Answer ---
+Correct the error: Him and I went to the market yesterday. He and I went to the market yesterday.
+Correct the error: Him and I went to the market yesterday. He and I went to the market yesterday.MD5:f1e5aa5c8b9b8d106866b64a5e297d06
+The following sentence is incorrect
+--------------------------------------------------
+--- Prompt ---
+Correct the error: The books is on the table.
+--- Answer ---
+Correct the error: The books is on the table. (Correct the error: + The books is on the table.) (Correct the error: + The books is on the table.)
+Correct the error: The books is on the table. (Correct the error: + The books is on the table.) (Correct the error: + The books is on the table.)
+Correct
+--------------------------------------------------
+--- Prompt ---
+Correct the error: They walks to school together every morning.
+--- Answer ---
+Correct the error: They walks to school together every morning. (I) They walk to school together every morning.
+1. Correct the error: They walks to school together every morning. (I) They walk to school together every morning.
+2. Correct the error: There are no more parking places in the parking lot. (I) There are no more parking places in the
+--------------------------------------------------

@@ -25,8 +25,17 @@ MODEL_NAMES = {
     'L3.1-8B': {"HF_NAME": "meta-llama/Llama-3.1-8B-Instruct", "FOLDER_NAME": "8-Llama-3.1-8B", "PLOT_NAME": "Llama 3.1 8B", "COLOR": "#9467bd"},
     'L3.1-8B-b': {"HF_NAME": "meta-llama/Llama-3.1-8B", "FOLDER_NAME": "9-Llama-3.1-8B-Base", "PLOT_NAME": "Llama 3.1 8B Base", "COLOR": "#9467ed"},
     'R1-L3.1-8B': {"HF_NAME": "deepseek-ai/DeepSeek-R1-Distill-Llama-8B", "FOLDER_NAME": "10-R1-Distilled-Llama-3.1-8B", "PLOT_NAME": "R1 Distilled Llama 3.1 8B", "COLOR": "#9467ju"},
+    'L3-1': {"HF_NAME": "meta-llama/Llama-3.2-1B", "FOLDER_NAME": "11-Llama-3.2-1B-Base", "PLOT_NAME": "Llama 3.2 1B", "COLOR": "#4d8e00"},
+    'L3-3': {"HF_NAME": "meta-llama/Llama-3.2-3B", "FOLDER_NAME": "12-Llama-3.2-3B-Base", "PLOT_NAME": "Llama 3.2 3B", "COLOR": "#456e00"},
+    'G3-1': {"HF_NAME": "google/gemma-3-1b-pt", "FOLDER_NAME": "13-Gemma-3-1B-Base", "PLOT_NAME": "Gemma 3 1B", "COLOR": "#647c00"},
+    'G3-4': {"HF_NAME": "google/gemma-3-4b-pt", "FOLDER_NAME": "14-Gemma-3-4B-Base", "PLOT_NAME": "Gemma 3 4B", "COLOR": "#7c8e00"},
+    'G3-12': {"HF_NAME": "google/gemma-3-12b-pt", "FOLDER_NAME": "15-Gemma-3-12B-Base", "PLOT_NAME": "Gemma 3 12B", "COLOR": "#8e9e00"},
+    'Q3-0': {"HF_NAME": "Qwen/Qwen3-0.6B-Base", "FOLDER_NAME": "16-Qwen3-0.6B-Base", "PLOT_NAME": "Qwen 3 0.6B", "COLOR": "#8e9e00"},
+    'Q3-1': {"HF_NAME": "Qwen/Qwen3-1.7B-Base", "FOLDER_NAME": "17-Qwen3-1.7B-Base", "PLOT_NAME": "Qwen 3 1.7B", "COLOR": "#a0ae00"},
+    'Q3-4': {"HF_NAME": "Qwen/Qwen3-4B-Base", "FOLDER_NAME": "18-Qwen3-4B-Base", "PLOT_NAME": "Qwen 3 4B", "COLOR": "#b0be00"},
+    'Q3-8': {"HF_NAME": "Qwen/Qwen3-8B-Base", "FOLDER_NAME": "19-Qwen3-8B-Base", "PLOT_NAME": "Qwen 3 8B", "COLOR": "#c0ce00"},
 }
-MODEL_CODE = 'R1-L3.1-8B'
+MODEL_CODE = 'G3-12'
 MODEL_NAME = MODEL_NAMES[MODEL_CODE]["HF_NAME"]
 FOLDER_MODEL_NAME = MODEL_NAMES[MODEL_CODE]["FOLDER_NAME"]
 

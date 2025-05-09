@@ -1,0 +1,67 @@
+--- Prompt ---
+If you have 15 apples and you give away 5, how many do you have left?
+--- Answer ---
+If you have 15 apples and you give away 5, how many do you have left? How about if you have 15 apples and you give away 2, how many do you have left? Now suppose you have 15 apples and you give away 3, how many do you have left? Or 4? What happens when you give away a whole bunch of apples? What do you have left
+--------------------------------------------------
+--- Prompt ---
+A rectangle's length is twice its width. If the rectangle's perimeter is 36 meters, what are its length and width?
+--- Answer ---
+A rectangle's length is twice its width. If the rectangle's perimeter is 36 meters, what are its length and width? A. 12, 6 B. 14, 7 C. 16, 8 D. 18, 9
+A rectangle's length is twice its width. If the rectangle's perimeter is 36 meters, what are its length and width? A. 12, 6 B.
+--------------------------------------------------
+--- Prompt ---
+You read 45 pages of a book each day. How many pages will you have read after 7 days?
+--- Answer ---
+You read 45 pages of a book each day. How many pages will you have read after 7 days? Let's solve the problem step by step.
+  1. Read the problem carefully. We want to know how many pages a student will have read after reading 45 pages in 7 days. This means that in 7 days we want to find the amount of pages that are read after 45 pages.
+
+--------------------------------------------------
+--- Prompt ---
+If a train travels 60 miles in 1 hour, how far will it travel in 3 hours?
+--- Answer ---
+If a train travels 60 miles in 1 hour, how far will it travel in 3 hours? Express your answer using 2 significant figures. A. 200 miles B. 180 miles C. 90 miles D. 220 miles E. 58 miles
+Your question is about 3 hours, not 3 days. I think you are thinking of 3 days. 1 hour is 1
+--------------------------------------------------
+--- Prompt ---
+There are 8 slices in a pizza. If you eat 2 slices, what fraction of the pizza is left?
+--- Answer ---
+There are 8 slices in a pizza. If you eat 2 slices, what fraction of the pizza is left? 2/8, 4/8, 6/8, or 8/8?
+2/8, 4/8, 6/8, or 8/8
+A. 2/8
+B. 4/8
+C. 6/8
+D.
+--------------------------------------------------
+--- Prompt ---
+If one pencil costs 50 cents, how much do 12 pencils cost?
+--- Answer ---
+If one pencil costs 50 cents, how much do 12 pencils cost? How much do 15 pencils cost?
+The cost of 12 pencils is $6.00 because $6.00 is the same as 12 x 50 cents. The cost of 15 pencils is $7.50 because $7.50 is the same as 15 x 50 cents.
+--------------------------------------------------
+--- Prompt ---
+You have a 2-liter bottle of soda. If you pour out 500 milliliters, how much soda is left?
+--- Answer ---
+You have a 2-liter bottle of soda. If you pour out 500 milliliters, how much soda is left? You have a 2-liter bottle of soda. If you pour out 500 milliliters, how much soda is left?
+You have a 2-liter bottle of soda. If you pour out 500 milliliters, how much soda is left?
+You have a 2-liter bottle of soda. If you
+--------------------------------------------------
+--- Prompt ---
+A marathon is 42 kilometers long. If you have run 10 kilometers, how much further do you have to run?
+--- Answer ---
+A marathon is 42 kilometers long. If you have run 10 kilometers, how much further do you have to run? What is the answer in kilometers and in kilometers?
+Solution: A marathon is 42 kilometers long. If you have run 10 kilometers, how much further do you have to run? What is the answer in kilometers and in kilometers?
+Firstly, we need to understand the concept of marathon:
+The marathon is a long
+--------------------------------------------------
+--- Prompt ---
+If you divide 24 by 3, then multiply by 2, what is the result?
+--- Answer ---
+If you divide 24 by 3, then multiply by 2, what is the result? (This is not a trick question, although it will be easy to answer.) What if you divide 24 by 4? What if you divide 24 by 5? So on and so forth…until you get to 24 by 8. What is the result here?
+What you have here is a
+--------------------------------------------------
+--- Prompt ---
+A car travels 150 miles on 10 gallons of gas. How many miles per gallon does the car get?
+--- Answer ---
+A car travels 150 miles on 10 gallons of gas. How many miles per gallon does the car get? How much gas does the car get per mile?
+When you drive your car, you have to pay for gas. Gas costs money, so you want to know how much gas you are using when you are driving. You can calculate how much gas you are using per mile by dividing the number of miles you drove by the
+--------------------------------------------------

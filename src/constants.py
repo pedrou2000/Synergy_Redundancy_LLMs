@@ -18,6 +18,7 @@ MODEL_NAMES = {
     'L3-3': {"HF_NAME": "meta-llama/Llama-3.2-3B", "FOLDER_NAME": "12-Llama-3.2-3B-Base", "PLOT_NAME": "Llama 3.2 3B", "COLOR": "#456e00"},
     'G3-1': {"HF_NAME": "google/gemma-3-1b-pt", "FOLDER_NAME": "13-Gemma-3-1B-Base", "PLOT_NAME": "Gemma 3 1B", "COLOR": "#647c00"},
     'G3-4': {"HF_NAME": "google/gemma-3-4b-pt", "FOLDER_NAME": "14-Gemma-3-4B-Base", "PLOT_NAME": "Gemma 3 4B", "COLOR": "#7c8e00"},
+    'G3-12': {"HF_NAME": "google/gemma-3-12b-pt", "FOLDER_NAME": "15-Gemma-3-12B-Base", "PLOT_NAME": "Gemma 3 12B", "COLOR": "#8e9e00"},
     'Q3-0': {"HF_NAME": "Qwen/Qwen3-0.6B-Base", "FOLDER_NAME": "16-Qwen3-0.6B-Base", "PLOT_NAME": "Qwen 3 0.6B", "COLOR": "#8e9e00"},
     'Q3-1': {"HF_NAME": "Qwen/Qwen3-1.7B-Base", "FOLDER_NAME": "17-Qwen3-1.7B-Base", "PLOT_NAME": "Qwen 3 1.7B", "COLOR": "#a0ae00"},
     'Q3-4': {"HF_NAME": "Qwen/Qwen3-4B-Base", "FOLDER_NAME": "18-Qwen3-4B-Base", "PLOT_NAME": "Qwen 3 4B", "COLOR": "#b0be00"},
@@ -27,6 +28,7 @@ MODEL_CODE = 'L3.1-8B-b'
 MODEL_NAME = MODEL_NAMES[MODEL_CODE]["HF_NAME"]
 FOLDER_MODEL_NAME = MODEL_NAMES[MODEL_CODE]["FOLDER_NAME"]
 FINAL_MODELS = ['G2-2B', 'G2-9B', 'L3.2-3B', 'L3.1-8B']
+NEW_MODELS = ['L3-1', 'L3-3', 'G3-1', 'G3-4']#, 'Q3-0', 'Q3-1', 'Q3-4', 'Q3-8']
 
 config = AutoConfig.from_pretrained(MODEL_NAME)
 NUM_LAYERS = config.num_hidden_layers if hasattr(config, 'num_hidden_layers') else config.n_layer
@@ -110,6 +112,7 @@ MODEL_COMPARISON_DIR = "../plots/" + "0-Model_Comparison/"
 MODEL_COMPARISON_GRAPH_THEORETICAL_DIR = MODEL_COMPARISON_DIR + "1-Graph_Theoretical_Analysis/"
 MODEL_COMPARISON_GRADIENT_RANK_DIR = MODEL_COMPARISON_DIR + "2-Gradient_Ranks/"
 MODEL_COMPARISON_ABLATIONS_DIR = MODEL_COMPARISON_DIR + "3-Ablations/"
+MODEL_COMPARISON_SYN_MINUS_RED_RANKINGS_DIR = MODEL_COMPARISON_DIR + "4-Syn-Red-Rankings/"
 
 # Prompts
 PROMPTS = {
@@ -207,7 +210,16 @@ def update_model_code(new_model_code):
     FOLDER_MODEL_NAME = MODEL_NAMES[MODEL_CODE]["FOLDER_NAME"]
 
     config = AutoConfig.from_pretrained(MODEL_NAME)
+    if hasattr(config, 'text_config'):
+        config = config.text_config
+    
     NUM_LAYERS = config.num_hidden_layers if hasattr(config, 'num_hidden_layers') else config.n_layer
+    if hasattr(config, 'num_hidden_layers'):
+        NUM_LAYERS = config.num_hidden_layers
+    elif hasattr(config, 'n_layer'):
+        NUM_LAYERS = config.n_layer
+    else:
+        raise ValueError("Model configuration does not contain 'num_hidden_layers', 'config.num_hidden_layers', or 'n_layer' attribute.")
     NUM_HEADS_PER_LAYER = config.num_attention_heads if hasattr(config, 'num_attention_heads') else config.n_head
     NUM_TOTAL_HEADS = NUM_LAYERS * NUM_HEADS_PER_LAYER
 

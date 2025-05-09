@@ -1,0 +1,9 @@
+
+
+
+
+--- Running model: G3-12 ---
+Updated to model: G3-12
+--- Loading Model:  google/gemma-3-12b-pt  ---
+
+

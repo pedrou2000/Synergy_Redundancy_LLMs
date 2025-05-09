@@ -51,13 +51,16 @@ def generate_text_with_attention(model, tokenizer, num_tokens_to_generate: int, 
                 attentions_on_cpu = []
                 for layer in outputs.attentions:
                     layer_attention = {}
+                    print(f"Layer: ", layer)
                     for key, value in layer.items():
+                        # print(f"Key: {key}, Value: {value.shape}")
                         layer_attention[key] = value.detach().to('cpu')
                     attentions_on_cpu.append(layer_attention)
-                # attentions_on_cpu = [{k: v.detach().to('cpu') for k, v in layer.items()} for layer in outputs.attentions]
+                attentions_on_cpu = [{k: v.detach().to('cpu') for k, v in layer.items()} for layer in outputs.attentions]
             else:
                 attentions_on_cpu = []
                 for layer in outputs.attentions:
+                    # breakpoint()
                     attentions_on_cpu.append({constants.ATTENTION_MEASURE: layer.detach().to('cpu')})
 
                 # attentions_on_cpu = [{constants.ATTENTION_MEASURE: layer.detach().to('cpu')} for layer in outputs.attentions]
@@ -70,7 +73,7 @@ def generate_text_with_attention(model, tokenizer, num_tokens_to_generate: int, 
                     attention_params[key].append(value[0]) # Remove the batch dimension
         # Clean gpu memory
         del outputs
-        torch.cuda.empty_cache()
+        # torch.cuda.empty_cache()
 
     # Convert time-step dictionaries into tensors where applicable
     for key in attention_params.keys():

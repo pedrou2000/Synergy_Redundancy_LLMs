@@ -1,0 +1,123 @@
+--- Prompt ---
+If you have 15 apples and you give away 5, how many do you have left?
+--- Answer ---
+If you have 15 apples and you give away 5, how many do you have left?
+
+This is just one of those brain teasers that can be solved in a variety of ways, but I think the solution to this is 10.
+
+The solution is to have 5 apples left, and the number of apples you give away times 10.
+
+Here are a couple of other brain
+--------------------------------------------------
+--- Prompt ---
+A rectangle's length is twice its width. If the rectangle's perimeter is 36 meters, what are its length and width?
+--- Answer ---
+A rectangle's length is twice its width. If the rectangle's perimeter is 36 meters, what are its length and width?
+
+The perimeter of a rectangle is 17 meters. The length of the rectangle is 16 meters. What is the width of the rectangle?
+
+If the perimeter of a rectangle is 15 meters, what is the length of the rectangle?
+
+If the perimeter of a rectangle is 30 meters
+--------------------------------------------------
+--- Prompt ---
+You read 45 pages of a book each day. How many pages will you have read after 7 days?
+--- Answer ---
+You read 45 pages of a book each day. How many pages will you have read after 7 days?
+
+You have given your daughter a 5-day old baby. She was born on 1st September, 2011. How many days will it take her to reach 3 years of age?
+
+Find the missing number in the following set of numbers:
+
+16, 12,
+--------------------------------------------------
+--- Prompt ---
+If a train travels 60 miles in 1 hour, how far will it travel in 3 hours?
+--- Answer ---
+If a train travels 60 miles in 1 hour, how far will it travel in 3 hours?
+
+What do you call an object that moves on a track?
+
+What kind of collision would occur if a train and a car were thrown into each other?
+
+What is the unit for speed?
+
+What do you call a group of people in the same place at the same time?
+
+What can you do with
+--------------------------------------------------
+--- Prompt ---
+There are 8 slices in a pizza. If you eat 2 slices, what fraction of the pizza is left?
+--- Answer ---
+There are 8 slices in a pizza. If you eat 2 slices, what fraction of the pizza is left?
+
+Answer: 2/8
+
+<strong>Step-by-step explanation:</strong>
+
+<strong>Answer:</strong>
+
+x = 2/4
+
+<strong>Step-by-step explanation:</strong>
+
+The question is asking to find the fraction of the pizza that has been eaten by two people.
+
+You can find the
+--------------------------------------------------
+--- Prompt ---
+If one pencil costs 50 cents, how much do 12 pencils cost?
+--- Answer ---
+If one pencil costs 50 cents, how much do 12 pencils cost? If you were given 12 pencils, how much would you pay for them?
+
+Solve the following equations:
+
+1. 
+  4x = 8
+2. 
+  8x = 16
+3. 
+  3x = 2
+4. 
+  3
+--------------------------------------------------
+--- Prompt ---
+You have a 2-liter bottle of soda. If you pour out 500 milliliters, how much soda is left?
+--- Answer ---
+You have a 2-liter bottle of soda. If you pour out 500 milliliters, how much soda is left? To solve this problem, you can use the formula for volume of a cylinder. The formula is V = πr<sup>2</sup> h. In this case, π is equal to 3.14. The radius, r, is equal to the radius of the bottle. The height, h, is equal to
+--------------------------------------------------
+--- Prompt ---
+A marathon is 42 kilometers long. If you have run 10 kilometers, how much further do you have to run?
+--- Answer ---
+A marathon is 42 kilometers long. If you have run 10 kilometers, how much further do you have to run?
+
+The minimum number of units of fruit required to feed 500 people for a week is
+
+If a number of students are 100% and the number of teachers are 50% of the total, how many teachers are there?
+
+If a number of boys are 10% of
+--------------------------------------------------
+--- Prompt ---
+If you divide 24 by 3, then multiply by 2, what is the result?
+--- Answer ---
+If you divide 24 by 3, then multiply by 2, what is the result?
+
+What is the answer to 32.2+23.2+25.2+28.2?
+
+If 20 equals 15 and 35 equals 28, what is the value of 29?
+
+If 15 equals 6 and 
+--------------------------------------------------
+--- Prompt ---
+A car travels 150 miles on 10 gallons of gas. How many miles per gallon does the car get?
+--- Answer ---
+A car travels 150 miles on 10 gallons of gas. How many miles per gallon does the car get?
+
+If you are a vegetarian how many calories would you need to eat each day to maintain your weight?
+
+Which of the following is an example of a renewable resource?
+
+A car travels 2,000 miles on 20 gallons of gas. How many miles per gallon does the car get?
+
+
+--------------------------------------------------

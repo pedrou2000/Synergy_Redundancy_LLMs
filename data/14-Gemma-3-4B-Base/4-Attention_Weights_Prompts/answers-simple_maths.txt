@@ -1,0 +1,110 @@
+--- Prompt ---
+If you have 15 apples and you give away 5, how many do you have left?
+--- Answer ---
+If you have 15 apples and you give away 5, how many do you have left?
+
+If you have 10 cookies and you give away 3, how many will you have left?
+
+If you have 10 apples and you give away 3, how many will you have left?
+
+If you have 12 cookies and you give away 4, how many will you have
+--------------------------------------------------
+--- Prompt ---
+A rectangle's length is twice its width. If the rectangle's perimeter is 36 meters, what are its length and width?
+--- Answer ---
+A rectangle's length is twice its width. If the rectangle's perimeter is 36 meters, what are its length and width?
+
+What is the ratio of the perimeter of the smaller rectangle to the perimeter of the larger rectangle?
+
+The volume of a rectangular prism is 90 cubic units. If a new rectangular prism is formed by doubling the length, doubling the width, and doubling the height, what is the volume of the new rectangular prism
+--------------------------------------------------
+--- Prompt ---
+You read 45 pages of a book each day. How many pages will you have read after 7 days?
+--- Answer ---
+You read 45 pages of a book each day. How many pages will you have read after 7 days?
+Sam works 40 hours a week at a job, and earns $22.75 per hour. What is her gross pay for one week?
+The Smith family is 85 miles from home. They travel 37 miles before stopping for a break. How many more miles do they need
+--------------------------------------------------
+--- Prompt ---
+If a train travels 60 miles in 1 hour, how far will it travel in 3 hours?
+--- Answer ---
+If a train travels 60 miles in 1 hour, how far will it travel in 3 hours?
+
+If a train travels 30 miles in 2 hours, how far will it travel in 3 hours?
+
+If 4 people can paint 20 rooms in 4 days, how many rooms can 6 people paint in 10 days?
+
+If 12 people can paint 3
+--------------------------------------------------
+--- Prompt ---
+There are 8 slices in a pizza. If you eat 2 slices, what fraction of the pizza is left?
+--- Answer ---
+There are 8 slices in a pizza. If you eat 2 slices, what fraction of the pizza is left?
+
+There are 15 pencils in a box. If you take away 8 pencils, how many are left?
+
+You have 24 cookies to give out. You give 4 to each of your friends. How many friends did you give cookies to?
+
+If there are 10 candies and you
+--------------------------------------------------
+--- Prompt ---
+If one pencil costs 50 cents, how much do 12 pencils cost?
+--- Answer ---
+If one pencil costs 50 cents, how much do 12 pencils cost?
+
+If one pencil costs 50 cents, how much do 6 pencils cost?
+
+If one pencil costs 50 cents, how much do 2 pencils cost?
+
+If one pencil costs 50 cents, how much do 4 pencils cost?
+
+If one pencil costs 50 cents,
+--------------------------------------------------
+--- Prompt ---
+You have a 2-liter bottle of soda. If you pour out 500 milliliters, how much soda is left?
+--- Answer ---
+You have a 2-liter bottle of soda. If you pour out 500 milliliters, how much soda is left?
+
+What is the product of 400 milliliters and 8?
+
+A farmer has a 150-liter water tank that is 3/4 full. If the farmer buys 50 liters of water, will it fill the water tank?
+
+A bottle of water contains 2 liters of
+--------------------------------------------------
+--- Prompt ---
+A marathon is 42 kilometers long. If you have run 10 kilometers, how much further do you have to run?
+--- Answer ---
+A marathon is 42 kilometers long. If you have run 10 kilometers, how much further do you have to run?
+
+What is the missing number in the sequence below?
+
+1, 2, 4, 8, 16, _____, 32
+
+Which of the following is a prime number?
+
+Which of the following is the most appropriate unit to measure the weight of a baby?
+
+What is the
+--------------------------------------------------
+--- Prompt ---
+If you divide 24 by 3, then multiply by 2, what is the result?
+--- Answer ---
+If you divide 24 by 3, then multiply by 2, what is the result?
+
+If you take 18 and multiply it by 2, then divide by 3, what is the result?
+
+If you multiply 46 by 2, then divide by 2, what is the result?
+
+If you multiply 15 by 2, then add 9, then
+--------------------------------------------------
+--- Prompt ---
+A car travels 150 miles on 10 gallons of gas. How many miles per gallon does the car get?
+--- Answer ---
+A car travels 150 miles on 10 gallons of gas. How many miles per gallon does the car get?
+
+If a bag of candy worth $12 is marked down 25% and then another 5% off, how much is the bag worth after the two discounts? Round to the nearest cent.
+
+Which of the following would be an example of a linear equation?
+
+The formula for finding the number of
+--------------------------------------------------

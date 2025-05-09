@@ -1,0 +1,135 @@
+--- Prompt ---
+Correct the error: He go to school every day.
+--- Answer ---
+Correct the error: He go to school every day.
+
+Correct the error: Her friends are going to the concert.
+
+Correct the error: The children will go to the movies tomorrow.
+
+Correct the error: I shall go to the cinema this evening.
+
+Correct the error: I will go to the cinema tonight.
+
+Correct the error: I'll go to
+--------------------------------------------------
+--- Prompt ---
+Correct the error: She have two cats and a dogs.
+--- Answer ---
+Correct the error: She have two cats and a dogs. She has a cat and a dog. (She has a cat and a dog.)
+
+<strong>She has two cats and a dog.</strong>
+
+Correct the error: She has two cats and a dogs.
+
+<strong>She has two cats and a dogs</strong>
+
+Correct the error: She has two cats and a dogs.
+--------------------------------------------------
+--- Prompt ---
+Correct the error: I eats breakfast at 8:00 in the morning.
+--- Answer ---
+Correct the error: I eats breakfast at 8:00 in the morning.
+
+Correct the error: The dog likes to bark, play, and sleep.
+
+Correct the error: I love to read books, play, and draw.
+
+Correct the error: I play computer games when I am free.
+
+Correct the error: I am doing my homework, and I'm watching TV now
+--------------------------------------------------
+--- Prompt ---
+Correct the error: Every students in the classroom has their own laptop.
+--- Answer ---
+Correct the error: Every students in the classroom has their own laptop.
+
+Correct the error: Every students in the classroom has their own laptop.
+
+Correct the error: Every students in the classroom has their own laptop.
+
+Correct the error: Every students in the classroom has their own laptop.
+
+1. Check the correct spelling of each underlined word or phrase:
+
+a) <strong>
+--------------------------------------------------
+--- Prompt ---
+Correct the error: She don't like going to the park on weekends.
+--- Answer ---
+Correct the error: She don't like going to the park on weekends.
+
+Correct the error: I'm not going to be late.
+
+Correct the error: You have to be really good at basketball to play in the team.
+
+Correct the error: She don't like going to the zoo on weekends.
+
+Correct the error: The children are not allowed to play outside.
+--------------------------------------------------
+--- Prompt ---
+Correct the error: We was happy to see the rainbow after the storm.
+--- Answer ---
+Correct the error: We was happy to see the rainbow after the storm.
+
+Correct the error: The rainbow is a beautiful sight.
+
+Correct the error: We were able to see the rainbow after the storm.
+
+Correct the error: The rainbow is a beautiful sight.
+
+Correct the error: We were happy to see the rainbow after the storm.
+
+Correct the error: We were able
+--------------------------------------------------
+--- Prompt ---
+Correct the error: There is many reasons to celebrate today.
+--- Answer ---
+Correct the error: There is many reasons to celebrate today. First, this is the day that we celebrate the birthday of our First Lady, the First Lady of the United States of America. She is the most powerful woman in the world. She is the woman who has been able to secure the proper education for our children in America, and we are so proud of her.
+
+
+--------------------------------------------------
+--- Prompt ---
+Correct the error: Him and I went to the market yesterday.
+--- Answer ---
+Correct the error: Him and I went to the market yesterday.
+Correct the error: I and my sister went to the market yesterday.
+Correct the error: He and his brother went to the market yesterday.
+Correct the error: I and my sister went to the market yesterday.
+Correct the error: I and my brother went to the market yesterday.
+Correct the error
+--------------------------------------------------
+--- Prompt ---
+Correct the error: The books is on the table.
+--- Answer ---
+Correct the error: The books is on the table.
+
+Correct the error: You can see me.
+
+Correct the error: The people are laughing.
+
+Correct the error: The children are playing.
+
+Correct the error: The car is on the road.
+
+Correct the error: The cow is eating grass.
+
+Correct the error: The girl is wearing a red
+--------------------------------------------------
+--- Prompt ---
+Correct the error: They walks to school together every morning.
+--- Answer ---
+Correct the error: They walks to school together every morning.
+
+Correct the error: They walks to school together every day.
+
+Correct the error: They walks to school together every morning.
+
+Correct the error: He walks to school every day.
+
+Correct the error: He walked to school every day.
+
+Correct the error: He walked to school every morning.
+
+Correct
+--------------------------------------------------
