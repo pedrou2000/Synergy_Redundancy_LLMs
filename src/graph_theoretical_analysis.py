@@ -128,7 +128,7 @@ def compare_graph_theoretical_results(model_codes, cognitive_task_category='aver
 
     metrics = list(all_results[model_codes[0]].keys())
     # model_names = [model_code for model_code in model_codes]
-    model_names = [constants.MODEL_NAMES[model_code]["PLOT_NAME"] for model_code in model_codes]
+    model_names = [constants.MODEL_NAMES[model_code]["plot_name"] for model_code in model_codes]
     bar_width = 0.35
     index = range(len(model_codes))
 

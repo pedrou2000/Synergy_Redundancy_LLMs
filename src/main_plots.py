@@ -42,21 +42,22 @@ import matplotlib.pyplot as plt
 
 
 
-# ### Time Series Plots ###
-
-# time_series = {cognitive_task: {} for cognitive_task in constants.PROMPT_CATEGORIES}
-
-# print("Loading Raw Attention and Time Series")
-# for cognitive_task in constants.PROMPT_CATEGORIES:
-#     print("Loading Cognitive Task: ", cognitive_task)
-#     for n_prompt, prompt in enumerate(constants.PROMPTS[cognitive_task]):
-#         time_series[cognitive_task][n_prompt] = load_time_series(base_load_path=constants.TIME_SERIES_DIR+cognitive_task+"/"+str(n_prompt) + ".pt")
-#         plot_attention_metrics_norms_over_time(time_series[cognitive_task][n_prompt], metrics=constants.METRICS_TRANSFORMER, num_heads_plot=8, smoothing_window=0, 
-#             save=constants.SAVE_PLOTS, base_plot_path=constants.PLOTS_TIME_SERIES_DIR+cognitive_task+"/"+str(n_prompt)+"/")
-
-
-for model_code in ['G3-1', 'G3-4']:
+for model_code in ['Q3-0', 'Q3-1']:
     constants.update_model_code(model_code)
+    
+    ### Time Series Plots ###
+
+    time_series = {cognitive_task: {} for cognitive_task in constants.PROMPT_CATEGORIES}
+
+    print("Loading Raw Attention and Time Series")
+    for cognitive_task in constants.PROMPT_CATEGORIES:
+        print("Loading Cognitive Task: ", cognitive_task)
+        for n_prompt, prompt in enumerate(constants.PROMPTS[cognitive_task]):
+            time_series[cognitive_task][n_prompt] = load_time_series(base_load_path=constants.TIME_SERIES_DIR+cognitive_task+"/"+str(n_prompt) + ".pt")
+            plot_attention_metrics_norms_over_time(time_series[cognitive_task][n_prompt], metrics=constants.METRICS_TRANSFORMER, num_heads_plot=8, smoothing_window=0, 
+                save=constants.SAVE_PLOTS, base_plot_path=constants.PLOTS_TIME_SERIES_DIR+cognitive_task+"/"+str(n_prompt)+"/")
+
+
 
     ### Plotting PhiID for Average Prompts and Random Walk Time Series ###
     prompt_category_names = ['average_prompts']

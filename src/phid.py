@@ -38,7 +38,7 @@ def compute_PhiID(time_series, tau=1, kind="gaussian", redundancy_measure="MMI",
         
         for src_idx in range(total_heads):
             if src_idx % 50 == 0:
-                print(f"Calculating PhiID for head {src_idx}...", flush=True)
+                print(f"Calculating PhiID for head {src_idx}/{constants.NUM_TOTAL_HEADS}...", flush=True)
             for trg_idx in range(total_heads):
                 if src_idx != trg_idx:
                     src = flat_time_series[src_idx] # Extract the source and target time series

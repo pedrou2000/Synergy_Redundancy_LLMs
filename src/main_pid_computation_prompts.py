@@ -15,29 +15,29 @@ import os
 
 # Constants 
 MODEL_NAMES = {
-    'G1-2B': {"HF_NAME": "google/gemma-2b-it", "FOLDER_NAME": "1-Gemma-2b-it", "PLOT_NAME": "Gemma 1 2B"},
-    'G1.1-2B': {"HF_NAME": "google/gemma-1.1-2b-it", "FOLDER_NAME": "2-Gemma-1.1-2b-it", "PLOT_NAME": "Gemma 1.1 2B"},
-    'G1.1-7B': {"HF_NAME": "google/gemma-1.1-7b-it", "FOLDER_NAME": "3-Gemma-1.1-7b-it", "PLOT_NAME": "Gemma 1.1 7B"},
-    'L3-8B': {"HF_NAME": "meta-llama/Meta-Llama-3-8B-Instruct", "FOLDER_NAME": "4-Llama-3-8B-Instruct", "PLOT_NAME": "Llama 3 8B"},
-    'G2-2B': {"HF_NAME": "google/gemma-2-2b-it", "FOLDER_NAME": "5-Gemma-2-2B", "PLOT_NAME": "Gemma 2 2B", "COLOR": "#1f77b4"},
-    'G2-9B': {"HF_NAME": "google/gemma-2-9b-it", "FOLDER_NAME": "6-Gemma-2-9B", "PLOT_NAME": "Gemma 2 9B", "COLOR": "#2ca02c"},
-    'L3.2-3B': {"HF_NAME": "meta-llama/Llama-3.2-3B-Instruct", "FOLDER_NAME": "7-Llama-3.2-3B", "PLOT_NAME": "Llama 3.2 3B", "COLOR": "#ff7f0e"},
-    'L3.1-8B': {"HF_NAME": "meta-llama/Llama-3.1-8B-Instruct", "FOLDER_NAME": "8-Llama-3.1-8B", "PLOT_NAME": "Llama 3.1 8B", "COLOR": "#9467bd"},
-    'L3.1-8B-b': {"HF_NAME": "meta-llama/Llama-3.1-8B", "FOLDER_NAME": "9-Llama-3.1-8B-Base", "PLOT_NAME": "Llama 3.1 8B Base", "COLOR": "#9467ed"},
-    'R1-L3.1-8B': {"HF_NAME": "deepseek-ai/DeepSeek-R1-Distill-Llama-8B", "FOLDER_NAME": "10-R1-Distilled-Llama-3.1-8B", "PLOT_NAME": "R1 Distilled Llama 3.1 8B", "COLOR": "#9467ju"},
-    'L3-1': {"HF_NAME": "meta-llama/Llama-3.2-1B", "FOLDER_NAME": "11-Llama-3.2-1B-Base", "PLOT_NAME": "Llama 3.2 1B", "COLOR": "#4d8e00"},
-    'L3-3': {"HF_NAME": "meta-llama/Llama-3.2-3B", "FOLDER_NAME": "12-Llama-3.2-3B-Base", "PLOT_NAME": "Llama 3.2 3B", "COLOR": "#456e00"},
-    'G3-1': {"HF_NAME": "google/gemma-3-1b-pt", "FOLDER_NAME": "13-Gemma-3-1B-Base", "PLOT_NAME": "Gemma 3 1B", "COLOR": "#647c00"},
-    'G3-4': {"HF_NAME": "google/gemma-3-4b-pt", "FOLDER_NAME": "14-Gemma-3-4B-Base", "PLOT_NAME": "Gemma 3 4B", "COLOR": "#7c8e00"},
-    'G3-12': {"HF_NAME": "google/gemma-3-12b-pt", "FOLDER_NAME": "15-Gemma-3-12B-Base", "PLOT_NAME": "Gemma 3 12B", "COLOR": "#8e9e00"},
-    'Q3-0': {"HF_NAME": "Qwen/Qwen3-0.6B-Base", "FOLDER_NAME": "16-Qwen3-0.6B-Base", "PLOT_NAME": "Qwen 3 0.6B", "COLOR": "#8e9e00"},
-    'Q3-1': {"HF_NAME": "Qwen/Qwen3-1.7B-Base", "FOLDER_NAME": "17-Qwen3-1.7B-Base", "PLOT_NAME": "Qwen 3 1.7B", "COLOR": "#a0ae00"},
-    'Q3-4': {"HF_NAME": "Qwen/Qwen3-4B-Base", "FOLDER_NAME": "18-Qwen3-4B-Base", "PLOT_NAME": "Qwen 3 4B", "COLOR": "#b0be00"},
-    'Q3-8': {"HF_NAME": "Qwen/Qwen3-8B-Base", "FOLDER_NAME": "19-Qwen3-8B-Base", "PLOT_NAME": "Qwen 3 8B", "COLOR": "#c0ce00"},
+    # Qwen
+    'Q3-0': {'hf_name': 'Qwen/Qwen3-0.6B-Base', 'company': 'alibaba', 'model_family': 'qwen-3', 'model_size': '0.6B', 'it': 'base', 'plot_name': 'Qwen 3 0.6B Base', 'color': '#8e9e00'},
+    'Q3-1': {'hf_name': 'Qwen/Qwen3-1.7B-Base', 'company': 'alibaba', 'model_family': 'qwen-3', 'model_size': '1.7B', 'it': 'base', 'plot_name': 'Qwen 3 1.7B Base', 'color': '#a0ae00'},
+    'Q3-4': {'hf_name': 'Qwen/Qwen3-4B-Base', 'company': 'alibaba', 'model_family': 'qwen-3', 'model_size': '4B', 'it': 'base', 'plot_name': 'Qwen 3 4B Base', 'color': '#b0be00'},
+    'Q3-8': {'hf_name': 'Qwen/Qwen3-8B-Base', 'company': 'alibaba', 'model_family': 'qwen-3', 'model_size': '8B', 'it': 'base', 'plot_name': 'Qwen 3 8B Base', 'color': '#c0ce00'},
+    'Q3-14': {'hf_name': 'Qwen/Qwen3-14B-Base', 'company': 'alibaba', 'model_family': 'qwen-3', 'model_size': '14B', 'it': 'base', 'plot_name': 'Qwen 3 14B Base', 'color': '#d0de00'},
+    'Q3-30-A3': {'hf_name': 'Qwen/Qwen3-30B-A3B-Base', 'company': 'alibaba', 'model_family': 'qwen-3', 'model_size': '30B-A3B', 'it': 'base', 'plot_name': 'Qwen 3 30B A3B Base', 'color': '#e0ee00'},
+    'Q25M-1': {'hf_name': 'Qwen/Qwen2.5-Math-1.5B', 'company': 'alibaba', 'model_family': 'qwen-2.5-math', 'model_size': '1.5B', 'it': 'base', 'plot_name': 'Qwen 2.5 Math 1.5B Base', 'color': '#8e9e00'},
+    'Q25M-7': {'hf_name': 'Qwen/Qwen2.5-Math-7B', 'company': 'alibaba', 'model_family': 'qwen-2.5-math', 'model_size': '7B', 'it': 'base', 'plot_name': 'Qwen 2.5 Math 7B Base', 'color': '#a0ae00'},
+    'Q25M-72': {'hf_name': 'Qwen/Qwen2.5-Math-72B', 'company': 'alibaba', 'model_family': 'qwen-2.5-math', 'model_size': '72B', 'it': 'base', 'plot_name': 'Qwen 2.5 Math 72B Base', 'color': '#b0be00'},
+    
+    # Gemma
+    'G3-1': {'hf_name': 'google/gemma-3-1b-pt', 'company': 'google', 'model_family': 'gemma-3', 'model_size': '1B', 'it': 'base', 'plot_name': 'Gemma 3 1B Base', 'color': '#647c00'},
+    'G3-4': {'hf_name': 'google/gemma-3-4b-pt', 'company': 'google', 'model_family': 'gemma-3', 'model_size': '4B', 'it': 'base', 'plot_name': 'Gemma 3 4B Base', 'color': '#7c8e00'},
+    'G3-12': {'hf_name': 'google/gemma-3-12b-pt', 'company': 'google', 'model_family': 'gemma-3', 'model_size': '12B', 'it': 'base', 'plot_name': 'Gemma 3 12B Base', 'color': '#8e9e00'},
+    'G3-27': {'hf_name': 'google/gemma-3-27b-pt', 'company': 'google', 'model_family': 'gemma-3', 'model_size': '27B', 'it': 'base', 'plot_name': 'Gemma 3 27B Base', 'color': '#9eae00'},
+
+    # Llama
 }
-MODEL_CODE = 'G3-12'
-MODEL_NAME = MODEL_NAMES[MODEL_CODE]["HF_NAME"]
-FOLDER_MODEL_NAME = MODEL_NAMES[MODEL_CODE]["FOLDER_NAME"]
+MODEL_CODE = os.getenv("MODEL_CODE", "Q25M-1")
+MODEL_NAME = MODEL_NAMES[MODEL_CODE]["hf_name"]
+FOLDER_MODEL_NAME = MODEL_NAMES[MODEL_CODE]["company"] + "/" + MODEL_NAMES[MODEL_CODE]["model_family"] + "/" + MODEL_NAMES[MODEL_CODE]["model_size"] + "/" + MODEL_NAMES[MODEL_CODE]["it"]
+FINAL_MODELS = ['Q3-0', 'Q3-1', 'Q3-4', 'Q3-8', 'Q3-14', 'G3-1', 'G3-4', 'G3-12']
 
 PLOTS_DIR = "../plots/" + FOLDER_MODEL_NAME + "/"
 SAVED_DATA_DIR = "../data/" + FOLDER_MODEL_NAME + "/"
@@ -56,7 +56,7 @@ generated_text = {cognitive_task: {} for cognitive_task in constants.PROMPT_CATE
 attention_params = {cognitive_task: {} for cognitive_task in constants.PROMPT_CATEGORIES}
 time_series = {cognitive_task: {} for cognitive_task in constants.PROMPT_CATEGORIES}
 
-categories = constants.PROMPT_CATEGORIES[:-1][::-1]
+categories = constants.PROMPT_CATEGORIES
 for cognitive_task in categories:
     for n_prompt, prompt in enumerate(constants.PROMPTS[cognitive_task]):
         time_series[cognitive_task][n_prompt] = load_time_series(base_load_path=TIME_SERIES_DIR+cognitive_task+"/"+str(n_prompt) + ".pt")
@@ -88,6 +88,7 @@ futures = []
 
 # Create a thread pool executor
 num_workers = os.cpu_count()  # or any number you find optimal
+print(f"Using {num_workers} workers for parallel processing.")
 with concurrent.futures.ThreadPoolExecutor(max_workers=num_workers) as executor:   
     for cognitive_task in categories:
         for n_prompt, prompt in enumerate(constants.PROMPTS[cognitive_task]):

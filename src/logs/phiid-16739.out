@@ -1,0 +1,430 @@
+Working directory: /home/p84400019/projects/consciousness-llms/Synergy_Redundancy_LLMs/src
+Updated to model: Q25M-1
+--- Computing PhiID for model:  Qwen/Qwen2.5-Math-1.5B  ---
+
+Loading Time Series Data from  ../data/alibaba/qwen-2.5-math/1.5B/base/2-Time_Series/
+Computing PhiID and saving matrices to  ../data/alibaba/qwen-2.5-math/1.5B/base/3-Synergy_Redundancy_Matrices/ 
+ -------------------------------------------------- 
+
+
+Using 80 workers for parallel processing.
+
+--- Computing PhiID for task simple_maths ---
+
+Prompt: 0
+Calculating PhiID for metric: queries
+
+--- Computing PhiID for task simple_maths ---
+
+Prompt: 1
+Calculating PhiID for metric: queries
+
+--- Computing PhiID for task simple_maths ---
+
+Prompt: 2
+Calculating PhiID for metric: queries
+
+--- Computing PhiID for task simple_maths ---
+
+Prompt: 4
+Calculating PhiID for metric: queries
+
+--- Computing PhiID for task simple_maths ---
+
+Prompt: 6
+Calculating PhiID for metric: queries
+
+--- Computing PhiID for task simple_maths ---
+
+Prompt: 8
+Calculating PhiID for metric: queries
+
+--- Computing PhiID for task simple_maths ---
+
+Prompt: 3
+Calculating PhiID for metric: queries
+Calculating PhiID for head 0/336...
+
+--- Computing PhiID for task syntax_and_grammar_correction ---
+
+Prompt: 7
+Calculating PhiID for metric: queries
+
+--- Computing PhiID for task syntax_and_grammar_correction ---
+
+Prompt: 1
+Calculating PhiID for metric: queries
+
+--- Computing PhiID for task syntax_and_grammar_correction ---
+
+Prompt: 3
+Calculating PhiID for metric: queries
+
+--- Computing PhiID for task syntax_and_grammar_correction ---
+
+Prompt: 4
+Calculating PhiID for metric: queries
+
+--- Computing PhiID for task syntax_and_grammar_correction ---
+
+Prompt: 5
+Calculating PhiID for metric: queries
+
+--- Computing PhiID for task syntax_and_grammar_correction ---
+
+Prompt: 6
+Calculating PhiID for metric: queries
+
+--- Computing PhiID for task simple_maths ---
+
+Prompt: 9
+Calculating PhiID for metric: queries
+
+--- Computing PhiID for task simple_maths ---
+
+Prompt: 5
+Calculating PhiID for metric: queries
+
+--- Computing PhiID for task syntax_and_grammar_correction ---
+
+Prompt: 2
+Calculating PhiID for metric: queries
+
+--- Computing PhiID for task syntax_and_grammar_correction ---
+
+Prompt: 9
+Calculating PhiID for metric: queries
+
+--- Computing PhiID for task part_of_speech_tagging ---
+
+Prompt: 1
+Calculating PhiID for metric: queries
+
+--- Computing PhiID for task part_of_speech_tagging ---
+
+Prompt: 2
+Calculating PhiID for metric: queries
+
+--- Computing PhiID for task part_of_speech_tagging ---
+
+Prompt: 3
+Calculating PhiID for metric: queries
+
+--- Computing PhiID for task syntax_and_grammar_correction ---
+
+Prompt: 0
+Calculating PhiID for metric: queries
+
+--- Computing PhiID for task syntax_and_grammar_correction ---
+
+Prompt: 8
+Calculating PhiID for metric: queries
+
+--- Computing PhiID for task part_of_speech_tagging ---
+
+Prompt: 5
+Calculating PhiID for metric: queries
+
+--- Computing PhiID for task part_of_speech_tagging ---
+
+Prompt: 6
+Calculating PhiID for metric: queries
+Calculating PhiID for head 0/336...
+
+--- Computing PhiID for task simple_maths ---
+
+Prompt: 7
+Calculating PhiID for metric: queries
+Calculating PhiID for head 0/336...
+
+--- Computing PhiID for task basic_common_sense_reasoning ---
+
+Prompt: 0
+Calculating PhiID for metric: queries
+
+--- Computing PhiID for task part_of_speech_tagging ---
+
+Prompt: 4
+Calculating PhiID for metric: queries
+
+--- Computing PhiID for task part_of_speech_tagging ---
+
+Prompt: 0
+Calculating PhiID for metric: queries
+
+--- Computing PhiID for task basic_common_sense_reasoning ---
+
+Prompt: 3
+Calculating PhiID for metric: queries
+
+--- Computing PhiID for task basic_common_sense_reasoning ---
+
+Prompt: 4
+Calculating PhiID for metric: queries
+
+--- Computing PhiID for task part_of_speech_tagging ---
+
+Prompt: 8
+Calculating PhiID for metric: queries
+Calculating PhiID for head 0/336...
+
+--- Computing PhiID for task basic_common_sense_reasoning ---
+
+Prompt: 6
+Calculating PhiID for metric: queries
+
+--- Computing PhiID for task basic_common_sense_reasoning ---
+
+Prompt: 1
+Calculating PhiID for metric: queries
+
+--- Computing PhiID for task basic_common_sense_reasoning ---
+
+Prompt: 2
+Calculating PhiID for metric: queries
+Calculating PhiID for head 0/336...
+
+--- Computing PhiID for task part_of_speech_tagging ---
+
+Prompt: 7
+Calculating PhiID for metric: queries
+
+--- Computing PhiID for task basic_common_sense_reasoning ---
+
+Prompt: 8
+Calculating PhiID for metric: queries
+
+--- Computing PhiID for task abstract_reasoning_and_creative_thinking ---
+
+Prompt: 0
+Calculating PhiID for metric: queries
+
+--- Computing PhiID for task abstract_reasoning_and_creative_thinking ---
+
+Prompt: 1
+Calculating PhiID for metric: queries
+Calculating PhiID for head 0/336...
+Calculating PhiID for head 0/336...
+Calculating PhiID for head 0/336...
+Calculating PhiID for head 0/336...
+
+--- Computing PhiID for task abstract_reasoning_and_creative_thinking ---
+
+Prompt: 3
+Calculating PhiID for metric: queries
+
+--- Computing PhiID for task abstract_reasoning_and_creative_thinking ---
+
+Prompt: 4
+Calculating PhiID for metric: queries
+
+--- Computing PhiID for task abstract_reasoning_and_creative_thinking ---
+
+Prompt: 5
+Calculating PhiID for metric: queries
+
+--- Computing PhiID for task basic_common_sense_reasoning ---
+
+Prompt: 7
+Calculating PhiID for metric: queries
+
+--- Computing PhiID for task abstract_reasoning_and_creative_thinking ---
+
+Prompt: 7
+Calculating PhiID for metric: queries
+
+--- Computing PhiID for task abstract_reasoning_and_creative_thinking ---
+
+Prompt: 8
+Calculating PhiID for metric: queries
+
+--- Computing PhiID for task abstract_reasoning_and_creative_thinking ---
+
+Prompt: 9
+Calculating PhiID for metric: queries
+
+--- Computing PhiID for task emotional_intelligence_and_social_cognition ---
+
+Prompt: 0
+Calculating PhiID for metric: queries
+
+--- Computing PhiID for task basic_common_sense_reasoning ---
+
+Prompt: 5
+Calculating PhiID for metric: queries
+Calculating PhiID for head 0/336...
+
+--- Computing PhiID for task emotional_intelligence_and_social_cognition ---
+
+Prompt: 1
+Calculating PhiID for metric: queries
+Calculating PhiID for head 0/336...
+Calculating PhiID for head 0/336...
+Calculating PhiID for head 0/336...
+
+--- Computing PhiID for task emotional_intelligence_and_social_cognition ---
+
+Prompt: 2
+Calculating PhiID for metric: queries
+Calculating PhiID for head 0/336...
+Calculating PhiID for head 0/336...
+
+--- Computing PhiID for task emotional_intelligence_and_social_cognition ---
+
+Prompt: 4
+Calculating PhiID for metric: queries
+
+--- Computing PhiID for task emotional_intelligence_and_social_cognition ---
+
+Prompt: 5
+Calculating PhiID for metric: queries
+
+--- Computing PhiID for task abstract_reasoning_and_creative_thinking ---
+
+Prompt: 6
+Calculating PhiID for metric: queries
+Calculating PhiID for head 0/336...
+Calculating PhiID for head 0/336...
+Calculating PhiID for head 0/336...
+
+--- Computing PhiID for task basic_common_sense_reasoning ---
+
+Prompt: 9
+Calculating PhiID for metric: queries
+Calculating PhiID for head 0/336...
+Calculating PhiID for head 0/336...
+
+--- Computing PhiID for task emotional_intelligence_and_social_cognition ---
+
+Prompt: 9
+Calculating PhiID for metric: queries
+Calculating PhiID for head 0/336...
+Calculating PhiID for head 0/336...
+Calculating PhiID for head 0/336...
+Calculating PhiID for head 0/336...
+Calculating PhiID for head 0/336...
+Calculating PhiID for head 0/336...
+Calculating PhiID for head 0/336...
+
+--- Computing PhiID for task emotional_intelligence_and_social_cognition ---
+
+Prompt: 7
+Calculating PhiID for metric: queries
+Calculating PhiID for head 0/336...
+Calculating PhiID for head 0/336...
+Calculating PhiID for head 0/336...
+
+--- Computing PhiID for task emotional_intelligence_and_social_cognition ---
+
+Prompt: 8
+Calculating PhiID for metric: queries
+Calculating PhiID for head 0/336...
+Calculating PhiID for head 0/336...
+
+--- Computing PhiID for task abstract_reasoning_and_creative_thinking ---
+
+Prompt: 2
+Calculating PhiID for metric: queries
+Calculating PhiID for head 0/336...
+
+--- Computing PhiID for task part_of_speech_tagging ---
+
+Prompt: 9
+Calculating PhiID for metric: queries
+Calculating PhiID for head 0/336...
+Calculating PhiID for head 0/336...
+Calculating PhiID for head 0/336...
+Calculating PhiID for head 0/336...
+Calculating PhiID for head 0/336...
+Calculating PhiID for head 0/336...
+Calculating PhiID for head 0/336...
+Calculating PhiID for head 0/336...
+Calculating PhiID for head 0/336...
+Calculating PhiID for head 0/336...
+Calculating PhiID for head 0/336...
+Calculating PhiID for head 0/336...
+Calculating PhiID for head 0/336...
+
+--- Computing PhiID for task emotional_intelligence_and_social_cognition ---
+
+Prompt: 3
+Calculating PhiID for metric: queries
+
+--- Computing PhiID for task emotional_intelligence_and_social_cognition ---
+
+Prompt: 6
+Calculating PhiID for metric: queries
+Calculating PhiID for head 0/336...
+Calculating PhiID for head 0/336...
+Calculating PhiID for head 0/336...
+Calculating PhiID for head 0/336...
+Calculating PhiID for head 0/336...
+Calculating PhiID for head 0/336...
+Calculating PhiID for head 0/336...
+Calculating PhiID for head 0/336...
+Calculating PhiID for head 0/336...
+Calculating PhiID for head 0/336...
+Calculating PhiID for head 0/336...
+Calculating PhiID for head 0/336...
+Calculating PhiID for head 0/336...
+Calculating PhiID for head 0/336...
+Calculating PhiID for head 50/336...
+Calculating PhiID for head 50/336...
+Calculating PhiID for head 50/336...
+Calculating PhiID for head 50/336...
+Calculating PhiID for head 50/336...
+Calculating PhiID for head 50/336...
+Calculating PhiID for head 50/336...
+Calculating PhiID for head 50/336...
+Calculating PhiID for head 50/336...
+Calculating PhiID for head 50/336...
+Calculating PhiID for head 50/336...
+Calculating PhiID for head 50/336...
+Calculating PhiID for head 50/336...
+Calculating PhiID for head 50/336...
+Calculating PhiID for head 50/336...
+Calculating PhiID for head 50/336...
+Calculating PhiID for head 50/336...
+Calculating PhiID for head 50/336...
+Calculating PhiID for head 50/336...
+Calculating PhiID for head 50/336...
+Calculating PhiID for head 50/336...
+Calculating PhiID for head 50/336...
+Calculating PhiID for head 50/336...
+Calculating PhiID for head 50/336...
+Calculating PhiID for head 50/336...
+Calculating PhiID for head 50/336...
+Calculating PhiID for head 50/336...
+Calculating PhiID for head 50/336...
+Calculating PhiID for head 50/336...
+Calculating PhiID for head 50/336...
+Calculating PhiID for head 50/336...
+Calculating PhiID for head 50/336...
+Calculating PhiID for head 50/336...
+Calculating PhiID for head 50/336...
+Calculating PhiID for head 50/336...
+Calculating PhiID for head 50/336...
+Calculating PhiID for head 50/336...
+Calculating PhiID for head 50/336...
+Calculating PhiID for head 50/336...
+Calculating PhiID for head 50/336...
+Calculating PhiID for head 50/336...
+Calculating PhiID for head 50/336...
+Calculating PhiID for head 50/336...
+Calculating PhiID for head 50/336...
+Calculating PhiID for head 50/336...
+Calculating PhiID for head 50/336...
+Calculating PhiID for head 50/336...
+Calculating PhiID for head 50/336...
+Calculating PhiID for head 50/336...
+Calculating PhiID for head 50/336...
+Calculating PhiID for head 50/336...
+Calculating PhiID for head 50/336...
+Calculating PhiID for head 50/336...
+Calculating PhiID for head 50/336...
+Calculating PhiID for head 50/336...
+Calculating PhiID for head 50/336...
+Calculating PhiID for head 50/336...
+Calculating PhiID for head 50/336...
+Calculating PhiID for head 50/336...
+Calculating PhiID for head 50/336...

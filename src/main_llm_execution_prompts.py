@@ -10,8 +10,9 @@ from huggingface_hub import login
 from transformers import AutoTokenizer, BitsAndBytesConfig, GemmaForCausalLM
 import seaborn as sns
 import matplotlib.pyplot as plt
+import sys
 
-for model_code in ['G3-12']:
+for model_code in constants.FINAL_MODELS:
     print(f"\n\n\n\n--- Running model: {model_code} ---")
     constants.update_model_code(model_code)
 
@@ -33,7 +34,6 @@ for model_code in ['G3-12']:
     )
     model.eval()
 
-
     # Generate Time Series
     print("\n\n\n--- Generating Time Series ---\n")
     random_input_length, num_tokens_to_generate, temperature = 24, 100, 0.3
@@ -54,6 +54,8 @@ for model_code in ['G3-12']:
             time_series[cognitive_task][n_prompt] = compute_attention_metrics_norms(attention_params[cognitive_task][n_prompt],
                                             constants.METRICS_TRANSFORMER, num_tokens_to_generate, aggregation_type='norm')
             save_time_series(time_series[cognitive_task][n_prompt], base_save_path=constants.TIME_SERIES_DIR+cognitive_task+"/"+str(n_prompt) + ".pt")
+            # Flush the print buffer
+            sys.stdout.flush()
 
 
     # Attention Weights Average Activation per Task Category and Attention Head

@@ -71,7 +71,7 @@ def plot_gradient_rank_overlay(models_gradient_ranks, figsize=None, save=False,
         normalized_x = np.linspace(0, 1, num_layers)
 
         # Plot the normalized mean with confidence band
-        plt.plot(normalized_x, normalized_y, label=constants.MODEL_NAMES[model_code]["PLOT_NAME"])
+        plt.plot(normalized_x, normalized_y, label=constants.MODEL_NAMES[model_code]["plot_name"])
         if plot_intralayer_std:
             plt.fill_between(normalized_x, normalized_y - normalized_std, normalized_y + normalized_std, alpha=0.2)
 

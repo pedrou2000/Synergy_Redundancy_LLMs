@@ -2,39 +2,69 @@ from transformers import AutoConfig
 
 # CACHE_DIR_BITBUCKET = "/vol/bitbucket/pu22/Transformers/" # Bitbucket cache directory
 # CACHE_DIR_LOCAL = "/homes/pu22/.cache/huggingface/hub" # Local cache directory
+"""
+MODEL_NAMES = {
+    'G1-2B': {"hf_name": "google/gemma-2b-it", "FOLDER_NAME": "1-Gemma-2b-it", "plot_name": "Gemma 1 2B"},
+    'G1.1-2B': {"hf_name": "google/gemma-1.1-2b-it", "FOLDER_NAME": "2-Gemma-1.1-2b-it", "plot_name": "Gemma 1.1 2B"},
+    'G1.1-7B': {"hf_name": "google/gemma-1.1-7b-it", "FOLDER_NAME": "3-Gemma-1.1-7b-it", "plot_name": "Gemma 1.1 7B"},
+    'L3-8B': {"hf_name": "meta-llama/Meta-Llama-3-8B-Instruct", "FOLDER_NAME": "4-Llama-3-8B-Instruct", "plot_name": "Llama 3 8B"},
+    'G2-2B': {"hf_name": "google/gemma-2-2b-it", "FOLDER_NAME": "5-Gemma-2-2B", "plot_name": "Gemma 2 2B", "color": "#1f77b4"},
+    'G2-9B': {"hf_name": "google/gemma-2-9b-it", "FOLDER_NAME": "6-Gemma-2-9B", "plot_name": "Gemma 2 9B", "color": "#2ca02c"},
+    'L3.2-3B': {"hf_name": "meta-llama/Llama-3.2-3B-Instruct", "FOLDER_NAME": "7-Llama-3.2-3B", "plot_name": "Llama 3.2 3B", "color": "#ff7f0e"},
+    'L3.1-8B': {"hf_name": "meta-llama/Llama-3.1-8B-Instruct", "FOLDER_NAME": "8-Llama-3.1-8B", "plot_name": "Llama 3.1 8B", "color": "#9467bd"},
+    'L3.1-8B-b': {"hf_name": "meta-llama/Llama-3.1-8B", "FOLDER_NAME": "9-Llama-3.1-8B-Base", "plot_name": "Llama 3.1 8B Base", "color": "#9467ed"},
+    'R1-L3.1-8B': {"hf_name": "deepseek-ai/DeepSeek-R1-Distill-Llama-8B", "FOLDER_NAME": "10-R1-Distilled-Llama-3.1-8B", "plot_name": "R1 Distilled Llama 3.1 8B", "color": "#9467ju"},
+    'L3-1': {"hf_name": "meta-llama/Llama-3.2-1B", "FOLDER_NAME": "11-Llama-3.2-1B-Base", "plot_name": "Llama 3.2 1B", "color": "#4d8e00"},
+    'L3-3': {"hf_name": "meta-llama/Llama-3.2-3B", "FOLDER_NAME": "12-Llama-3.2-3B-Base", "plot_name": "Llama 3.2 3B", "color": "#456e00"},
+    'G3-1': {"hf_name": "google/gemma-3-1b-pt", "FOLDER_NAME": "13-Gemma-3-1B-Base", "plot_name": "Gemma 3 1B", "color": "#647c00"},
+    'G3-4': {"hf_name": "google/gemma-3-4b-pt", "FOLDER_NAME": "14-Gemma-3-4B-Base", "plot_name": "Gemma 3 4B", "color": "#7c8e00"},
+    'G3-12': {"hf_name": "google/gemma-3-12b-pt", "FOLDER_NAME": "15-Gemma-3-12B-Base", "plot_name": "Gemma 3 12B", "color": "#8e9e00"},
+    'Q25M-1': {"hf_name": "Qwen/Qwen2.5-Math-1.5B", "FOLDER_NAME": "16-Qwen2.5-Math-1.5B", "plot_name": "Qwen 2.5 Math 1.5B", "color": "#8e9e00"},
+    'Q25M-7': {"hf_name": "Qwen/Qwen2.5-Math-7B", "FOLDER_NAME": "17-Qwen2.5-Math-7B", "plot_name": "Qwen 2.5 Math 7B", "color": "#8e9e00"},
+    'Q3-0': {"hf_name": "Qwen/Qwen3-0.6B-Base", "FOLDER_NAME": "18-Qwen3-0.6B-Base", "plot_name": "Qwen 3 0.6B", "color": "#8e9e00"},
+    'Q3-1': {"hf_name": "Qwen/Qwen3-1.7B-Base", "FOLDER_NAME": "19-Qwen3-1.7B-Base", "plot_name": "Qwen 3 1.7B", "color": "#a0ae00"},
+    'Q3-4': {"hf_name": "Qwen/Qwen3-4B-Base", "FOLDER_NAME": "20-Qwen3-4B-Base", "plot_name": "Qwen 3 4B", "color": "#b0be00"},
+    'Q3-8': {"hf_name": "Qwen/Qwen3-8B-Base", "FOLDER_NAME": "21-Qwen3-8B-Base", "plot_name": "Qwen 3 8B", "color": "#c0ce00"},
+}
+"""
 
 MODEL_NAMES = {
-    'G1-2B': {"HF_NAME": "google/gemma-2b-it", "FOLDER_NAME": "1-Gemma-2b-it", "PLOT_NAME": "Gemma 1 2B"},
-    'G1.1-2B': {"HF_NAME": "google/gemma-1.1-2b-it", "FOLDER_NAME": "2-Gemma-1.1-2b-it", "PLOT_NAME": "Gemma 1.1 2B"},
-    'G1.1-7B': {"HF_NAME": "google/gemma-1.1-7b-it", "FOLDER_NAME": "3-Gemma-1.1-7b-it", "PLOT_NAME": "Gemma 1.1 7B"},
-    'L3-8B': {"HF_NAME": "meta-llama/Meta-Llama-3-8B-Instruct", "FOLDER_NAME": "4-Llama-3-8B-Instruct", "PLOT_NAME": "Llama 3 8B"},
-    'G2-2B': {"HF_NAME": "google/gemma-2-2b-it", "FOLDER_NAME": "5-Gemma-2-2B", "PLOT_NAME": "Gemma 2 2B", "COLOR": "#1f77b4"},
-    'G2-9B': {"HF_NAME": "google/gemma-2-9b-it", "FOLDER_NAME": "6-Gemma-2-9B", "PLOT_NAME": "Gemma 2 9B", "COLOR": "#2ca02c"},
-    'L3.2-3B': {"HF_NAME": "meta-llama/Llama-3.2-3B-Instruct", "FOLDER_NAME": "7-Llama-3.2-3B", "PLOT_NAME": "Llama 3.2 3B", "COLOR": "#ff7f0e"},
-    'L3.1-8B': {"HF_NAME": "meta-llama/Llama-3.1-8B-Instruct", "FOLDER_NAME": "8-Llama-3.1-8B", "PLOT_NAME": "Llama 3.1 8B", "COLOR": "#9467bd"},
-    'L3.1-8B-b': {"HF_NAME": "meta-llama/Llama-3.1-8B", "FOLDER_NAME": "9-Llama-3.1-8B-Base", "PLOT_NAME": "Llama 3.1 8B Base", "COLOR": "#9467ed"},
-    'R1-L3.1-8B': {"HF_NAME": "deepseek-ai/DeepSeek-R1-Distill-Llama-8B", "FOLDER_NAME": "10-R1-Distilled-Llama-3.1-8B", "PLOT_NAME": "R1 Distilled Llama 3.1 8B", "COLOR": "#9467ju"},
-    'L3-1': {"HF_NAME": "meta-llama/Llama-3.2-1B", "FOLDER_NAME": "11-Llama-3.2-1B-Base", "PLOT_NAME": "Llama 3.2 1B", "COLOR": "#4d8e00"},
-    'L3-3': {"HF_NAME": "meta-llama/Llama-3.2-3B", "FOLDER_NAME": "12-Llama-3.2-3B-Base", "PLOT_NAME": "Llama 3.2 3B", "COLOR": "#456e00"},
-    'G3-1': {"HF_NAME": "google/gemma-3-1b-pt", "FOLDER_NAME": "13-Gemma-3-1B-Base", "PLOT_NAME": "Gemma 3 1B", "COLOR": "#647c00"},
-    'G3-4': {"HF_NAME": "google/gemma-3-4b-pt", "FOLDER_NAME": "14-Gemma-3-4B-Base", "PLOT_NAME": "Gemma 3 4B", "COLOR": "#7c8e00"},
-    'G3-12': {"HF_NAME": "google/gemma-3-12b-pt", "FOLDER_NAME": "15-Gemma-3-12B-Base", "PLOT_NAME": "Gemma 3 12B", "COLOR": "#8e9e00"},
-    'Q3-0': {"HF_NAME": "Qwen/Qwen3-0.6B-Base", "FOLDER_NAME": "16-Qwen3-0.6B-Base", "PLOT_NAME": "Qwen 3 0.6B", "COLOR": "#8e9e00"},
-    'Q3-1': {"HF_NAME": "Qwen/Qwen3-1.7B-Base", "FOLDER_NAME": "17-Qwen3-1.7B-Base", "PLOT_NAME": "Qwen 3 1.7B", "COLOR": "#a0ae00"},
-    'Q3-4': {"HF_NAME": "Qwen/Qwen3-4B-Base", "FOLDER_NAME": "18-Qwen3-4B-Base", "PLOT_NAME": "Qwen 3 4B", "COLOR": "#b0be00"},
-    'Q3-8': {"HF_NAME": "Qwen/Qwen3-8B-Base", "FOLDER_NAME": "19-Qwen3-8B-Base", "PLOT_NAME": "Qwen 3 8B", "COLOR": "#c0ce00"},
+    # Qwen
+    'Q3-0': {'hf_name': 'Qwen/Qwen3-0.6B-Base', 'company': 'alibaba', 'model_family': 'qwen-3', 'model_size': '0.6B', 'it': 'base', 'plot_name': 'Qwen 3 0.6B Base', 'color': '#8e9e00', 'apply_chat_template': 'no'},
+    'Q3-1': {'hf_name': 'Qwen/Qwen3-1.7B-Base', 'company': 'alibaba', 'model_family': 'qwen-3', 'model_size': '1.7B', 'it': 'base', 'plot_name': 'Qwen 3 1.7B Base', 'color': '#a0ae00', 'apply_chat_template': 'no'},
+    'Q3-4': {'hf_name': 'Qwen/Qwen3-4B-Base', 'company': 'alibaba', 'model_family': 'qwen-3', 'model_size': '4B', 'it': 'base', 'plot_name': 'Qwen 3 4B Base', 'color': '#b0be00', 'apply_chat_template': 'no'},
+    'Q3-8': {'hf_name': 'Qwen/Qwen3-8B-Base', 'company': 'alibaba', 'model_family': 'qwen-3', 'model_size': '8B', 'it': 'base', 'plot_name': 'Qwen 3 8B Base', 'color': '#c0ce00', 'apply_chat_template': 'no'},
+    'Q3-14': {'hf_name': 'Qwen/Qwen3-14B-Base', 'company': 'alibaba', 'model_family': 'qwen-3', 'model_size': '14B', 'it': 'base', 'plot_name': 'Qwen 3 14B Base', 'color': '#d0de00', 'apply_chat_template': 'no'},
+    'Q3-30-A3': {'hf_name': 'Qwen/Qwen3-30B-A3B-Base', 'company': 'alibaba', 'model_family': 'qwen-3', 'model_size': '30B-A3B', 'it': 'base', 'plot_name': 'Qwen 3 30B A3B Base', 'color': '#e0ee00', 'apply_chat_template': 'no'},
+    'Q25M-1': {'hf_name': 'Qwen/Qwen2.5-Math-1.5B', 'company': 'alibaba', 'model_family': 'qwen-2.5-math', 'model_size': '1.5B', 'it': 'base', 'plot_name': 'Qwen 2.5 Math 1.5B Base', 'color': '#8e9e00', 'apply_chat_template': 'no'},
+    'Q25M-7': {'hf_name': 'Qwen/Qwen2.5-Math-7B', 'company': 'alibaba', 'model_family': 'qwen-2.5-math', 'model_size': '7B', 'it': 'base', 'plot_name': 'Qwen 2.5 Math 7B Base', 'color': '#a0ae00', 'apply_chat_template': 'no'},
+    'Q25M-72': {'hf_name': 'Qwen/Qwen2.5-Math-72B', 'company': 'alibaba', 'model_family': 'qwen-2.5-math', 'model_size': '72B', 'it': 'base', 'plot_name': 'Qwen 2.5 Math 72B Base', 'color': '#b0be00', 'apply_chat_template': 'no'},
+    
+    # Gemma
+    'G3-1': {'hf_name': 'google/gemma-3-1b-pt', 'company': 'google', 'model_family': 'gemma-3', 'model_size': '1B', 'it': 'base', 'plot_name': 'Gemma 3 1B Base', 'color': '#647c00', 'apply_chat_template': 'base'},
+    'G3-4': {'hf_name': 'google/gemma-3-4b-pt', 'company': 'google', 'model_family': 'gemma-3', 'model_size': '4B', 'it': 'base', 'plot_name': 'Gemma 3 4B Base', 'color': '#7c8e00', 'apply_chat_template': 'base'},
+    'G3-12': {'hf_name': 'google/gemma-3-12b-pt', 'company': 'google', 'model_family': 'gemma-3', 'model_size': '12B', 'it': 'base', 'plot_name': 'Gemma 3 12B Base', 'color': '#8e9e00', 'apply_chat_template': 'base'},
+    'G3-27': {'hf_name': 'google/gemma-3-27b-pt', 'company': 'google', 'model_family': 'gemma-3', 'model_size': '27B', 'it': 'base', 'plot_name': 'Gemma 3 27B Base', 'color': '#9eae00', 'apply_chat_template': 'base'},
+
+    # Llama
 }
-MODEL_CODE = 'L3.1-8B-b'
-MODEL_NAME = MODEL_NAMES[MODEL_CODE]["HF_NAME"]
-FOLDER_MODEL_NAME = MODEL_NAMES[MODEL_CODE]["FOLDER_NAME"]
-FINAL_MODELS = ['G2-2B', 'G2-9B', 'L3.2-3B', 'L3.1-8B']
-NEW_MODELS = ['L3-1', 'L3-3', 'G3-1', 'G3-4']#, 'Q3-0', 'Q3-1', 'Q3-4', 'Q3-8']
+
+PROMP_TEMPLATE_BASE = lambda prompt: f"### Instruction:\n{prompt}\n\n### Response:\n"
+
+MODEL_CODE = 'G3-1'  
+MODEL_NAME = MODEL_NAMES[MODEL_CODE]["hf_name"]
+FOLDER_MODEL_NAME = MODEL_NAMES[MODEL_CODE]["company"] + "/" + MODEL_NAMES[MODEL_CODE]["model_family"] + "/" + MODEL_NAMES[MODEL_CODE]["model_size"] + "/" + MODEL_NAMES[MODEL_CODE]["it"]
+FINAL_MODELS = ['G3-27', 'Q3-30-A3', 'Q25M-72'] 
 
 config = AutoConfig.from_pretrained(MODEL_NAME)
-NUM_LAYERS = config.num_hidden_layers if hasattr(config, 'num_hidden_layers') else config.n_layer
-NUM_HEADS_PER_LAYER = config.num_attention_heads if hasattr(config, 'num_attention_heads') else config.n_head
+config = config.text_config if hasattr(config, 'text_config') else config
+NUM_LAYERS = config.num_hidden_layers 
+NUM_HEADS_PER_LAYER = config.num_attention_heads  
+NUM_KV_HEADS = config.num_key_value_heads
+MODEL_RESIDUAL_STREAM_SIZE = config.hidden_size 
+HEAD_DIM = config.head_dim if hasattr(config, 'head_dim') else config.hidden_size // config.num_attention_heads
 NUM_TOTAL_HEADS = NUM_LAYERS * NUM_HEADS_PER_LAYER
-MODIFIED_OUTPUT_ATTENTIONS = False
+MODIFIED_OUTPUT_ATTENTIONS = False   
 USING_REST_STATE = False
 
 GENERATE_RAW_ATTENTION_AND_TIME_SERIES = True
@@ -197,7 +227,8 @@ PROMPT_CATEGORIES.append(RESTING_STATE_CATEGORY) if USING_REST_STATE else None
 
 def update_model_code(new_model_code):
     """Update MODEL_CODE and all dependent variables."""
-    global MODEL_CODE, MODEL_NAME, FOLDER_MODEL_NAME, NUM_LAYERS, NUM_HEADS_PER_LAYER, NUM_TOTAL_HEADS
+    global MODEL_CODE, MODEL_NAME, FOLDER_MODEL_NAME, NUM_LAYERS, NUM_HEADS_PER_LAYER, NUM_TOTAL_HEADS, config, NUM_KV_HEADS
+    global MODEL_RESIDUAL_STREAM_SIZE, HEAD_DIM
     global PLOTS_DIR, SAVED_DATA_DIR, RAW_ATTENTION_DIR, TIME_SERIES_DIR, MATRICES_DIR, ATTENTION_WEIGHTS_DIR
     global GRAPH_METRICS_DIR, ABLATIONS_DIR, PLOTS_TIME_SERIES_DIR, PLOTS_SYNERGY_REDUNDANCY_DIR
     global PLOTS_HEAD_ACTIVATIONS_COGNITIVE_TASKS, PLOT_SYNERGY_REDUNDANCY_TASK_CORRELATIONS, PLOT_ABLATIONS
@@ -206,21 +237,20 @@ def update_model_code(new_model_code):
         raise ValueError(f"Invalid model code: {new_model_code}. Available options: {list(MODEL_NAMES.keys())}")
 
     MODEL_CODE = new_model_code
-    MODEL_NAME = MODEL_NAMES[MODEL_CODE]["HF_NAME"]
-    FOLDER_MODEL_NAME = MODEL_NAMES[MODEL_CODE]["FOLDER_NAME"]
+    MODEL_NAME = MODEL_NAMES[MODEL_CODE]["hf_name"]
+    FOLDER_MODEL_NAME = MODEL_NAMES[MODEL_CODE]["company"] + "/" + MODEL_NAMES[MODEL_CODE]["model_family"] + "/" + MODEL_NAMES[MODEL_CODE]["model_size"] + "/" + MODEL_NAMES[MODEL_CODE]["it"]
 
     config = AutoConfig.from_pretrained(MODEL_NAME)
+    config = config.text_config if hasattr(config, 'text_config') else config
     if hasattr(config, 'text_config'):
         config = config.text_config
     
-    NUM_LAYERS = config.num_hidden_layers if hasattr(config, 'num_hidden_layers') else config.n_layer
-    if hasattr(config, 'num_hidden_layers'):
-        NUM_LAYERS = config.num_hidden_layers
-    elif hasattr(config, 'n_layer'):
-        NUM_LAYERS = config.n_layer
-    else:
-        raise ValueError("Model configuration does not contain 'num_hidden_layers', 'config.num_hidden_layers', or 'n_layer' attribute.")
-    NUM_HEADS_PER_LAYER = config.num_attention_heads if hasattr(config, 'num_attention_heads') else config.n_head
+
+    NUM_LAYERS = config.num_hidden_layers 
+    NUM_HEADS_PER_LAYER = config.num_attention_heads  
+    NUM_KV_HEADS = config.num_key_value_heads
+    MODEL_RESIDUAL_STREAM_SIZE = config.hidden_size 
+    HEAD_DIM = config.head_dim if hasattr(config, 'head_dim') else config.hidden_size // config.num_attention_heads
     NUM_TOTAL_HEADS = NUM_LAYERS * NUM_HEADS_PER_LAYER
 
     # Update directories
