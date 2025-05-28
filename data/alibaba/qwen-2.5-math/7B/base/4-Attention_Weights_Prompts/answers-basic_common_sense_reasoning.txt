@@ -1,0 +1,75 @@
+--- Prompt ---
+If it starts raining while the sun is shining, what weather phenomenon might you expect to see?
+--- Answer ---
+If it starts raining while the sun is shining, what weather phenomenon might you expect to see? If it starts raining while the sun is shining, you might expect to see rainbows. Rainbows are formed when light is refracted, or bent, as it enters a raindrop, then reflected off the inside of the raindrop, and finally refracted again as it exits the raindrop. This process creates a
+--------------------------------------------------
+--- Prompt ---
+Why do people wear sunglasses?
+--- Answer ---
+Why do people wear sunglasses? What is the difference between wearing sunglasses for protection from harmful UV rays and for reducing eye strain? How do you know which ones to use when? There are two types of sunglasses: those that protect the eye from harmful UV light, and those that reduce eye strain. The first type is called "UV protection" sunglasses,
+--------------------------------------------------
+--- Prompt ---
+What might you use to write on a chalkboard?
+--- Answer ---
+What might you use to write on a chalkboard? (4 letters)
+What might you use to write on a computer screen? (5 letters)
+What might you use to write on a pad of paper? (6 letters)
+What might you use to write on a sand dune? (6 letters)
+What might you use to write on a wall? (6 letters
+--------------------------------------------------
+--- Prompt ---
+Why would you put a letter in an envelope?
+--- Answer ---
+Why would you put a letter in an envelope? Putting a letter in an envelope is a common practice for delivering or mailing a letter or document. The envelope is a small, flat container that is designed to hold the letter and provide a barrier between the letter and the person or organization that will receive it. 
+
+There are several reasons why someone might choose to put a letter
+--------------------------------------------------
+--- Prompt ---
+If you're cold, what might you do to get warm?
+--- Answer ---
+If you're cold, what might you do to get warm? Describe how heat flows to make this happen.
+
+If you're cold, you might get warm by walking, running, jumping, or any other form of physical activity. This is because physical activity generates heat through the production of waste heat. As you move, your muscles contract and relax, which causes your body to produce heat
+--------------------------------------------------
+--- Prompt ---
+What is the purpose of a refrigerator?
+--- Answer ---
+What is the purpose of a refrigerator? 
+
+Options:
+A) To freeze the liquids
+B) To produce heat
+C) To cool the contents inside
+D) None of these
+The purpose of a refrigerator is to cool the contents inside. Therefore, the correct answer is C) To cool the contents inside.Human Resources Consulting (HRC)
+--------------------------------------------------
+--- Prompt ---
+Why might someone plant a tree?
+--- Answer ---
+Why might someone plant a tree? Choose two reasons.
+
+A. To provide shade and beauty.
+B. To produce food for others.
+C. To prevent flooding.
+D. To prevent soil erosion.
+A. To provide shade and beauty.
+B. To prevent soil erosion.Human resources professionals are concerned about employee wrist injuries from using computers and other handheld
+--------------------------------------------------
+--- Prompt ---
+What happens to ice when it's left out in the sun?
+--- Answer ---
+What happens to ice when it's left out in the sun? I'm trying to understand whether the answer to this question is yes, if it's true that the ice will start to melt because molecules of ice need a certain amount of thermal energy to transform into water.
+Another question is what happens to the molecules once the ice melts? Do they get away from the lattice of their interactions
+--------------------------------------------------
+--- Prompt ---
+Why do people shake hands when they meet?
+--- Answer ---
+Why do people shake hands when they meet? Do you think this is a universal practice across cultures, or are there variations in how different cultures greet each other? The tradition of shaking hands when meeting someone is indeed a cultural practice that varies across different societies. In many cultures, such as those in the Western world, shaking hands is deeply ingrained and signifies a friendly
+--------------------------------------------------
+--- Prompt ---
+What can you use to measure the length of a desk?
+--- Answer ---
+What can you use to measure the length of a desk? To measure the length of a desk, you can use a ruler or a tape measure. These tools are designed to measure linear distances and can provide accurate measurements.
+
+What can you use to measure the weight of a rock? To measure the weight of a rock, you can use a scale. There are various types of scales
+--------------------------------------------------

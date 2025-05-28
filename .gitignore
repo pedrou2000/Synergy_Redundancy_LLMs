@@ -3,6 +3,5 @@ src/hf_token.py
 **/1-Raw_Attention/
 **/3-Synergy_Redundancy_Matrices/
 **/8-All_PhiID_Separate/
-**/data/
-data/
+# data/
 plots/

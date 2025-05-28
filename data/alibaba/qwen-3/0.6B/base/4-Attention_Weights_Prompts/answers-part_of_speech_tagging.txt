@@ -1,0 +1,107 @@
+--- Prompt ---
+Identify the parts of speech in the sentence: Quickly, the agile cat climbed the tall tree.
+--- Answer ---
+Identify the parts of speech in the sentence: Quickly, the agile cat climbed the tall tree. The parts of speech in the sentence are as follows:
+
+1. **Quickly** - Adverb  
+2. **the** - Article  
+3. **agile** - Adjective  
+4. **cat** - Noun  
+5. **climbed** - Verb  
+6. **the** -
+--------------------------------------------------
+--- Prompt ---
+Identify the parts of speech in the sentence: She whispered a secret to her friend during the boring lecture.
+--- Answer ---
+Identify the parts of speech in the sentence: She whispered a secret to her friend during the boring lecture. The parts of speech in the sentence "She whispered a secret to her friend during the boring lecture" are as follows:
+
+1. **She** - Pronoun (subject)
+2. **whispered** - Verb (main action)
+3. **secret** - Noun (object of the verb)
+4.
+--------------------------------------------------
+--- Prompt ---
+Identify the parts of speech in the sentence: The sun sets in the west.
+--- Answer ---
+Identify the parts of speech in the sentence: The sun sets in the west. 
+
+The parts of speech in the sentence "The sun sets in the west" are:
+
+1. **Subject**: "The sun" (a noun acting as the subject of the sentence)
+2. **Verb**: "sets" (a verb describing the action of the subject)
+3. **Preposition**: "in
+--------------------------------------------------
+--- Prompt ---
+Identify the parts of speech in the sentence: Can you believe this amazing view?
+--- Answer ---
+Identify the parts of speech in the sentence: Can you believe this amazing view? Also, explain the role of each part of speech.
+
+The sentence "Can you believe this amazing view?" contains the following parts of speech:
+- **Adjective**: "amazing" modifies the noun "view" by describing it as "amazing."
+- **Adjective**: "this" modifies the noun "view
+--------------------------------------------------
+--- Prompt ---
+Identify the parts of speech in the sentence: He quickly finished his homework.
+--- Answer ---
+Identify the parts of speech in the sentence: He quickly finished his homework. The parts of speech in the sentence "He quickly finished his homework" are:
+
+1. **He**: Subject
+2. **quickly**: Adverb (describes the action)
+3. **finished**: Verb (past participle of the main verb)
+4. **his**: Possessive adjective (refers
+--------------------------------------------------
+--- Prompt ---
+Identify the parts of speech in the sentence: The beautifully decorated cake was a sight to behold.
+--- Answer ---
+Identify the parts of speech in the sentence: The beautifully decorated cake was a sight to behold. In the sentence "The beautifully decorated cake was a sight to behold," the parts of speech are:
+
+1. **The** - Demonstrative pronoun  
+2. **beautifully** - Adverb  
+3. **decorated** - Adjective  
+4. **cake** - Noun  
+5. **was
+--------------------------------------------------
+--- Prompt ---
+Identify the parts of speech in the sentence: They will travel to Japan next month.
+--- Answer ---
+Identify the parts of speech in the sentence: They will travel to Japan next month. Here are the parts of speech for each word in the sentence:
+
+1. **They** - Subject  
+2. **will** - Verb (indicative mood)  
+3. **travel** - Verb (main verb)  
+4. **to** - Preposition  
+5. **Japan** - Object (noun
+--------------------------------------------------
+--- Prompt ---
+Identify the parts of speech in the sentence: My favorite book was lost.
+--- Answer ---
+Identify the parts of speech in the sentence: My favorite book was lost. The parts of speech in the sentence "My favorite book was lost" are as follows:
+
+1. **My** - Pronoun (Personal pronoun)
+2. **favorite** - Adjective (A personal adverb)
+3. **book** - Noun (A common noun)
+4. **was** -
+--------------------------------------------------
+--- Prompt ---
+Identify the parts of speech in the sentence: The loud music could be heard from miles away.
+--- Answer ---
+Identify the parts of speech in the sentence: The loud music could be heard from miles away. 
+(a) The, loud, music, could, be, heard, miles, away.
+Answer:
+In this exercise, we need to identify the parts of speech in the given sentence. 
+The given sentence is: *The loud music could be heard from miles away.*
+
+*The*, *loud*, *music*,
+--------------------------------------------------
+--- Prompt ---
+Identify the parts of speech in the sentence: She sold all of her paintings at the art show.
+--- Answer ---
+Identify the parts of speech in the sentence: She sold all of her paintings at the art show. To identify the parts of speech in the sentence "She sold all of her paintings at the art show," we can break it down as follows:
+
+1. She: Subject 
+2. sold: Verb
+3. all: Adjective
+4. of: Preposition
+5. her: Possessive adjective
+
+--------------------------------------------------

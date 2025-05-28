@@ -1,0 +1,83 @@
+--- Prompt ---
+If it starts raining while the sun is shining, what weather phenomenon might you expect to see?
+--- Answer ---
+If it starts raining while the sun is shining, what weather phenomenon might you expect to see? Also, if you step onto a wet floor when you are outside, what will happen to your feet? Additionally, what is the difference in temperature between the 1000 meters mark and the 100 meters mark in a vertical soap bubble? Furthermore, how many times will a bicycle wheel turn if the
+--------------------------------------------------
+--- Prompt ---
+Why do people wear sunglasses?
+--- Answer ---
+Why do people wear sunglasses? Do they protect the eyes from the sun? Or do they protect from reflections?
+Do people wear sunglasses for protection from the sun, or is it more than that?
+Do those questions have the same meaning?
+Possible answers:
+I. no
+II. yes
+II.Humanity is more dependent on solar energy than
+--------------------------------------------------
+--- Prompt ---
+What might you use to write on a chalkboard?
+--- Answer ---
+What might you use to write on a chalkboard? When you think about writing on a chalkboard, you're likely thinking about a simple, straightforward activity. Here are some common materials you might use:
+
+1. **Chalk**: This is one of the most common and simplest materials. Chalk is made from finely ground limestone, which is easily spreadable and easy to
+--------------------------------------------------
+--- Prompt ---
+Why would you put a letter in an envelope?
+--- Answer ---
+Why would you put a letter in an envelope? Choose the most suitable option to answer the above question. Options：  A. write  B. send  C. find  D. find something  E. hold
+A: The most suitable option to answer the question "Why would you put a letter in an envelope?" is:
+
+**B. send**
+
+Explanation
+--------------------------------------------------
+--- Prompt ---
+If you're cold, what might you do to get warm?
+--- Answer ---
+If you're cold, what might you do to get warm? Choose the most suitable option to answer the above question. Options: - step on ice - eat ice - drink water - read book - sweat
+Answer:
+Drink water
+
+Step-by-step justification:
+
+1. The question is asking about the most suitable action to get warm when someone feels cold.
+2. The options given are
+--------------------------------------------------
+--- Prompt ---
+What is the purpose of a refrigerator?
+--- Answer ---
+What is the purpose of a refrigerator? What is the purpose of a freezer? What is the purpose of a freezer fan? What is the purpose of a refrigerator door? What is the purpose of a refrigerator door handle? What is the purpose of a freezer door? What is the purpose of a freezer door handle? What is the purpose of a refrigerator door latch
+--------------------------------------------------
+--- Prompt ---
+Why might someone plant a tree?
+--- Answer ---
+Why might someone plant a tree?  A. raise money  B. make noise  C. fork out money  D. light cigarette  E. grow food  The best answer is
+A:
+
+E. grow foodWhat is the most logical reason to plant a tree?
+
+A. To raise money
+B. To make noise
+C.
+--------------------------------------------------
+--- Prompt ---
+What happens to ice when it's left out in the sun?
+--- Answer ---
+What happens to ice when it's left out in the sun? Is it possible to keep ice at 0 degrees Celsius for 15 minutes? What are the limitations of these methods? How does the behavior of ice change with temperature?
+
+When ice is left out in the sun, it undergoes a process called sublimation. During sublimation, ice transitions directly from a
+--------------------------------------------------
+--- Prompt ---
+Why do people shake hands when they meet?
+--- Answer ---
+Why do people shake hands when they meet? What is the significance of shaking hands, and how does it relate to the concept of family? Why do people shake hands with their families, and what are the cultural variations in this practice? Additionally, how can we encourage people to shake hands more frequently, and what are some common reasons for not shaking hands?
+
+People shake
+--------------------------------------------------
+--- Prompt ---
+What can you use to measure the length of a desk?
+--- Answer ---
+What can you use to measure the length of a desk? Can you measure the length of a table? How can we measure the length of a pencil? What is the length of a pencil? What did we learn from this activity?
+
+We can measure the length of a desk using a ruler, which is a tool specifically designed for measuring length. A ruler has markings along its sides
+--------------------------------------------------

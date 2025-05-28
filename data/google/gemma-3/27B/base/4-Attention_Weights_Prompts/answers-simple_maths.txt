@@ -1,0 +1,122 @@
+--- Prompt ---
+If you have 15 apples and you give away 5, how many do you have left?
+--- Answer ---
+### Instruction:
+If you have 15 apples and you give away 5, how many do you have left?
+
+### Response:
+To find out how many apples you have left, you need to subtract the number of apples you gave away from the total number of apples you had. You started with 15 apples, and you gave away 5, so you can calculate the remaining apples like this:
+
+15 (total apples) - 
+--------------------------------------------------
+--- Prompt ---
+A rectangle's length is twice its width. If the rectangle's perimeter is 36 meters, what are its length and width?
+--- Answer ---
+### Instruction:
+A rectangle's length is twice its width. If the rectangle's perimeter is 36 meters, what are its length and width?
+
+### Response:
+Let's denote the width of the rectangle as \( w \). According to the problem, the length \( l \) is twice the width, so \( l = 2w \). The perimeter \( P \) of a rectangle is given by the formula \( P = 2l + 2w \).
+
+
+--------------------------------------------------
+--- Prompt ---
+You read 45 pages of a book each day. How many pages will you have read after 7 days?
+--- Answer ---
+### Instruction:
+You read 45 pages of a book each day. How many pages will you have read after 7 days?
+
+### Response:
+To determine the total number of pages read after 7 days, you can multiply the number of pages read each day (45) by the number of days (7).
+
+\[
+45 \text{ pages/day} \times 7 \text{ days} = 315 \text{
+--------------------------------------------------
+--- Prompt ---
+If a train travels 60 miles in 1 hour, how far will it travel in 3 hours?
+--- Answer ---
+### Instruction:
+If a train travels 60 miles in 1 hour, how far will it travel in 3 hours?
+
+### Response:
+To find out how far the train will travel in 3 hours, we need to multiply the distance it travels in 1 hour by the number of hours it will be traveling.
+
+So, the train travels 60 miles in 1 hour.
+
+If it travels for 3 hours, it will travel 
+--------------------------------------------------
+--- Prompt ---
+There are 8 slices in a pizza. If you eat 2 slices, what fraction of the pizza is left?
+--- Answer ---
+### Instruction:
+There are 8 slices in a pizza. If you eat 2 slices, what fraction of the pizza is left?
+
+### Response:
+There are 8 slices in a pizza. If you eat 2 slices, the fraction of the pizza that is left is 6/8 or 3/4. This is because you have eaten 2 slices out of the total 8 slices, leaving 6 slices. The fraction 6/8 can
+--------------------------------------------------
+--- Prompt ---
+If one pencil costs 50 cents, how much do 12 pencils cost?
+--- Answer ---
+### Instruction:
+If one pencil costs 50 cents, how much do 12 pencils cost?
+
+### Response:
+To find the cost of 12 pencils, we multiply the cost of one pencil by the number of pencils.
+
+The cost of one pencil is 50 cents.
+
+To find the cost of 12 pencils, we multiply 50 cents by 12:
+
+$50 \text{
+--------------------------------------------------
+--- Prompt ---
+You have a 2-liter bottle of soda. If you pour out 500 milliliters, how much soda is left?
+--- Answer ---
+### Instruction:
+You have a 2-liter bottle of soda. If you pour out 500 milliliters, how much soda is left?
+
+### Response:
+To solve this problem, we need to subtract the amount of soda poured out (500 milliliters) from the initial amount of soda in the bottle (2 liters).
+
+First, we need to convert the initial amount of soda from liters to milliliters, as the amount poured out is given in milliliters. We know that
+--------------------------------------------------
+--- Prompt ---
+A marathon is 42 kilometers long. If you have run 10 kilometers, how much further do you have to run?
+--- Answer ---
+### Instruction:
+A marathon is 42 kilometers long. If you have run 10 kilometers, how much further do you have to run?
+
+### Response:
+To find out how much further you have to run, you need to subtract the distance you have already run (10 kilometers) from the total distance of the marathon (42 kilometers).
+
+So, 42 kilometers - 10 kilometers = 32 kilometers.
+
+Therefore, you still have to run
+--------------------------------------------------
+--- Prompt ---
+If you divide 24 by 3, then multiply by 2, what is the result?
+--- Answer ---
+### Instruction:
+If you divide 24 by 3, then multiply by 2, what is the result?
+
+### Response:
+Let's break down the steps:
+1. Divide 24 by 3: `24 / 3 = 8`
+2. Multiply the result by 2: `8 * 2 = 16`
+
+So, the final result is 16.
+### Instruction
+--------------------------------------------------
+--- Prompt ---
+A car travels 150 miles on 10 gallons of gas. How many miles per gallon does the car get?
+--- Answer ---
+### Instruction:
+A car travels 150 miles on 10 gallons of gas. How many miles per gallon does the car get?
+
+### Response:
+To find the miles per gallon (mpg) for the car, we can divide the total distance traveled by the total amount of gas used:
+
+<tex>$\text{Miles per gallon (mpg)} = \frac{\text{Total distance traveled}}{\text{Total amount of gas used}}$</tex>
+
+Substituting
+--------------------------------------------------

@@ -1,0 +1,70 @@
+--- Prompt ---
+If it starts raining while the sun is shining, what weather phenomenon might you expect to see?
+--- Answer ---
+If it starts raining while the sun is shining, what weather phenomenon might you expect to see? Generate several options based on the given context.
+1. A rainbow
+2. Thunderstorm
+3. Cloudy skies
+4. Fog
+5. Hailstorm
+6. Snowfall
+7. Tornado
+8. Lightning
+9. Wind gusts
+10. Heavy rainHuman: You
+--------------------------------------------------
+--- Prompt ---
+Why do people wear sunglasses?
+--- Answer ---
+Why do people wear sunglasses? Can they protect against rain? Do sunglasses block rain? Do sunglasses prevent water from getting into the eyes? Do sunglasses keep out sand? Do sunglasses keep out bugs? Do sunglasses keep out glare? Do sunglasses protect against the sun? Do sunglasses protect against UV rays? Do sunglasses protect against snow? Do sunglasses protect against wind
+--------------------------------------------------
+--- Prompt ---
+What might you use to write on a chalkboard?
+--- Answer ---
+What might you use to write on a chalkboard? Options: - cabinet - classroom - dining room - lecture - university Let's give stream of consciousness first:
+
+Classroom is a room in which a class of pupils or students is taught. I might use chalk to write on a chalkboard in the classroom. Therefore, the answer is classroom.Human: Where could you
+--------------------------------------------------
+--- Prompt ---
+Why would you put a letter in an envelope?
+--- Answer ---
+Why would you put a letter in an envelope? Options: - to be read - to touch - to write code - to write - to send The purpose of an envelope is to send the letter. A letter is sent to read by the person. to be read Where would you get a dog if you do not have one? Options: - pet store - outside -
+--------------------------------------------------
+--- Prompt ---
+If you're cold, what might you do to get warm?
+--- Answer ---
+If you're cold, what might you do to get warm? Options: - light fire - go swimming - get out of bed - sing and dance - turn on - Let's think now! Step-by-step reasoning:
+Lighting a fire can keep one warm as fire has heat. If one is cold he can get warm by lighting a fire. So, the final answer is light
+--------------------------------------------------
+--- Prompt ---
+What is the purpose of a refrigerator?
+--- Answer ---
+What is the purpose of a refrigerator? Is it okay to leave a refrigerator door open for a few minutes when unloading groceries? Why do some refrigerators have a freezer compartment on the bottom? What is a "fridge-magnet"? What is a "fridge" used for in a gym?
+
+The primary purpose of a refrigerator is to preserve food by
+--------------------------------------------------
+--- Prompt ---
+Why might someone plant a tree?
+--- Answer ---
+Why might someone plant a tree? Options: - outside - be beautiful - yard - apple - grown Let's think carefully first. Step-by-step reasoning process:
+Planting trees is good for environment as trees suck carbon dioxide from the air. Trees are generally beautiful and makes environment good for both humans and animals. So the final answer is be beautiful.
+--------------------------------------------------
+--- Prompt ---
+What happens to ice when it's left out in the sun?
+--- Answer ---
+What happens to ice when it's left out in the sun? Also, what are the three states of matter we are learning about, and how do the particles behave in each state? What happens to the particles in water when it is heated until it boils, and what changes occur when it cools down to form ice? How can we measure the volume of a liquid, and what
+--------------------------------------------------
+--- Prompt ---
+Why do people shake hands when they meet?
+--- Answer ---
+Why do people shake hands when they meet? Does shaking hands mean I am being polite? Can shaking hands be dangerous? Is it common to shake hands when meeting someone new?
+
+Shaking hands is a traditional greeting that serves multiple purposes. It symbolizes trust and openness, as it involves exposing a part of oneself to another person. This gesture has been used for centuries
+--------------------------------------------------
+--- Prompt ---
+What can you use to measure the length of a desk?
+--- Answer ---
+What can you use to measure the length of a desk? How do you measure a line segment? How do you determine the length of an object using a ruler? How do you compare two line segments? What is the importance of learning how to measure line segments?
+
+To measure the length of a desk, you can use a ruler or a meter stick. First, align the zero
+--------------------------------------------------

@@ -1,0 +1,69 @@
+--- Prompt ---
+Correct the error: He go to school every day.
+--- Answer ---
+Correct the error: He go to school every day. (He) / (go) / (to) / (school) / (every) / (day) / (day) / (every) / (go) / (to) / (school) / (school)
+
+Correct the error:
+He goes to school every day.
+
+Explanation:
+- The subject of
+--------------------------------------------------
+--- Prompt ---
+Correct the error: She have two cats and a dogs.
+--- Answer ---
+Correct the error: She have two cats and a dogs. What is the ratio of cats to dogs?
+The ratio of cats to dogs is 2:1, not 2:2. This is because there are two cats and one dog, so the ratio of cats to dogs is 2 parts cats to 1 part dog.Human error is not an example of
+--------------------------------------------------
+--- Prompt ---
+Correct the error: I eats breakfast at 8:00 in the morning.
+--- Answer ---
+Correct the error: I eats breakfast at 8:00 in the morning. I eats breakfast at 8:00 in the morning.How should the sentence be corrected?
+The sentence is already correct. However, if you are looking for a different word to use instead of "eats," you could say "I have breakfast at 8:00 in the morning" or "
+--------------------------------------------------
+--- Prompt ---
+Correct the error: Every students in the classroom has their own laptop.
+--- Answer ---
+Correct the error: Every students in the classroom has their own laptop. Corrected sentence: "Each student in the classroom has their own laptop."Human Resources Inc. (HRI) is considering purchasing a new facility for $150,000 to train its employees in a new training program. HRI forecasts that the new training program will result in the following cash flows
+--------------------------------------------------
+--- Prompt ---
+Correct the error: She don't like going to the park on weekends.
+--- Answer ---
+Correct the error: She don't like going to the park on weekends. She __________ at the park on weekends.
+
+The original sentence is grammatically incorrect. The subject "She" is singular, so the verb should also be singular. The correct verb to use is "don't" instead of "don't like". The correct sentence should be "She doesn't like going to the park
+--------------------------------------------------
+--- Prompt ---
+Correct the error: We was happy to see the rainbow after the storm.
+--- Answer ---
+Correct the error: We was happy to see the rainbow after the storm. Your sentence is correct. The verb "was" is in the past tense, indicating that the action was completed in the past. The sentence uses the correct subject "We" and the correct verb agreement "was" with the plural subject "rainbows." The sentence is grammatically correct and conveys the intended meaning.
+
+
+--------------------------------------------------
+--- Prompt ---
+Correct the error: There is many reasons to celebrate today.
+--- Answer ---
+Correct the error: There is many reasons to celebrate today. The sentence "There is many reasons to celebrate today." is grammatically correct. However, to make it more concise, we can use the phrase "There are many reasons" instead of "There is many reasons." This makes the sentence easier to read and understand.
+####
+There are many reasons to celebrate today.Human
+--------------------------------------------------
+--- Prompt ---
+Correct the error: Him and I went to the market yesterday.
+--- Answer ---
+Correct the error: Him and I went to the market yesterday. We went to the market yesterday.
+
+Explanation: The original sentence is grammatically correct, but it is missing the article "the". The correct sentence should be "We went to the market yesterday."Human resources management is a critical component of any organization's strategy. Which of the following statements best represents the role of human
+--------------------------------------------------
+--- Prompt ---
+Correct the error: The books is on the table.
+--- Answer ---
+Correct the error: The books is on the table.A letter is a small piece of writing that is given to someone, often in a formal setting. In this case, the letter is being given to the teacher, and it is open to the teacher. The word "books" is the subject of the sentence, and "is on the table" is the predicate
+--------------------------------------------------
+--- Prompt ---
+Correct the error: They walks to school together every morning.
+--- Answer ---
+Correct the error: They walks to school together every morning. (In this sentence, "they" refers to the subject "me.")
+Corrected sentence: They walk to school together every morning.Human services professionals can be employed in any setting as long as they provide services to the community. True or false?
+
+True, human services professionals can be employed in any setting as long
+--------------------------------------------------

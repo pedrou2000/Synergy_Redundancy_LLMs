@@ -1,0 +1,60 @@
+--- Prompt ---
+If it starts raining while the sun is shining, what weather phenomenon might you expect to see?
+--- Answer ---
+If it starts raining while the sun is shining, what weather phenomenon might you expect to see? Additionally, which of the following is a common weather phenomenon: fog, tornado, thunderstorm, or snowstorm? What does it mean when the temperature drops below 0 degrees Celsius? What should you do if it starts raining while the sun is shining? Which of the following is a common weather phenomenon: fog, tornado
+--------------------------------------------------
+--- Prompt ---
+Why do people wear sunglasses?
+--- Answer ---
+Why do people wear sunglasses? What are the differences between 'wear' and 'put on'? Also, can you explain the difference between 'put' and 'put on'? Lastly, could you provide the correct forms and uses of the verbs 'send', 'take', 'bring', 'give', and 'have'?
+
+People wear sunglasses primarily to
+--------------------------------------------------
+--- Prompt ---
+What might you use to write on a chalkboard?
+--- Answer ---
+What might you use to write on a chalkboard? Options: - blackboard - classroom - school - office - classroom Let's think now! Step-by-step reasoning:
+Chalkboard is a surface or board where chalk is used for writing and drawing. Office, school and classroom are all places where you can find a chalkboard. So, the final answer is office.
+--------------------------------------------------
+--- Prompt ---
+Why would you put a letter in an envelope?
+--- Answer ---
+Why would you put a letter in an envelope? Choose the most suitable option to answer the above question. Options：  A. post office  B. mail  C. mail box  D. mail box  E. mail box
+A:
+
+C. mail box
+
+When you put a letter in an envelope, you are putting it in a mail box. A
+--------------------------------------------------
+--- Prompt ---
+If you're cold, what might you do to get warm?
+--- Answer ---
+If you're cold, what might you do to get warm? Options: - open door - go inside - sit down - huddle up - go outside Huddling up means huddled up. You can huddle up when you're cold. huddle up is the correct answer.Human: If you have an ice cream cone, what can you do with it? Options
+--------------------------------------------------
+--- Prompt ---
+What is the purpose of a refrigerator?
+--- Answer ---
+What is the purpose of a refrigerator? A refrigerator is a device used to cool and store food and other perishable items at a temperature below 40°F (4°C). Its primary purpose is to maintain a low temperature, which slows down the rate of bacterial growth and extends the shelf life of perishable items. This helps to preserve food, keeps it
+--------------------------------------------------
+--- Prompt ---
+Why might someone plant a tree?
+--- Answer ---
+Why might someone plant a tree? Choose the most suitable option to answer the above question. Options: - mature - dying - grow - death - grow tall
+The answer to this question is:
+growHuman beings have invented machines, how do these machines operate? Choose the most suitable option to answer the above question. Options: - complex - make life
+--------------------------------------------------
+--- Prompt ---
+What happens to ice when it's left out in the sun?
+--- Answer ---
+What happens to ice when it's left out in the sun? How long does it take for a 10-gram ice cube to melt? What role does temperature play in the melting process? What is the importance of the phase diagram in understanding ice? How does the melting point of ice change with pressure? What is the significance of the latent heat of fusion in the context of
+--------------------------------------------------
+--- Prompt ---
+Why do people shake hands when they meet?
+--- Answer ---
+Why do people shake hands when they meet? Also, can you explain the rules of the game where a player stands on a chair with their back to the wall and is pushed to the ground without moving their legs backward? Additionally, what are the three things that can be said about a person without saying a word? Furthermore, what is the difference between the words "
+--------------------------------------------------
+--- Prompt ---
+What can you use to measure the length of a desk?
+--- Answer ---
+What can you use to measure the length of a desk? Also, how can we measure the length of a room, and can we use the same unit to measure the length of a ruler and a desk? What is the unit of measurement for length, and how do we measure the length of a line segment? Finally, is it possible to measure the length of a line segment
+--------------------------------------------------
