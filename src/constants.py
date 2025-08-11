@@ -47,14 +47,22 @@ MODEL_NAMES = {
     'G3-27': {'hf_name': 'google/gemma-3-27b-pt', 'company': 'google', 'model_family': 'gemma-3', 'model_size': '27B', 'it': 'base', 'plot_name': 'Gemma 3 27B Base', 'color': '#9eae00', 'apply_chat_template': 'base'},
 
     # Llama
+    'L32-1': {'hf_name': 'meta-llama/Llama-3.2-1B', 'company': 'meta', 'model_family': 'llama-3', 'model_size': '1B', 'it': 'base', 'plot_name': 'Llama 3.2 1B Base', 'color': '#4d8e00', 'apply_chat_template': 'base'},
+    'L32-3': {'hf_name': 'meta-llama/Llama-3.2-3B', 'company': 'meta', 'model_family': 'llama-3', 'model_size': '3B', 'it': 'base', 'plot_name': 'Llama 3.2 3B Base', 'color': '#456e00', 'apply_chat_template': 'base'},
+    'L31-8': {'hf_name': 'meta-llama/Llama-3.1-8B', 'company': 'meta', 'model_family': 'llama-3', 'model_size': '8B', 'it': 'base', 'plot_name': 'Llama 3.1 8B Base', 'color': '#9467bd', 'apply_chat_template': 'base'},
+    'L31-8-IT': {'hf_name': 'meta-llama/Llama-3.1-8B-Instruct', 'company': 'meta', 'model_family': 'llama-3', 'model_size': '8B', 'it': 'instruct', 'plot_name': 'Llama 3.1 8B Instruct', 'color': '#9467ed', 'apply_chat_template': 'chat'},
+    'L31-8-R1-Distill': {'hf_name': 'deepseek-ai/DeepSeek-R1-Distill-Llama-8B', 'company': 'meta', 'model_family': 'llama-3', 'model_size': '8B', 'it': 'R1-distill', 'plot_name': 'R1 Distilled Llama 3.1 8B Base', 'color': '#9467ju', 'apply_chat_template': 'chat'},
+    'L32-3-IT': {"hf_name": "meta-llama/Llama-3.2-3B-Instruct", 'company': 'mata', 'model_family': 'llama-3', 'model_size': '3B', 'it': 'instruct', "FOLDER_NAME": "7-Llama-3.2-3B-Instruct", "plot_name": "Llama 3.2 3B Instruct", "color": "#ff7f0e", "apply_chat_template": "chat"},
 }
 
 PROMP_TEMPLATE_BASE = lambda prompt: f"### Instruction:\n{prompt}\n\n### Response:\n"
 
-MODEL_CODE = 'G3-1'  
+MODEL_CODE = 'L32-3-IT'  # Default model code
 MODEL_NAME = MODEL_NAMES[MODEL_CODE]["hf_name"]
 FOLDER_MODEL_NAME = MODEL_NAMES[MODEL_CODE]["company"] + "/" + MODEL_NAMES[MODEL_CODE]["model_family"] + "/" + MODEL_NAMES[MODEL_CODE]["model_size"] + "/" + MODEL_NAMES[MODEL_CODE]["it"]
-FINAL_MODELS = ['G3-27', 'Q3-30-A3', 'Q25M-72'] 
+FOLDER_MODEL_NAME = MODEL_NAMES[MODEL_CODE]["FOLDER_NAME"]
+FINAL_MODELS = ['G2-2B', 'G2-9B', 'L3.2-3B', 'L3.1-8B']
+# FINAL_MODELS = ['L32-1', 'L32-3', 'L31-8', 'L31-8-IT', 'L31-8-R1-Distill']
 
 config = AutoConfig.from_pretrained(MODEL_NAME)
 config = config.text_config if hasattr(config, 'text_config') else config

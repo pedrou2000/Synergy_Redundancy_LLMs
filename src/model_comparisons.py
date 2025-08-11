@@ -11,7 +11,7 @@ def load_final_models_gradient_ranks():
     prompt_category_name = 'average_prompts'
 
     for constants.MODEL_CODE in constants.FINAL_MODELS:
-        constants.MODEL_NAME = constants.MODEL_NAMES[constants.MODEL_CODE]["HF_NAME"]
+        constants.MODEL_NAME = constants.MODEL_NAMES[constants.MODEL_CODE]["hf_name"]
         constants.FOLDER_MODEL_NAME = constants.MODEL_NAMES[constants.MODEL_CODE]["FOLDER_NAME"]
         constants.SAVED_DATA_DIR = "../data/" + constants.FOLDER_MODEL_NAME + "/"
         constants.MATRICES_DIR = constants.SAVED_DATA_DIR + "3-Synergy_Redundancy_Matrices/"
@@ -31,7 +31,7 @@ def normalize_values(values):
     return (values - min_val) / (max_val - min_val), min_val, max_val
 
 def plot_gradient_rank_overlay(models_gradient_ranks, figsize=None, save=False, 
-                               base_plot_path=constants.MODEL_COMPARISON_GRADIENT_RANK_DIR + "1-gradient_ranks.jpg", 
+                               base_plot_path=constants.MODEL_COMPARISON_GRADIENT_RANK_DIR + "1-gradient_ranks.svg", 
                                plot_intralayer_std=False, title=True):
     """
     Create an overlay plot of normalized synergy-minus-redundancy ranks for multiple models,

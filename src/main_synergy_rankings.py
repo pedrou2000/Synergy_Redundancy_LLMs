@@ -16,8 +16,9 @@ import utils
 import random, os, json
 import matplotlib.pyplot as plt
 
+models = ['Q25M-1', 'Q3-0', 'Q3-1', 'Q3-8']
 all_head_rankings = {}
-for model_code in constants.NEW_MODELS:
+for model_code in models:
     constants.update_model_code(model_code)
     print(f"--- Running for model code: {model_code} ---")
 
@@ -52,7 +53,7 @@ for model_code in constants.NEW_MODELS:
 
 # Save the head rankings to a JSON file in MODEL_COMPARISON_DIR
 # Create a string with all the model codes
-model_codes = "-".join(constants.NEW_MODELS)
+model_codes = "-".join(models)
 file_name = f"head_rankings_{model_codes}.json"
 if not os.path.exists(constants.MODEL_COMPARISON_SYN_MINUS_RED_RANKINGS_DIR):
     os.makedirs(constants.MODEL_COMPARISON_SYN_MINUS_RED_RANKINGS_DIR)

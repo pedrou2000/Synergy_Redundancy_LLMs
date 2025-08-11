@@ -27,14 +27,14 @@ print(f'Status: Starting main ablations...')
 print(f'GPU memory allocated at the beginning of main ablations: {torch.cuda.memory_allocated(device)}')
 
 # Load the configuration and modify it
-model_config = AutoConfig.from_pretrained(constants.MODEL_NAME, cache_dir=constants.CACHE_DIR_BITBUCKET)
+model_config = AutoConfig.from_pretrained(constants.MODEL_NAME)#, cache_dir=constants.CACHE_DIR_BITBUCKET)
 model_config._attn_implementation = attn_implementation  # Custom attention parameter
 
 # Load the tokenizer and model with the modified configuration
-tokenizer = AutoTokenizer.from_pretrained(constants.MODEL_NAME, cache_dir=constants.CACHE_DIR_BITBUCKET)
+tokenizer = AutoTokenizer.from_pretrained(constants.MODEL_NAME)#, cache_dir=constants.CACHE_DIR_BITBUCKET)
 model = AutoModelForCausalLM.from_pretrained(
     constants.MODEL_NAME,
-    cache_dir=constants.CACHE_DIR_BITBUCKET,
+    # cache_dir=constants.CACHE_DIR_BITBUCKET,
     device_map='auto',
     attn_implementation=attn_implementation, # Make sure to use the adequate attention layer in order to 
     config=model_config,  # Use the modified config

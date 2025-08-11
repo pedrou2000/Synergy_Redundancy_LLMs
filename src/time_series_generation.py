@@ -19,25 +19,12 @@ def sample_with_temperature(logits, temperature=1.0):
     sampled_indices = torch.multinomial(probabilities, num_samples=1) # Sample from the probability distribution
     return sampled_indices
 
-def apply_prompt_template(prompt, tokenizer):
-    if constants.MODEL_NAMES[constants.MODEL_CODE]['apply_chat_template'] == 'chat':
-        messages = [{"role": "user", "content": prompt}]
-        return tokenizer.apply_chat_template(messages, tokenize=False, add_generation_prompt=True)
-    elif constants.MODEL_NAMES[constants.MODEL_CODE]['apply_chat_template'] == 'base':
-        return constants.PROMP_TEMPLATE_BASE(prompt)
-    elif constants.MODEL_NAMES[constants.MODEL_CODE]['apply_chat_template'] == 'no':
-        return prompt
-    else:
-        raise ValueError("Invalid prompt template type. Choose 'chat', 'base', or 'none'.")
-
 def generate_text_with_attention(model, tokenizer, num_tokens_to_generate: int, device: str, prompt=None, input_ids=None, 
                                  temperature=0.1, modified_output_attentions=True):
     # Autoregressively generates text from a given prompt while capturing all types of attention weights and other related tensors.
 
     # Encode the prompt and move to the specified device
     if prompt is not None and input_ids is None:
-        prompt = apply_prompt_template(prompt, tokenizer)
-
         input_ids = tokenizer.encode(prompt, return_tensors='pt').to(device)
     elif input_ids is not None and prompt is None:
         input_ids = input_ids.to(device)
@@ -49,7 +36,7 @@ def generate_text_with_attention(model, tokenizer, num_tokens_to_generate: int, 
     attention_params = {}
 
     for t in range(num_tokens_to_generate):
-        # gc.collect()  # Explicitly invoke garbage collection
+        gc.collect()  # Explicitly invoke garbage collection
         with torch.no_grad():
             outputs = model(generated_ids, output_attentions=True)
         next_token_logits = outputs.logits[:, -1, :]  # Logits for the next token predictions
@@ -65,14 +52,13 @@ def generate_text_with_attention(model, tokenizer, num_tokens_to_generate: int, 
                 for layer in outputs.attentions:
                     layer_attention = {}
                     for key, value in layer.items():
-                        # print(f"Key: {key}, Value: {value.shape}")
                         layer_attention[key] = value.detach().to('cpu')
                     attentions_on_cpu.append(layer_attention)
-                attentions_on_cpu = [{k: v.detach().to('cpu') for k, v in layer.items()} for layer in outputs.attentions]
+                # attentions_on_cpu = [{k: v.detach().to('cpu') for k, v in layer.items()} for layer in outputs.attentions]
             else:
                 attentions_on_cpu = []
                 for layer in outputs.attentions:
-                    attentions_on_cpu.append({constants.ATTENTION_MEASURE: layer[constants.ATTENTION_MEASURE].detach().to('cpu')})
+                    attentions_on_cpu.append({constants.ATTENTION_MEASURE: layer.to('cpu')})
 
                 # attentions_on_cpu = [{constants.ATTENTION_MEASURE: layer.detach().to('cpu')} for layer in outputs.attentions]
 
@@ -84,7 +70,7 @@ def generate_text_with_attention(model, tokenizer, num_tokens_to_generate: int, 
                     attention_params[key].append(value[0]) # Remove the batch dimension
         # Clean gpu memory
         del outputs
-        # torch.cuda.empty_cache()
+        torch.cuda.empty_cache()
 
     # Convert time-step dictionaries into tensors where applicable
     for key in attention_params.keys():
@@ -183,73 +169,8 @@ def calculate_aggregation(vector, aggregation_type):
     else:
         raise ValueError("Unsupported aggregation type. Choose from 'norm', 'mean', 'entropy'.")
 
-def entropy_aggregation(vector: torch.Tensor) -> torch.Tensor:
-    vector_normalized = F.softmax(vector, dim=0)
-    return -(vector_normalized * torch.log(vector_normalized + 1e-5)).sum()
-
-AGGREGATION_FACTORY = {
-    'norm': torch.norm,
-    'mean': torch.mean,
-    'max': torch.max,
-    'entropy': entropy_aggregation,
-}
-
-def check_shape(attention_params, num_tokens):
-    for metric, tensor in attention_params.items():
-        if metric == 'queries':
-            assert tensor.shape[0] == constants.NUM_LAYERS, f"Expected {constants.NUM_LAYERS} layers, got {tensor.shape[0]} for {metric}"
-            assert tensor.shape[1] == constants.NUM_HEADS_PER_LAYER, f"Expected {constants.NUM_HEADS_PER_LAYER} heads, got {tensor.shape[1]} for {metric}"
-            assert tensor.shape[2] == num_tokens, f"Expected {num_tokens} tokens, got {tensor.shape[2]} for {metric}"
-            assert tensor.shape[3] == constants.HEAD_DIM, f"Expected {constants.HEAD_DIM} head dimension, got {tensor.shape[3]} for {metric}"
-        elif metric == 'attention_weights':
-            assert tensor.shape[0] == constants.NUM_LAYERS, f"Expected {constants.NUM_LAYERS} layers, got {tensor.shape[0]} for {metric}"
-            assert tensor.shape[1] == constants.NUM_HEADS_PER_LAYER, f"Expected {constants.NUM_HEADS_PER_LAYER} heads, got {tensor.shape[1]} for {metric}"
-            assert tensor.shape[2] == num_tokens, f"Expected {num_tokens} tokens, got {tensor.shape[2]} for {metric}"
-            assert tensor.shape[3] == num_tokens, f"Expected {num_tokens} tokens, got {tensor.shape[3]} for {metric}"
-        elif metric == 'attention_outputs':
-            assert tensor.shape[0] == constants.NUM_LAYERS, f"Expected {constants.NUM_LAYERS} layers, got {tensor.shape[0]} for {metric}"
-            assert tensor.shape[1] == num_tokens, f"Expected {num_tokens} tokens, got {tensor.shape[1]} for {metric}"
-            assert tensor.shape[2] == constants.NUM_HEADS_PER_LAYER, f"Expected {constants.NUM_HEADS_PER_LAYER} heads, got {tensor.shape[2]} for {metric}"
-            assert tensor.shape[3] == constants.HEAD_DIM, f"Expected {constants.HEAD_DIM} head dimension, got {tensor.shape[3]} for {metric}"
-
-def remove_lookahead_and_aggreagate(attention_weights, num_inputs, num_tokens_to_generate, aggregator):
-    time_series = torch.zeros((attention_weights.shape[0], attention_weights.shape[1], num_tokens_to_generate))
-    for t in range(num_tokens_to_generate):
-        for layer in range(attention_weights.shape[0]):
-            for head in range(attention_weights.shape[1]):
-                # Set the attention weights for future tokens to zero => :t + num_inputs + 1 in the last dimension
-                aggregated_vector = aggregator(attention_weights[layer, head, t, :t + num_inputs + 1])
-                time_series[layer, head, t] = aggregated_vector.item()
-    return time_series # Shape (num_layers, num_heads_per_layer, T)
 
 def compute_attention_metrics_norms(attention_params, selected_metrics, num_tokens_to_generate, aggregation_type='norm'):
-    # Computes the norms of selected attention metrics across all layers and heads for each timestep.
-    time_series = {}
-    num_tokens = attention_params['attention_outputs'].shape[1]
-    num_inputs = num_tokens - num_tokens_to_generate
-    aggregator = AGGREGATION_FACTORY.get(aggregation_type, None)
-    check_shape(attention_params, num_tokens)
-
-    for metric, params in attention_params.items():
-        if metric == 'attention_weights':
-            # Remove lookahead
-            time_series[metric] = remove_lookahead_and_aggreagate(params, num_inputs, num_tokens_to_generate, aggregator)
-        else:
-            # In any other case, we can directly aggregate the current the token dimension in the last dimension
-            time_series[metric] = aggregator(params, dim=3)
-
-            # Switch the last two dimensions if attention_outputs as [l, T, h] currently
-            if metric == 'attention_outputs':
-                time_series[metric] = time_series[metric].permute(0, 2, 1)  
-            
-            # Remove the input tokens on the last dimension
-            time_series[metric] = time_series[metric][:, :, num_inputs:]
-        # print(f"Time series shape for {metric}: {time_series[metric].shape}")
-    
-    return time_series
-
-
-def compute_attention_metrics_norms_old(attention_params, selected_metrics, num_tokens_to_generate, aggregation_type='norm'):
     # Computes the norms of selected attention metrics across all layers and heads for each timestep.
     # print shape of attention_params
     attention_metrics = [attention_params[metric] for metric in selected_metrics]
@@ -264,13 +185,8 @@ def compute_attention_metrics_norms_old(attention_params, selected_metrics, num_
             for layer in range(num_layers):
                 for head in range(num_heads_per_layer):
                     # Compute the norm for the specified token, layer, and head
-                    print(constants.config)
-                    print(f"Queries Shape: {attention_params['queries'].shape}")
-                    print(f"Attention Weights Shape: {attention_params['attention_weights'].shape}")
-                    print(f"Attention Outputs Shape: {attention_params['attention_outputs'].shape}")
-                    breakpoint()
-                    vector = attention_metrics[metric_index][layer, t + num_inputs, head]
-                    # At time t, we only have t + num_i nputs tokens, so attention weights are only available up to t + num_inputs
+                    vector = attention_metrics[metric_index][layer, head, t + num_inputs]
+                    # At time t, we only have t + num_inputs tokens, so attention weights are only available up to t + num_inputs
                     if selected_metric =="attention_weights":
                         vector = vector[: t + num_inputs + 1]
                     # print(f"Vector Mean Shape: {vector_mean.shape}, t + inputs: {t + num_inputs}")

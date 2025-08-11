@@ -602,9 +602,9 @@ def plot_aggregated_kl_divergence_multi_models(models, save=False, save_dir=None
 
         # Plot for the current model
         color = constants.MODEL_NAMES[model_code]["color"]
-        plt.plot(x, random_mean_agg, label=f"{constants.MODEL_NAMES[model_code]["plot_name"]} Random Ablations", linestyle="--", color=color)
+        plt.plot(x, random_mean_agg, label=f"{constants.MODEL_NAMES[model_code]['plot_name']} Random Ablations", linestyle="--", color=color)
         plt.fill_between(x, random_ci_lower_agg, random_ci_upper_agg, alpha=0.2, color=color)
-        plt.plot(x, synergy_mean_agg, label=f"{constants.MODEL_NAMES[model_code]["plot_name"]} Synergy-Redundancy Ablations", linestyle="-", color=color)
+        plt.plot(x, synergy_mean_agg, label=f"{constants.MODEL_NAMES[model_code]['plot_name']} Synergy-Redundancy Ablations", linestyle="-", color=color)
         plt.fill_between(x, synergy_ci_lower_agg, synergy_ci_upper_agg, alpha=0.2, color=color)
 
     # Formatting

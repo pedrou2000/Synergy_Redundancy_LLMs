@@ -12,7 +12,8 @@ import seaborn as sns
 import matplotlib.pyplot as plt
 import sys
 
-for model_code in constants.FINAL_MODELS:
+for model_code in ['L32-3-IT']:
+# for model_code in constants.FINAL_MODELS:
     print(f"\n\n\n\n--- Running model: {model_code} ---")
     constants.update_model_code(model_code)
 

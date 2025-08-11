@@ -561,6 +561,21 @@ def plot_matrix_correlation(correlation_matrix, keys, title, save_path):
     plt.savefig(save_path)
     plt.close()
 
+def save_te_results(te_results, normalized=False):
+    base_save_path_te = constants.MATRICES_DIR + 'average_prompts/' 
+    file_name = 'transfer_entropy_x_t_->_y_t+1' + normalized + '.pkl'
+    with open(os.path.join(base_save_path_te, file_name), 'wb') as f:
+        pickle.dump(te_results, f)
+    print(f"Transfer entropy results saved to {os.path.join(base_save_path_te, file_name)}")
+
+def load_te_results(normalized='Unnormalized'):
+    base_save_path_te = constants.MATRICES_DIR + 'average_prompts/' 
+    file_name = 'transfer_entropy_x_t_->_y_t+1' + normalized + '.pkl'
+    with open(os.path.join(base_save_path_te, file_name), 'rb') as f:
+        te_results = pickle.load(f)
+    print(f"Transfer entropy results loaded from {os.path.join(base_save_path_te, file_name)}")
+    return te_results
+
 def plot_all_PhiID_separately(global_matrices, base_plot_path=None, save=True, percentiles=[1, 0.1, 0.01]):
     results = {}
     if not base_plot_path:
@@ -596,6 +611,8 @@ def plot_all_PhiID_separately(global_matrices, base_plot_path=None, save=True, p
                     else:
                         print("Invalid atom type in constants.INFORMATION_DYNAMICS: ", atom)
                 all_matrices[normalized][key] = matrix
+                if key == 'transfer_entropy_x_t_->_y_t+1':
+                    save_te_results(all_matrices[normalized][key], normalized=normalized)
 
             # Plot all the Unnormalized PhiID Atoms separately
             for key, matrix in all_matrices[normalized].items():
@@ -906,6 +923,27 @@ def compute_gradient_rank(averages, method='synergy-redundancy'):
         head_ranks = {head_number: rank for head_number, rank in enumerate(ranks, start=1)}
         
         gradient_ranks[metric] = head_ranks
+    return gradient_ranks
+    
+def compute_gradient_rank_first(averages):
+    gradient_ranks = {}
+    for metric, avg_data in averages.items():
+        # Calculate synergy minus redundancy for each head
+        # First rank the synergy and redundancy values
+        synergy_ranks = np.argsort(-avg_data['synergy']) + 1
+        redundancy_ranks = np.argsort(-avg_data['redundancy']) + 1
+        # Compute the gradient: Redundancy rank - Synergy rank
+        gradient_diff = redundancy_ranks - synergy_ranks
+        # Sort gradient_diff and get indices of sorted array
+        sorted_indices = np.argsort(gradient_diff)
+        # Create an empty array of the same length as gradient_diff to store ranks
+        ranks = np.empty_like(sorted_indices)
+        # Assign ranks; since sorted_indices are 0-based, we add 1 to make them start from 1
+        ranks[sorted_indices] = np.arange(1, len(gradient_diff) + 1)
+        # Create a dictionary where the key is the head number (1-indexed) and value is the rank
+        head_ranks = {head_number: rank for head_number, rank in enumerate(ranks, start=1)}
+        gradient_ranks[metric] = head_ranks
+
     return gradient_ranks
 
 def plot_gradient_rank(gradient_ranks, base_plot_path=None, save=False, figsize=(12, 5), use_heatmap=False, show_numbers=True, num_heads_per_layer=constants.NUM_HEADS_PER_LAYER, title=True):

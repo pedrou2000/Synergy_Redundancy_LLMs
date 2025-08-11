@@ -42,20 +42,21 @@ import matplotlib.pyplot as plt
 
 
 
-for model_code in ['Q3-0', 'Q3-1']:
+for model_code in constants.FINAL_MODELS:
+    print(f"\n--- Processing Model: {model_code} ---")
     constants.update_model_code(model_code)
     
     ### Time Series Plots ###
 
     time_series = {cognitive_task: {} for cognitive_task in constants.PROMPT_CATEGORIES}
 
-    print("Loading Raw Attention and Time Series")
-    for cognitive_task in constants.PROMPT_CATEGORIES:
-        print("Loading Cognitive Task: ", cognitive_task)
-        for n_prompt, prompt in enumerate(constants.PROMPTS[cognitive_task]):
-            time_series[cognitive_task][n_prompt] = load_time_series(base_load_path=constants.TIME_SERIES_DIR+cognitive_task+"/"+str(n_prompt) + ".pt")
-            plot_attention_metrics_norms_over_time(time_series[cognitive_task][n_prompt], metrics=constants.METRICS_TRANSFORMER, num_heads_plot=8, smoothing_window=0, 
-                save=constants.SAVE_PLOTS, base_plot_path=constants.PLOTS_TIME_SERIES_DIR+cognitive_task+"/"+str(n_prompt)+"/")
+    # print("Loading Raw Attention and Time Series")
+    # for cognitive_task in constants.PROMPT_CATEGORIES:
+    #     print("Loading Cognitive Task: ", cognitive_task)
+    #     for n_prompt, prompt in enumerate(constants.PROMPTS[cognitive_task]):
+    #         time_series[cognitive_task][n_prompt] = load_time_series(base_load_path=constants.TIME_SERIES_DIR+cognitive_task+"/"+str(n_prompt) + ".pt")
+    #         plot_attention_metrics_norms_over_time(time_series[cognitive_task][n_prompt], metrics=constants.METRICS_TRANSFORMER, num_heads_plot=8, smoothing_window=0, 
+    #             save=constants.SAVE_PLOTS, base_plot_path=constants.PLOTS_TIME_SERIES_DIR+cognitive_task+"/"+str(n_prompt)+"/")
 
 
 
@@ -66,9 +67,10 @@ for model_code in ['Q3-0', 'Q3-1']:
         print("\n--- Plotting Prompt Category: ", prompt_category_name, " ---")
 
         global_matrices, synergy_matrices, redundancy_matrices = load_matrices(base_save_path=constants.MATRICES_DIR + prompt_category_name + '/' + prompt_category_name + '.pt')
-        plot_synergy_redundancy_PhiID(synergy_matrices, redundancy_matrices, save=constants.SAVE_PLOTS, base_plot_path=constants.PLOTS_SYNERGY_REDUNDANCY_DIR + prompt_category_name + '/')
-        plot_all_PhiID(global_matrices, save=constants.SAVE_PLOTS, base_plot_path=constants.PLOTS_SYNERGY_REDUNDANCY_DIR + prompt_category_name + '/')
+        # plot_synergy_redundancy_PhiID(synergy_matrices, redundancy_matrices, save=constants.SAVE_PLOTS, base_plot_path=constants.PLOTS_SYNERGY_REDUNDANCY_DIR + prompt_category_name + '/')
+        # plot_all_PhiID(global_matrices, save=constants.SAVE_PLOTS, base_plot_path=constants.PLOTS_SYNERGY_REDUNDANCY_DIR + prompt_category_name + '/')
         # results_all_phid = plot_all_PhiID_separately({"attention_outputs": global_matrices["attention_outputs"]}, save=constants.SAVE_PLOTS, base_plot_path=constants.PLOTS_SYNERGY_REDUNDANCY_DIR + prompt_category_name + '/')
+        
         # plot_box_plot_information_dynamics(results_all_phid, atom_or_dynamics="dynamics", save=constants.SAVE_PLOTS, base_plot_path=constants.PLOTS_SYNERGY_REDUNDANCY_DIR + prompt_category_name + '/')
         # plot_box_plot_information_dynamics(results_all_phid, atom_or_dynamics="atoms", save=constants.SAVE_PLOTS, base_plot_path=constants.PLOTS_SYNERGY_REDUNDANCY_DIR + prompt_category_name + '/')
 
@@ -76,13 +78,14 @@ for model_code in ['Q3-0', 'Q3-1']:
         averages = calculate_average_synergy_redundancies_per_head(synergy_matrices, redundancy_matrices, within_layer=False)
         plot_averages_per_head(averages, save=constants.SAVE_PLOTS, use_heatmap=True, num_heads_per_layer=constants.NUM_HEADS_PER_LAYER, base_plot_path=base_plot_path)
         plot_averages_per_layer(averages, num_heads_per_layer=constants.NUM_HEADS_PER_LAYER)
-        gradient_ranks = compute_gradient_rank(averages)
+        # gradient_ranks = compute_gradient_rank(averages)
+        gradient_ranks = compute_gradient_rank_first(averages)
         plot_gradient_rank(gradient_ranks, base_plot_path=base_plot_path, save=constants.SAVE_PLOTS, use_heatmap=True, num_heads_per_layer=constants.NUM_HEADS_PER_LAYER)
         ranks_per_layer_mean, ranks_per_layer_std = plot_average_ranks_per_layer(gradient_ranks, save=constants.SAVE_PLOTS, num_heads_per_layer=constants.NUM_HEADS_PER_LAYER, base_plot_path=base_plot_path)
     
         # Graph Theoretical Analysis
-        graph_theoretical_results = load_graph_theoretical_results(base_save_path=constants.GRAPH_METRICS_DIR + prompt_category_name + '/', file_name=prompt_category_name)
-        plot_graph_theoretical_results(graph_theoretical_results, save=constants.SAVE_PLOTS, base_plot_path=base_plot_path)
+        # graph_theoretical_results = load_graph_theoretical_results(base_save_path=constants.GRAPH_METRICS_DIR + prompt_category_name + '/', file_name=prompt_category_name)
+        # plot_graph_theoretical_results(graph_theoretical_results, save=constants.SAVE_PLOTS, base_plot_path=base_plot_path)
 
 
 # ### Plotting PhiID for All Cognitive Tasks ###
