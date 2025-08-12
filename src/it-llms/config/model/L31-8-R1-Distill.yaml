@@ -1,0 +1,10 @@
+# Auto-generated model config for L31-8-R1-Distill
+shortcode: 'L31-8-R1-Distill'
+hf_name: 'deepseek-ai/DeepSeek-R1-Distill-Llama-8B'
+company: 'meta'
+model_family: 'llama-3'
+model_size: '8B'
+it: 'R1-distill'
+plot_name: 'R1 Distilled Llama 3.1 8B Base'
+color: '#9467ju'
+apply_chat_template: 'chat'

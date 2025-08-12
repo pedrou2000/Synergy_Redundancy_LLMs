@@ -1,0 +1,7 @@
+defaults:
+  - base
+
+node_type: moe
+node_activation: expert_output
+projection_method: norm
+exclude_shared_expert_moe: true

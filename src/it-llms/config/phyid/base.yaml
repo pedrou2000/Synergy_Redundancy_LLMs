@@ -1,0 +1,3 @@
+tau: 1
+kind: gaussian # gaussian or discrete
+redundancy: "MMI" # MMI or CCS

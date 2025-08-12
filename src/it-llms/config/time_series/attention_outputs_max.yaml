@@ -1,0 +1,6 @@
+defaults:
+  - base
+
+node_type: attention
+node_activation: attention_outputs
+projection_method: max

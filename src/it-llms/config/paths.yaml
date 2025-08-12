@@ -1,0 +1,27 @@
+paths:
+  project_root: /home/p84400019/projects/consciousness-llms/IT-LLMs/
+  
+  # useful composition of paths
+  model_path: ${model.company}/${model.model_family}/${model.model_size}/${model.it}/
+  activation_method: ${time_series.node_type}/${time_series.node_activation}/${time_series.projection_method}/
+  phyid_method: ${paths.activation_method}phyid_tau-${phyid.tau}/phyid_kind-${phyid.kind}/phyid_redundancy-${phyid.redundancy}/
+  deactivation_method: 'deactivate_k_nodes_per_iteration-${deactivation_analysis.deactivate_k_nodes_per_iteration}/max_deactivated_nodes-${deactivation_analysis.max_deactivated_nodes}/n_randomised_runs-${deactivation_analysis.n_randomised_runs}/micro_batch_size-${deactivation_analysis.micro_batch_size}/reverse_kl-${deactivation_analysis.reverse_kl}/run_reverse_ranking-${deactivation_analysis.run_reverse_ranking}/noise_std-${deactivation_analysis.noise_std}/'
+
+  # data directories
+  data_dir: ${paths.project_root}data/${paths.model_path}${generation.name}/
+  
+  data_activations_dir: ${paths.data_dir}activations/
+  data_activations_file: ${paths.data_activations_dir}multi_prompt_activations.pkl
+  
+  data_phyid_dir: ${paths.data_dir}phyid/${paths.phyid_method}
+  data_phyid_file: ${paths.data_phyid_dir}multi_prompt_phyid.pkl
+  data_phyid_file_data_array: ${paths.data_phyid_dir}multi_prompt_phyid.nc
+
+  data_deactivation_dir: ${paths.data_dir}deactivation/ranked/${paths.phyid_method}${paths.deactivation_method}
+
+  # plot directories
+  plot_dir: ${paths.project_root}plots/${paths.model_path}${generation.name}/
+  plot_time_series_dir: ${paths.plot_dir}time_series/${paths.activation_method}
+  plot_phyid_dir: ${paths.plot_dir}phyid/${paths.phyid_method}
+  plot_deactivation_dir: ${paths.plot_dir}deactivation/${paths.phyid_method}${paths.deactivation_method}
+  plot_synergy_through_training_dir: ${paths.plot_dir}synergy_through_training/${paths.phyid_method}

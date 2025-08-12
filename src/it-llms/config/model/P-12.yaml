@@ -1,0 +1,11 @@
+# Auto-generated model config for P-1
+shortcode: 'P-12'
+hf_name: 'EleutherAI/pythia-12b'
+company: 'eleutherai'
+model_family: 'pythia'
+model_size: '12B'
+it: 'base'
+plot_name: 'Pythia 12B Base'
+color: '#647c00'
+apply_chat_template: 'base'
+revision: null

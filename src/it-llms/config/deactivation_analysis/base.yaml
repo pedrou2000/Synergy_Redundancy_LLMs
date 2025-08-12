@@ -1,0 +1,9 @@
+deactivate_k_nodes_per_iteration: 5
+max_deactivated_nodes: 8192
+n_randomised_runs: 5
+micro_batch_size: 1
+reverse_kl: false
+run_reverse_ranking: false
+noise_std: null
+aggregate_random: true
+fractions_plot: [1.0, 0.5, 0.25]

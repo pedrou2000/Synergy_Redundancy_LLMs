@@ -1,0 +1,8 @@
+defaults:
+  - paths
+  - model: L32-1-IT # L32-1, D2-16-A2, P-1
+  - generation: original_prompts # original_prompts, subset
+  - time_series: attention_outputs # attention_outputs, expert_output
+  - phyid: base  # discrete
+  - deactivation_analysis: reverse_kl # reverse_kl
+

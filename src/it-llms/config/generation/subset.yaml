@@ -1,0 +1,22 @@
+max_new_tokens: 128
+
+name: subset
+prompts:
+  simple_maths:
+    - "If you divide 24 by 3, then multiply by 2, what is the result?"
+    - "A car travels 150 miles on 10 gallons of gas. How many miles per gallon does the car get?"
+  grammar_correction:
+    - "Correct the error: The books is on the table."
+    - "Correct the error: They walks to school together every morning."
+  parts_of_speech:
+    - "Identify the parts of speech in the sentence: The loud music could be heard from miles away."
+    - "Identify the parts of speech in the sentence: She sold all of her paintings at the art show."
+  commonsense_reasoning:
+    - "Why do people shake hands when they meet?"
+    - "What can you use to measure the length of a desk?"
+  creative_thinking:
+    - "Write a poem about a journey through a desert."
+    - "Describe a device that allows you to experience other people's dreams."
+  social_cognition:
+    - "Create a story about a misunderstanding between characters from different cultures."
+    - "Imagine a scenario where a character has to forgive someone who wronged them."

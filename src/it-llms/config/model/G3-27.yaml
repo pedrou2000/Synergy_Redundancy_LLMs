@@ -1,0 +1,10 @@
+# Auto-generated model config for G3-27
+shortcode: 'G3-27'
+hf_name: 'google/gemma-3-27b-pt'
+company: 'google'
+model_family: 'gemma-3'
+model_size: '27B'
+it: 'base'
+plot_name: 'Gemma 3 27B Base'
+color: '#9eae00'
+apply_chat_template: 'base'

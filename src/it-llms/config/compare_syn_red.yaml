@@ -1,0 +1,13 @@
+defaults:
+  - model: L32-1   # random model, just for interpolation
+  - paths
+  - generation: original_prompts
+  - time_series: attention_outputs
+  - phyid: base
+  - deactivation_analysis: base
+  - _self_
+
+compare:
+  models: [L32-1, L32-1-IT, L32-3, L32-3-IT, L31-8, L31-8-IT]
+  phyid_rank_key: syn_minus_red_rank
+  phyid_dir_field: paths.data_phyid_dir

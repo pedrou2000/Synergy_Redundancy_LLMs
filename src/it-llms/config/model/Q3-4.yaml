@@ -1,0 +1,10 @@
+# Auto-generated model config for Q3-4
+shortcode: 'Q3-4'
+hf_name: 'Qwen/Qwen3-4B-Base'
+company: 'alibaba'
+model_family: 'qwen-3'
+model_size: '4B'
+it: 'base'
+plot_name: 'Qwen 3 4B Base'
+color: '#b0be00'
+apply_chat_template: 'no'

@@ -1,0 +1,10 @@
+# Auto-generated model config for D2-16-A2
+shortcode: 'D2-16-A2'
+hf_name: 'deepseek-ai/DeepSeek-V2-Lite'
+company: 'deepseek'
+model_family: 'deepseek-v2'
+model_size: '16B-A2B'
+it: 'base'
+plot_name: 'DeepSeek V2 Lite'
+color: '#8e9e00'
+apply_chat_template: 'base'

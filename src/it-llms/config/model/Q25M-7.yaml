@@ -1,0 +1,10 @@
+# Auto-generated model config for Q25M-7
+shortcode: 'Q25M-7'
+hf_name: 'Qwen/Qwen2.5-Math-7B'
+company: 'alibaba'
+model_family: 'qwen-2.5-math'
+model_size: '7B'
+it: 'base'
+plot_name: 'Qwen 2.5 Math 7B Base'
+color: '#a0ae00'
+apply_chat_template: 'no'

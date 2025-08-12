@@ -1,0 +1,10 @@
+# Auto-generated model config for Q3-8
+shortcode: 'Q3-8'
+hf_name: 'Qwen/Qwen3-8B-Base'
+company: 'alibaba'
+model_family: 'qwen-3'
+model_size: '8B'
+it: 'base'
+plot_name: 'Qwen 3 8B Base'
+color: '#c0ce00'
+apply_chat_template: 'no'

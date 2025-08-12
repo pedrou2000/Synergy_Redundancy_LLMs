@@ -1,0 +1,10 @@
+# Auto-generated model config for L32-1
+shortcode: 'L32-3-IT'
+hf_name: 'meta-llama/Llama-3.2-3B-Instruct'
+company: 'meta'
+model_family: 'llama-3'
+model_size: '3B'
+it: 'instruct'
+plot_name: 'Llama 3.2 3B Instruct'
+color: '#4d8e00'
+apply_chat_template: 'chat'

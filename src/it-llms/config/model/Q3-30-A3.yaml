@@ -1,0 +1,10 @@
+# Auto-generated model config for Q3-30-A3
+shortcode: 'Q3-30-A3'
+hf_name: 'Qwen/Qwen3-30B-A3B-Base'
+company: 'alibaba'
+model_family: 'qwen-3'
+model_size: '30B-A3B'
+it: 'base'
+plot_name: 'Qwen 3 30B A3B Base'
+color: '#e0ee00'
+apply_chat_template: 'no'

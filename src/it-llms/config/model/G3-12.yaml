@@ -1,0 +1,10 @@
+# Auto-generated model config for G3-12
+shortcode: 'G3-12'
+hf_name: 'google/gemma-3-12b-pt'
+company: 'google'
+model_family: 'gemma-3'
+model_size: '12B'
+it: 'base'
+plot_name: 'Gemma 3 12B Base'
+color: '#8e9e00'
+apply_chat_template: 'base'

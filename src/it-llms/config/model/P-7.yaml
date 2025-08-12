@@ -1,0 +1,11 @@
+# Auto-generated model config for P-1
+shortcode: 'P-7'
+hf_name: 'EleutherAI/pythia-6.9b'
+company: 'eleutherai'
+model_family: 'pythia'
+model_size: '7B'
+it: 'base'
+plot_name: 'Pythia 7B Base'
+color: '#647c00'
+apply_chat_template: 'base'
+revision: null

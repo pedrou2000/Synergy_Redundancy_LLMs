@@ -1,0 +1,10 @@
+# Auto-generated model config for G3-4
+shortcode: 'G3-4'
+hf_name: 'google/gemma-3-4b-pt'
+company: 'google'
+model_family: 'gemma-3'
+model_size: '4B'
+it: 'base'
+plot_name: 'Gemma 3 4B Base'
+color: '#7c8e00'
+apply_chat_template: 'base'

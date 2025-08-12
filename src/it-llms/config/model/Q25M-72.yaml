@@ -1,0 +1,10 @@
+# Auto-generated model config for Q25M-72
+shortcode: 'Q25M-72'
+hf_name: 'Qwen/Qwen2.5-Math-72B'
+company: 'alibaba'
+model_family: 'qwen-2.5-math'
+model_size: '72B'
+it: 'base'
+plot_name: 'Qwen 2.5 Math 72B Base'
+color: '#b0be00'
+apply_chat_template: 'no'

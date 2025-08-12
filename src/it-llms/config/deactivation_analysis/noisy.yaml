@@ -1,0 +1,4 @@
+defaults:
+  - base
+
+noise_std: 0.5
